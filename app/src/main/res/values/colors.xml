@@ -5,5 +5,19 @@
     <color name="background">#FF090B14</color>
     <color name="primary">#FF15192D</color>
     <color name="secondary">#FFF7BE13</color>
-    <color name="magenta">#FFE02F99</color>
+    <color name="royalBlue">#365FE3</color>
+    <color name="purple">#D26DFF</color>
+    <color name="magenta">#FFF112A2</color>
+    <color name="aquaGreen">#2DE290</color>
+    <color name="chromeYellow">#F8AB07</color>
+    <color name="bluePurple">#6A18D1</color>
+    <color name="blazeOrange">#FF7600</color>
+    <color name="red">#D72929</color>
+    <color name="claret">#6F0614</color>
+    <color name="smokeyGrey">#7D7171</color>
+    <color name="purpleJam">#721F7D</color>
+    <color name="brown">#492609</color>
+    <color name="green">#30A000</color>
+    <color name="cobaltBlue">#001DB8</color>
+    <color name="skyBlue">#32C5FF</color>
 </resources>
