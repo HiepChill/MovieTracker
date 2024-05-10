@@ -21,4 +21,5 @@
     <color name="cobaltBlue">#001DB8</color>
     <color name="skyBlue">#32C5FF</color>
     <color name="cardColor">#10121B</color>
+    <color name="cardContent">#686b73</color>
 </resources>
