@@ -1,5 +1,6 @@
 package com.hyep.movietracker.adapter;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
+import com.hyep.movietracker.models.MovieResponse;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
 
     private final List<Movie> movieList;
 
+    String dateTimeFormat = "MMM dd, yyyy";
     public CardViewAdapter(List<Movie> movieList) {
         this.movieList = movieList;
     }
@@ -34,7 +37,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         if (movie == null) {
             return;
         }
-        holder.tvTitle.setText(String.valueOf(movie.getId()));
+        holder.tvTitle.setText(String.valueOf(movie.getTitle()));
+        holder.tvReleaseDate.setText(String.valueOf(DateFormat.format(dateTimeFormat, movie.getReleaseDate())));
     }
 
     @Override
@@ -48,10 +52,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
     public static class CardViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvTitle;
+        private TextView tvReleaseDate;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvReleaseDate = itemView.findViewById(R.id.tvDate);
         }
     }
 }

@@ -50,7 +50,7 @@ public class UpcomingScreen extends AppCompatActivity {
         ApiService.apiService.getUpcomingMovies("0b9dffdf2cc5ef177909e12da7782207").enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                movies = (List<Movie>) response.body();
+                movies = response.body().getMovies();
                 CardViewAdapter cardViewAdapter = new CardViewAdapter(movies);
                 rcvMovieCard.setAdapter(cardViewAdapter);
             }
