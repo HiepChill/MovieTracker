@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.RequestManager;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
@@ -18,11 +19,16 @@ import java.util.List;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder> {
 
-
+    RequestManager glide;
     private final List<Movie> movieList;
 
     String dateTimeFormat = "MMM dd, yyyy";
     public CardViewAdapter(List<Movie> movieList) {
+        this.movieList = movieList;
+    }
+
+    public CardViewAdapter(RequestManager glide, List<Movie> movieList) {
+        this.glide = glide;
         this.movieList = movieList;
     }
 
@@ -39,7 +45,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         if (movie == null) {
             return;
         }
-        //holder.imgPoster.setImageBitmap(movie.getPosterPath());
+//        glide.load("https://image.tmdb.org/t/p/w500" + movie.getPosterPath())
+//                .into(holder.imgPoster);
         holder.tvGenre.setText("Movie");
         holder.tvTitle.setText(String.valueOf(movie.getTitle()));
         holder.tvReleaseDate.setText(String.valueOf(DateFormat.format(dateTimeFormat, movie.getReleaseDate())));
@@ -59,6 +66,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         private TextView tvReleaseDate;
         private  TextView tvGenre;
         private ImageView imgPoster;
+
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);

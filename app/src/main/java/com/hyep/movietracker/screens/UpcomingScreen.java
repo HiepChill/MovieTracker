@@ -1,5 +1,6 @@
 package com.hyep.movietracker.screens;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class UpcomingScreen extends AppCompatActivity {
 
     private RecyclerView rcvMovieCard;
     private List<Movie> movies;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +46,17 @@ public class UpcomingScreen extends AppCompatActivity {
         rcvMovieCard.addItemDecoration(itemDecoration);
 
         movies = new ArrayList<>();
+        progressDialog = new ProgressDialog(this);
+
         callMovieApi();
     }
 
     private void callMovieApi() {
+        progressDialog.show();
         ApiService.apiService.getUpcomingMovies("0b9dffdf2cc5ef177909e12da7782207").enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                progressDialog.dismiss();
                 movies = response.body().getMovies();
                 CardViewAdapter cardViewAdapter = new CardViewAdapter(movies);
                 rcvMovieCard.setAdapter(cardViewAdapter);

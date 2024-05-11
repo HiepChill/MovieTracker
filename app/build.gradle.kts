@@ -56,4 +56,9 @@ dependencies {
     //Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
+    //Paging
+    implementation("androidx.paging:paging-runtime:3.2.1")
+    // optional - RxJava3 support
+    implementation("androidx.paging:paging-rxjava3:3.2.1")
+
 }
