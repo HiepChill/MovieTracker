@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.core.Single;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -51,7 +52,7 @@ public class APIClient {
 
     public interface APIInterface{
         @GET("movie/upcoming")
-        Single<MovieResponse> getUpcomingMovies(@Query("page") int page);
+        Call<MovieResponse> getUpcomingMovies(@Query("api_key") String api_key);
     }
 
 }
