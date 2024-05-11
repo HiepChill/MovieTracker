@@ -22,8 +22,8 @@ public class MovieAdapter extends PagingDataAdapter<Movie, MovieAdapter.MovieVie
     String dateTimeFormat = "MMM dd, yyyy";
     RequestManager glide;
 
-    public MovieAdapter(@NonNull DiffUtil.ItemCallback<Movie> diffCallback, @NonNull CoroutineContext mainDispatcher, RequestManager glide) {
-        super(diffCallback, mainDispatcher);
+    public MovieAdapter(@NonNull DiffUtil.ItemCallback<Movie> diffCallback, RequestManager glide) {
+        super(diffCallback);
         this.glide = glide;
     }
 
@@ -50,9 +50,6 @@ public class MovieAdapter extends PagingDataAdapter<Movie, MovieAdapter.MovieVie
             holder.moviesBinding.tvTitle.setText(String.valueOf(currentMovie.getTitle()));
             holder.moviesBinding.tvDate.setText(String.valueOf(DateFormat.format(dateTimeFormat, currentMovie.getReleaseDate())));
         }
-
-
-
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {

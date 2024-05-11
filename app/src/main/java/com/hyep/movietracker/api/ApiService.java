@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
+import com.hyep.movietracker.utils.Utils;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -12,13 +13,11 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface ApiService {
-    //https://api.themoviedb.org/3/movie/upcoming?api_key=0b9dffdf2cc5ef177909e12da7782207
-
     Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd")
             .create();
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(Utils.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);

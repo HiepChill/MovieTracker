@@ -19,6 +19,8 @@ import java.util.List;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder> {
 
+    public static final int LOADING_ITEM = 0;
+    public static final int MOVIE_ITEM = 1;
     RequestManager glide;
     private final List<Movie> movieList;
 
