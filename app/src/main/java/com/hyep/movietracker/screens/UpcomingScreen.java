@@ -35,6 +35,7 @@ public class UpcomingScreen extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_upcoming_screen);
 
+
         rcvMovieCard = findViewById(R.id.rcvMovieCard);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvMovieCard.setLayoutManager(linearLayoutManager);
