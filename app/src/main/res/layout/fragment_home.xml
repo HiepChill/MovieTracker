@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
     tools:context=".screens.fragment.HomeFragment">
 
@@ -29,23 +29,23 @@
         app:layout_constraintTop_toTopOf="@+id/wg1" />
 
     <ImageButton
-        android:contentDescription="Watched"
         android:id="@+id/imgBtnWatched"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginTop="35dp"
         android:background="@drawable/ic_watched_background"
+        android:contentDescription="Watched"
         app:layout_constraintEnd_toStartOf="@+id/imgBtnUpcoming"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageButton
-        android:contentDescription="Upcoming"
         android:id="@+id/imgBtnUpcoming"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:background="@drawable/ic_upcoming"
+        android:contentDescription="Upcoming"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgBtnWatched"
         app:layout_constraintTop_toTopOf="@+id/imgBtnWatched" />
@@ -69,5 +69,45 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/wg2"
         app:layout_constraintTop_toTopOf="@+id/wg2" />
+
+    <ImageView
+        android:id="@+id/imgSpace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_space"
+        app:layout_constraintBottom_toTopOf="@+id/tvSpace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtnWatched"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/tvSpace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No spaces"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvCreate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgSpace" />
+
+    <TextView
+        android:id="@+id/tvCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create your own space"
+        android:textColor="#9DA0A8"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSpace"
+        android:layout_marginBottom="80dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
