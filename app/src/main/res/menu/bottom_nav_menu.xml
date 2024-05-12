@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuItemHome"
+        android:icon="@drawable/ic_home_selector"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/menuItemTag"
+        android:icon="@drawable/ic_tag_screen_selector"
+        android:title="Tag"
+        android:checkable="true"/>
+
+    <item
+        android:title=""
+        android:enabled="false"/>
+
+    <item
+        android:id="@+id/menuItemStatic"
+        android:icon="@drawable/ic_static_screen_selector"
+        android:title="Static"
+        android:checkable="true"/>
+
+    <item
+        android:id="@+id/menuItemSetting"
+        android:icon="@drawable/ic_setting_screen_selector"
+        android:title="Setting"
+        android:checkable="true"/>
+</menu>
