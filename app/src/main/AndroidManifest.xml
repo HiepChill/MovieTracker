@@ -22,9 +22,8 @@
         <activity
             android:name=".screens.UpcomingScreen"
             android:exported="true" />
-
         <activity
-            android:name=".screens.HomeScreen"
+            android:name=".screens.MainScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
