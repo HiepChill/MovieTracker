@@ -60,24 +60,5 @@ dependencies {
 
     //Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
-
-    //Paging
-    implementation("androidx.paging:paging-runtime:3.2.1")
-    // optional - RxJava3 support
-    implementation("androidx.paging:paging-rxjava3:3.2.1")
-
-
-    //Hilt Dagger
-    implementation("com.google.dagger:hilt-android:2.44")
-
-    //ViewModel
-    val lifecycle_version = "2.7.0"
-    val arch_version = "2.2.0"
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")
-    // LiveData
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-
-
+    
 }
