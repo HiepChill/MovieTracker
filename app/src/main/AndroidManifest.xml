@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MovieTracker"
         tools:targetApi="31">
         <activity
-            android:name=".screens.DetailSpaceActivity"
+            android:name=".screens.DetailSpaceScreen"
             android:exported="false" />
         <activity
             android:name=".screens.HomeScreen"

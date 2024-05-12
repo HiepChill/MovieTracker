@@ -52,4 +52,7 @@ dependencies {
 
     //GSON
     implementation ("com.google.code.gson:gson:2.10.1")
+
+    //flexBoxLayout
+    implementation ("com.google.android.flexbox:flexbox:3.0.0")
 }
