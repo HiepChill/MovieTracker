@@ -79,7 +79,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvReleaseDate = itemView.findViewById(R.id.tvDate);
             tvGenre = itemView.findViewById(R.id.tvGenre);
-            imgPoster = itemView.findViewById(R.id.rv_image);
+            imgPoster = itemView.findViewById(R.id.imagePoster);
         }
     }
 }
