@@ -47,6 +47,8 @@ public class MainScreen extends AppCompatActivity {
 
         replaceFragment(new HomeFragment());
 
+        bottomNavigationView.setItemIconTintList(null);
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.menuItemHome) {
                 replaceFragment(new HomeFragment());

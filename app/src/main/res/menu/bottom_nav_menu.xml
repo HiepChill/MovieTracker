@@ -9,18 +9,22 @@
     <item
         android:id="@+id/menuItemTag"
         android:icon="@drawable/ic_tag_screen_inactive"
-        android:title="Tag"/>
+        android:title="Tag"
+        android:checkable="true"/>
 
     <item
-        android:title=""/>
+        android:title=""
+        android:enabled="false"/>
 
     <item
         android:id="@+id/menuItemStatic"
         android:icon="@drawable/ic_static_screen_inactive"
-        android:title="Static"/>
+        android:title="Static"
+        android:checkable="true"/>
 
     <item
         android:id="@+id/menuItemSetting"
         android:icon="@drawable/ic_setting_screen_inactive"
-        android:title="Setting"/>
+        android:title="Setting"
+        android:checkable="true"/>
 </menu>
