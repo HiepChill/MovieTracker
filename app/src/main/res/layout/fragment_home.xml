@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:layout_marginBottom="80dp"
     tools:context=".screens.fragment.HomeFragment">
 
     <View
@@ -80,7 +81,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgBtnWatched"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:id="@+id/tvSpace"
@@ -94,7 +96,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgSpace" />
+        app:layout_constraintTop_toBottomOf="@+id/imgSpace"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/tvCreate"

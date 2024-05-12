@@ -1,13 +1,7 @@
 package com.hyep.movietracker.screens;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -42,21 +36,13 @@ public class MainScreen extends AppCompatActivity {
             return insets;
         });
 
-        // Hide the status bar.
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        decorView.setSystemUiVisibility(uiOptions);
-
         // Ensure that the content view fits the system windows
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
             // Handle insets here if needed
             return insets.consumeSystemWindowInsets();
         });
 
-        frameLayout = findViewById(R.id.frameLayout);
+        frameLayout = findViewById(R.id.fragmentContainer);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         replaceFragment(new HomeFragment());

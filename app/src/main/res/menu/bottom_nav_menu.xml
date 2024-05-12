@@ -12,6 +12,9 @@
         android:title="Tag"/>
 
     <item
+        android:title=""/>
+
+    <item
         android:id="@+id/menuItemStatic"
         android:icon="@drawable/ic_static_screen_inactive"
         android:title="Static"/>
