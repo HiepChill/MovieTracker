@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
+
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
@@ -24,7 +24,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
 
     public static final int LOADING_ITEM = 0;
     public static final int MOVIE_ITEM = 1;
-    RequestManager glide;
     private final List<Movie> movieList;
     private Context con;
 
@@ -32,11 +31,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
     public CardViewAdapter(List<Movie> movieList, Context con) {
         this.movieList = movieList;
         this.con = con;
-    }
-
-    public CardViewAdapter(RequestManager glide, List<Movie> movieList) {
-        this.glide = glide;
-        this.movieList = movieList;
     }
 
     @NonNull
