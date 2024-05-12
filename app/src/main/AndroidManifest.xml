@@ -17,13 +17,13 @@
         tools:targetApi="31">
         <activity
 
-            android:name=".screens.DetailSpaceScreen"
+            android:name=".screens.MainScreen"
             android:exported="false" />
         <activity
             android:name=".screens.UpcomingScreen"
             android:exported="true" />
         <activity
-            android:name=".screens.MainScreen"
+            android:name=".screens.DetailSpaceScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

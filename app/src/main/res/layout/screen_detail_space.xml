@@ -151,49 +151,16 @@
             android:layout_marginLeft="20dp"
             />
     </LinearLayout>
-<!--    <com.google.android.flexbox.FlexboxLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:flexWrap="wrap"-->
-<!--        app:flexDirection="row"-->
 
 
-<!--        >-->
-<!--        <LinearLayout-->
-<!--            android:layout_width="106dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical"-->
-<!--            android:layout_marginRight="15dp"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            >-->
-<!--            <ImageView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="160dp"-->
-<!--                android:background="@color/white"/>-->
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:maxLines="2"-->
-<!--                android:text="Back panther: sadasdadasdsadasadasdsadasd"-->
-<!--                android:textSize="15dp"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textAlignment="center"-->
-<!--                android:ellipsize="end"-->
-<!--                />-->
-<!--        </LinearLayout>-->
-<!--    </com.google.android.flexbox.FlexboxLayout>-->
-    <com.google.android.flexbox.FlexboxLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:flexDirection="row"
-        app:flexWrap="wrap"
-        android:padding="20dp">
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvItemSpace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="20dp"
+            app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+            />
 
-            >
 
-        </androidx.recyclerview.widget.RecyclerView>
-    </com.google.android.flexbox.FlexboxLayout>
+
 </LinearLayout>
