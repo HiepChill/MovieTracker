@@ -21,12 +21,12 @@ import com.hyep.movietracker.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import dagger.hilt.android.AndroidEntryPoint;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@AndroidEntryPoint
+
 public class UpcomingScreen extends AppCompatActivity {
 
     private RecyclerView rcvMovieCard;
@@ -60,20 +60,7 @@ public class UpcomingScreen extends AppCompatActivity {
 
     private void callMovieApi() {
         progressDialog.show();
-//        ApiService.apiService.getUpcomingMovies(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
-//            @Override
-//            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-//                progressDialog.dismiss();
-//                movies = response.body().getMovies();
-//                CardViewAdapter cardViewAdapter = new CardViewAdapter(movies);
-//                rcvMovieCard.setAdapter(cardViewAdapter);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MovieResponse> call, Throwable throwable) {
-//                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
         APIClient.getApiInterface().getUpcomingMovies(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {

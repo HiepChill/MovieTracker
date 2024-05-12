@@ -52,11 +52,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         if (movie == null) {
             return;
         }
-//        glide.load("https://image.tmdb.org/t/p/w500" + movie.getPosterPath())
-//                .into(holder.imgPoster);
-//        holder.tvGenre.setText("Movie");
-//        holder.tvTitle.setText(String.valueOf(movie.getTitle()));
-//        holder.tvReleaseDate.setText(String.valueOf(DateFormat.format(dateTimeFormat, movie.getReleaseDate())));
         Glide.with(con).load(Utils.BASE_IMG_URL + movieList.get(position).getPosterPath()).into(holder.imgPoster);
         holder.tvTitle.setText(movieList.get(position).getTitle());
         holder.tvGenre.setText("Movie");
