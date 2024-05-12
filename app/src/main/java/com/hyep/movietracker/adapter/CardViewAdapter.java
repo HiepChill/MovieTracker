@@ -21,9 +21,6 @@ import com.hyep.movietracker.utils.Utils;
 import java.util.List;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder> {
-
-    public static final int LOADING_ITEM = 0;
-    public static final int MOVIE_ITEM = 1;
     private final List<Movie> movieList;
     private Context con;
 
