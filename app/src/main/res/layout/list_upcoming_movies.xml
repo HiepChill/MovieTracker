@@ -21,13 +21,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imgPoster"
+<!--            <ImageView-->
+<!--                android:id="@+id/imgPoster"-->
+<!--                android:layout_width="82dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rv_image"
                 android:layout_width="82dp"
                 android:layout_height="match_parent"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <LinearLayout
                 android:layout_width="290dp"

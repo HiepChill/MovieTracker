@@ -2,6 +2,7 @@ package com.hyep.movietracker.screens;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -34,11 +35,10 @@ public class UpcomingScreen extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        binding = ActivityUpcomingScreenBinding.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_upcoming_screen);
 
@@ -54,6 +54,8 @@ public class UpcomingScreen extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         callMovieApi();
+
+
     }
 
     private void callMovieApi() {
@@ -77,8 +79,10 @@ public class UpcomingScreen extends AppCompatActivity {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 progressDialog.dismiss();
                 movies = response.body().getMovies();
-                CardViewAdapter cardViewAdapter = new CardViewAdapter(movies);
+                CardViewAdapter cardViewAdapter = new CardViewAdapter(movies, getApplicationContext());
                 rcvMovieCard.setAdapter(cardViewAdapter);
+
+                Log.d("data", movies.toString());
             }
 
             @Override
@@ -90,37 +94,5 @@ public class UpcomingScreen extends AppCompatActivity {
 
     }
 
-
-    //        if (Utils.API_KEY == null || Utils.API_KEY.isEmpty()) {
-//            Toast.makeText(this, "API_KEY ERROR", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        movieAdapter = new MovieAdapter(new MovieComparator(), requestManager);
-//
-//        upcomingViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
-//
-//        initRecyclerviewAndAdapter();
-//
-//        //subcribe to paging data
-//        upcomingViewModel.moviePagingDataFlowable.subscribe(moviePagingData -> {
-//            movieAdapter.submitData(getLifecycle(), moviePagingData);
-//        });
-//    }
-//
-//    private void initRecyclerviewAndAdapter() {
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
-//
-//        binding.rcvMovieCard.setLayoutManager(gridLayoutManager);
-//
-//        binding.rcvMovieCard.addItemDecoration(new GridSpace(2, 20, true));
-//
-//
-//
-//        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(int position) {
-//                return movieAdapter.getItemViewType(position) == MovieAdapter.LOADING_ITEM ? 1 : 2;
-//            }
-//        });
 
 }
