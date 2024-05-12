@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
+    tools:context=".screens.fragment.HomeFragment">
+
+    <View
+        android:id="@+id/wg1"
+        android:layout_width="5dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/chromeYellow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="WATCH LIST"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/wg1"
+        app:layout_constraintTop_toTopOf="@+id/wg1" />
+
+    <ImageButton
+        android:contentDescription="Watched"
+        android:id="@+id/imgBtnWatched"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/ic_watched_background"
+        app:layout_constraintEnd_toStartOf="@+id/imgBtnUpcoming"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageButton
+        android:contentDescription="Upcoming"
+        android:id="@+id/imgBtnUpcoming"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:background="@drawable/ic_upcoming"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgBtnWatched"
+        app:layout_constraintTop_toTopOf="@+id/imgBtnWatched" />
+
+    <View
+        android:id="@+id/wg2"
+        android:layout_width="5dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="35dp"
+        android:background="@color/chromeYellow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtnWatched" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="PERSONAL SPACE"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/wg2"
+        app:layout_constraintTop_toTopOf="@+id/wg2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
