@@ -53,6 +53,12 @@ dependencies {
     //GSON
     implementation ("com.google.code.gson:gson:2.10.1")
 
+
     //flexBoxLayout
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
+
+    //Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+
 }
