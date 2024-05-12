@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/menuItemTag"
-        android:icon="@drawable/ic_tag_screen_inactive"
+        android:icon="@drawable/ic_tag_screen_selector"
         android:title="Tag"
         android:checkable="true"/>
 
@@ -18,13 +18,13 @@
 
     <item
         android:id="@+id/menuItemStatic"
-        android:icon="@drawable/ic_static_screen_inactive"
+        android:icon="@drawable/ic_static_screen_selector"
         android:title="Static"
         android:checkable="true"/>
 
     <item
         android:id="@+id/menuItemSetting"
-        android:icon="@drawable/ic_setting_screen_inactive"
+        android:icon="@drawable/ic_setting_screen_selector"
         android:title="Setting"
         android:checkable="true"/>
 </menu>
