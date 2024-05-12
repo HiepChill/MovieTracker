@@ -40,7 +40,7 @@ public class UpcomingScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_upcoming_screen);
+        setContentView(R.layout.screen_upcoming);
 
 
         rcvMovieCard = findViewById(R.id.rcvMovieCard);
