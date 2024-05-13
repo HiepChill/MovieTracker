@@ -2,7 +2,7 @@
 
 ## Thông Tin Chung
 - **Tên Dự Án**: MovieTracker
-- **Tuần**: 1
+- **Tuần**: 2
 - **Ngày**: (5-5-2024 -> 12-5-2024)
 - **Nhóm Thực Hiện**: 
   - Thành viên 1: Chu Mạnh Vũ Hiệp
