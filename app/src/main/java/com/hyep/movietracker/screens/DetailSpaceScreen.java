@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.flexbox.FlexDirection;
@@ -20,10 +21,10 @@ import com.hyep.movietracker.models.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailSpaceScreen extends AppCompatActivity {
+public class DetailSpaceScreen extends AppCompatActivity{
 
     
-    private ImageButton imgBtnBack, imgBtnSpaceSetting;
+    private ImageButton imgBtnBack, imgBtnSpaceSetting, imgBtnSearch, imgBtnNote;
 
     private RecyclerView rvItemSpace;
     @Override
@@ -39,6 +40,8 @@ public class DetailSpaceScreen extends AppCompatActivity {
         rvItemSpace = findViewById(R.id.rvItemSpace);
         imgBtnBack = (ImageButton) findViewById(R.id.imgBtnBack);
         imgBtnSpaceSetting = (ImageButton) findViewById(R.id.imgBtnSpaceSetting); 
+        imgBtnSearch = (ImageButton) findViewById(R.id.imgBtnSearch);
+        imgBtnNote = (ImageButton) findViewById(R.id.imgBtnNote); 
         
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,9 +58,32 @@ public class DetailSpaceScreen extends AppCompatActivity {
             }
         });
 
-        FlexboxLayoutManager flexboxLayoutManager = new FlexboxLayoutManager(this);
-        flexboxLayoutManager.setFlexWrap(FlexWrap.WRAP);
-        flexboxLayoutManager.setJustifyContent(JustifyContent.SPACE_AROUND);
+        imgBtnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DetailSpaceScreen.this, "Search", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        imgBtnNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DetailSpaceScreen.this, "Note", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+
+                return 1;
+            }
+        });
+        rvItemSpace.setLayoutManager(layoutManager);
+
 
 
         List<Movie> movies = new ArrayList<Movie>();
@@ -70,6 +96,8 @@ public class DetailSpaceScreen extends AppCompatActivity {
         movies.add(new Movie(1063879,"/dY98PkUAbIGUUg0FhXEcOkbzHIZ.jpg","Vermines"));
 
         CardMovieAdapter adapter = new CardMovieAdapter(movies,this);
+
         rvItemSpace.setAdapter(adapter);
     }
+
 }

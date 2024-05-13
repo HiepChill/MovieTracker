@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,16 +29,19 @@ public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.Card
     private final List<Movie> movieList;
     private final Context cont;
 
+//    private AdapterView.OnItemClickListener itemClickListener;
+
     public CardMovieAdapter(List<Movie> movieList, Context cont) {
         this.movieList = movieList;
         this.cont = cont;
     }
 
-//    public CardMovieAdapter(RequestManager glide, List<Movie> movieList) {
-//        this.glide = glide;
-//        this.movieList = movieList;
+//    public interface ItemClickListener {
+//        void onItemClick(int position, int movieId);
 //    }
-
+//    public void setItemClickListener(ItemClickListener itemClickListener) {
+//        this.itemClickListener = (AdapterView.OnItemClickListener) itemClickListener;
+//    }
     @NonNull
     @Override
     public CardMovieAdapter.CardMovieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,6 +58,12 @@ public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.Card
         Glide.with(cont).load(Utils.BASE_IMG_URL+movieList.get(position).getPosterPath()).into(holder.imgPoster);
         holder.tvItemTitle.setText(movieList.get(position).getTitle());
         holder.imgBtnItemSetting.setOnClickListener(view -> Toast.makeText(cont, movie.getId()+"", Toast.LENGTH_SHORT).show());
+        holder.imgPoster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(cont, movie.getId()+"", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -72,11 +83,14 @@ public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.Card
         private final ImageButton imgBtnItemSetting;
 
 
+
+
         public CardMovieHolder(View viewItem) {
             super(viewItem);
             imgPoster = viewItem.findViewById(R.id.imgPoster);
             tvItemTitle = viewItem.findViewById(R.id.tvItemTitle);
             imgBtnItemSetting = viewItem.findViewById(R.id.imgBtnItemSetting);
+
 
 
         }
