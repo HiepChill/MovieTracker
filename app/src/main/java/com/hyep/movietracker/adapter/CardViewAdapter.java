@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
-import com.hyep.movietracker.models.MovieResponse;
 import com.hyep.movietracker.utils.Utils;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_upcoming_movies, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
         return new CardViewHolder(view);
     }
 

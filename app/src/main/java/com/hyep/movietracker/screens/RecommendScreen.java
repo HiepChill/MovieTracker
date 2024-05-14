@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.CardViewAdapter;
 import com.hyep.movietracker.adapter.DiscoverMovieAdapter;
+import com.hyep.movietracker.adapter.DiscoverTVAdapter;
 import com.hyep.movietracker.api.APIClient;
 import com.hyep.movietracker.api.APIServive;
 import com.hyep.movietracker.models.Movie;
@@ -34,7 +35,8 @@ import retrofit2.Response;
 
 public class RecommendScreen extends AppCompatActivity {
 
-    private RecyclerView rcvMovie, rcvTV;
+    private RecyclerView rcvMovie;
+    private RecyclerView rcvTV;
     private List<Movie> movies;
     private List<TV> tvList;
 
@@ -52,26 +54,34 @@ public class RecommendScreen extends AppCompatActivity {
         });
 
         rcvMovie = findViewById(R.id.rcvMovie);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rcvMovie.setLayoutManager(linearLayoutManager);
+        rcvTV = findViewById(R.id.rcvTV);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
+        rcvMovie.setLayoutManager(linearLayoutManager1);
+        rcvTV.setLayoutManager(linearLayoutManager2);
 
 
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        rcvMovie.addItemDecoration(itemDecoration);
+        DividerItemDecoration itemDecoration1 = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        DividerItemDecoration itemDecoration2 = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+
+        rcvMovie.addItemDecoration(itemDecoration1);
+        rcvTV.addItemDecoration(itemDecoration2);
 
 
         progressDialog = new ProgressDialog(this);
 
         callMovieApi();
-
+        callTVApi();
     }
 
-    private void callMovieApi() {
 
-        APIServive.apiService.getDiscoverMovie(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
+    private void callMovieApi() {
+        progressDialog.show();
+
+        APIClient.getApiInterface().getDiscoverMovie(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
                 movies = response.body().getMovies();
                 DiscoverMovieAdapter movieAdapter = new DiscoverMovieAdapter(movies, getApplicationContext());
                 rcvMovie.setAdapter(movieAdapter);
@@ -84,41 +94,22 @@ public class RecommendScreen extends AppCompatActivity {
         });
     }
 
-//    private void callMovieApi() {
-//        progressDialog.show();
-//
-//        APIClient.getApiInterface().getDiscoverMovie(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
-//            @Override
-//            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-//                progressDialog.dismiss();
-//                movies = response.body().getMovies();
-//                DiscoverMovieAdapter movieAdapter = new DiscoverMovieAdapter(movies, getApplicationContext());
-//                rcvMovie.setAdapter(movieAdapter);
-//                Log.d("data", movies.toString());
-//            }
-//            @Override
-//            public void onFailure(Call<MovieResponse> call, Throwable throwable) {
-//                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    private void callTVApi() {
+        progressDialog.show();
 
-//    private void callTVApi() {
-//        progressDialog.show();
-//
-//        APIClient.getApiInterface().getDiscoverTV(Utils.API_KEY).enqueue(new Callback<TVResponse>() {
-//            @Override
-//            public void onResponse(Call<TVResponse> call, Response<TVResponse> response) {
-//                progressDialog.dismiss();
-//                tvList = response.body().getTvList();
-//                CardViewAdapter cardViewAdapter = new CardViewAdapter(movies, getApplicationContext());
-//                rcvMovie.setAdapter(cardViewAdapter);
-//                Log.d("data", movies.toString());
-//            }
-//            @Override
-//            public void onFailure(Call<TVResponse> call, Throwable throwable) {
-//                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+        APIClient.getApiInterface().getDiscoverTV(Utils.API_KEY, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<TVResponse>() {
+            @Override
+            public void onResponse(Call<TVResponse> call, Response<TVResponse> response) {
+                progressDialog.dismiss();
+                tvList = response.body().getTvList();
+                DiscoverTVAdapter tvAdapter = new DiscoverTVAdapter(tvList, getApplicationContext());
+                rcvMovie.setAdapter(tvAdapter);
+                Log.d("data", tvList.toString());
+            }
+            @Override
+            public void onFailure(Call<TVResponse> call, Throwable throwable) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
