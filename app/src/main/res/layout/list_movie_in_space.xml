@@ -29,11 +29,11 @@
 
         <ImageButton
             android:id="@+id/imgBtnItemSetting"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            android:background="@color/cardview_shadow_start_color"
+            android:background="@drawable/btn_setting_item_in_space"
             android:contentDescription="TODO"
             android:src="@drawable/ic_setting_item"
             app:layout_constraintEnd_toEndOf="parent"

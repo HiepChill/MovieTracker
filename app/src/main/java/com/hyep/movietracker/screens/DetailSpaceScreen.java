@@ -1,8 +1,10 @@
 package com.hyep.movietracker.screens;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,6 +29,8 @@ public class DetailSpaceScreen extends AppCompatActivity{
     private ImageButton imgBtnBack, imgBtnSpaceSetting, imgBtnSearch, imgBtnNote;
 
     private RecyclerView rvItemSpace;
+
+    private ImageView ivLogo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +41,15 @@ public class DetailSpaceScreen extends AppCompatActivity{
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
+        ivLogo = findViewById(R.id.ivLogo);
         rvItemSpace = findViewById(R.id.rvItemSpace);
         imgBtnBack = (ImageButton) findViewById(R.id.imgBtnBack);
         imgBtnSpaceSetting = (ImageButton) findViewById(R.id.imgBtnSpaceSetting); 
         imgBtnSearch = (ImageButton) findViewById(R.id.imgBtnSearch);
-        imgBtnNote = (ImageButton) findViewById(R.id.imgBtnNote); 
-        
+        imgBtnNote = (ImageButton) findViewById(R.id.imgBtnNote);
+
+        ivLogo.getDrawable().setColorFilter(getResources().getColor(R.color.magenta), PorterDuff.Mode.SRC_IN);
+
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

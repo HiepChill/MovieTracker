@@ -30,21 +30,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="60dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:gravity="center"
             >
             <ImageView
+                android:id="@+id/ivLogo"
+                android:src="@drawable/ic_space_logo_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_space_logo_1"
                 />
         </LinearLayout>
         <ImageButton
             android:id="@+id/imgBtnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
             android:src="@drawable/ic_back"
@@ -57,8 +58,8 @@
 
         <ImageButton
             android:id="@+id/imgBtnSpaceSetting"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="#11131B"
             android:src="@drawable/ic_space_setting"
             android:layout_marginTop="40dp"
@@ -108,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:text="Add"
                 android:textStyle="bold"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:textColor="@color/white"
                 />
         </LinearLayout>
@@ -132,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:text="Note"
                 android:textStyle="bold"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:textColor="@color/white"
                 />
         </LinearLayout>
