@@ -4,6 +4,7 @@ import static com.hyep.movietracker.utils.Utils.API_KEY;
 import static com.hyep.movietracker.utils.Utils.BASE_URL;
 
 import com.hyep.movietracker.models.MovieResponse;
+import com.hyep.movietracker.models.TVResponse;
 
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.HttpUrl;
@@ -53,6 +54,12 @@ public class APIClient {
     public interface APIInterface{
         @GET("movie/upcoming")
         Call<MovieResponse> getUpcomingMovies(@Query("api_key") String api_key);
+
+        @GET("discover/movie")
+        Call<MovieResponse> getDiscoverMovie(@Query("api_key") String api_key);
+
+        @GET("discover/tv")
+        Call<TVResponse> getDiscoverTV(@Query("api_key") String api_key);
     }
 
 }
