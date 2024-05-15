@@ -12,12 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 //import com.bumptech.glide.RequestManager;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
+import com.hyep.movietracker.screens.fragment.BottomSheetSettingItemInSpaceFragment;
 import com.hyep.movietracker.utils.Utils;
 
 import java.util.List;
@@ -28,12 +30,14 @@ public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.Card
 
     private final List<Movie> movieList;
     private final Context cont;
+    private final FragmentManager fragmentManager;
 
 //    private AdapterView.OnItemClickListener itemClickListener;
 
-    public CardMovieAdapter(List<Movie> movieList, Context cont) {
+    public CardMovieAdapter(List<Movie> movieList, Context cont, FragmentManager fragmentManager) {
         this.movieList = movieList;
         this.cont = cont;
+        this.fragmentManager = fragmentManager;
     }
 
 //    public interface ItemClickListener {
@@ -57,7 +61,13 @@ public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.Card
         }
         Glide.with(cont).load(Utils.BASE_IMG_URL+movieList.get(position).getPosterPath()).into(holder.imgPoster);
         holder.tvItemTitle.setText(movieList.get(position).getTitle());
-        holder.imgBtnItemSetting.setOnClickListener(view -> Toast.makeText(cont, movie.getId()+"", Toast.LENGTH_SHORT).show());
+        holder.imgBtnItemSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheetSettingItemInSpaceFragment bottomSheetSettingItemInSpaceFragment = new BottomSheetSettingItemInSpaceFragment();
+                bottomSheetSettingItemInSpaceFragment.show(fragmentManager, bottomSheetSettingItemInSpaceFragment.getTag());
+            }
+        });
         holder.imgPoster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
