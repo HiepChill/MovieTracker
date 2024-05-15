@@ -55,8 +55,6 @@ public class UpcomingScreen extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvMovieCard.setLayoutManager(linearLayoutManager);
 
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        rcvMovieCard.addItemDecoration(itemDecoration);
 
         movies = new ArrayList<>();
         progressDialog = new ProgressDialog(this);

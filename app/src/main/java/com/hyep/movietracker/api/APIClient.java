@@ -56,7 +56,8 @@ public class APIClient {
         Call<MovieResponse> getUpcomingMovies(@Query("api_key") String api_key);
 
         @GET("discover/movie")
-        Call<MovieResponse> getDiscoverMovie(@Query("api_key") String api_key);
+        Call<MovieResponse> getDiscoverMovie(@Query("api_key") String api_key,
+                                             @Query("language") String language);
 
         @GET("discover/tv")
         Call<TVResponse> getDiscoverTV(@Query("api_key") String api_key,

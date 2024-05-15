@@ -24,6 +24,12 @@ public class DiscoverMovieAdapter extends RecyclerView.Adapter<DiscoverMovieAdap
 
     String dateTimeFormat = "MMM dd, yyyy";
     public DiscoverMovieAdapter(List<Movie> movieList, Context con) {
+//        if (movieList.size() > 2) {
+//            this.movieList = movieList.subList(0, 2);
+//        }
+//        else {
+//            this.movieList = movieList;
+//        }
         this.movieList = movieList;
         this.con = con;
     }
