@@ -62,6 +62,11 @@ public class APIClient {
         @GET("discover/tv")
         Call<TVResponse> getDiscoverTV(@Query("api_key") String api_key,
                                        @Query("language") String language);
+
+        @GET("search/movie")
+        Call<MovieResponse> getListMovieBySearch(@Query("api_key") String api_key,
+                                                 @Query("query") String query,
+                                                 @Query("language") String language);
     }
 
 }

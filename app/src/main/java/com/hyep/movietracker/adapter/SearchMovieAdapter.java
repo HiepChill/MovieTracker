@@ -18,31 +18,25 @@ import com.hyep.movietracker.utils.Utils;
 
 import java.util.List;
 
-public class DiscoverMovieAdapter extends RecyclerView.Adapter<DiscoverMovieAdapter.DiscoverMovieViewHolder> {
+public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder> {
     private final List<Movie> movieList;
     private Context con;
 
     String dateTimeFormat = "MMM dd, yyyy";
-    public DiscoverMovieAdapter(List<Movie> movieList, Context con) {
-//        if (movieList.size() > 2) {
-//            this.movieList = movieList.subList(0, 2);
-//        }
-//        else {
-//            this.movieList = movieList;
-//        }
+    public SearchMovieAdapter(List<Movie> movieList, Context con) {
         this.movieList = movieList;
         this.con = con;
     }
 
     @NonNull
     @Override
-    public DiscoverMovieAdapter.DiscoverMovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SearchMovieAdapter.SearchMovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
-        return new DiscoverMovieAdapter.DiscoverMovieViewHolder(view);
+        return new SearchMovieAdapter.SearchMovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DiscoverMovieAdapter.DiscoverMovieViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchMovieAdapter.SearchMovieViewHolder holder, int position) {
         Movie movie = movieList.get(position);
         if (movie == null) {
             return;
@@ -61,15 +55,15 @@ public class DiscoverMovieAdapter extends RecyclerView.Adapter<DiscoverMovieAdap
         return 0;
     }
 
-    public static class DiscoverMovieViewHolder extends RecyclerView.ViewHolder {
+
+    public static class SearchMovieViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvTitle;
         private TextView tvReleaseDate;
         private  TextView tvGenre;
         private ImageView imgPoster;
 
-
-        public DiscoverMovieViewHolder(@NonNull View itemView) {
+        public SearchMovieViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvReleaseDate = itemView.findViewById(R.id.tvDate);

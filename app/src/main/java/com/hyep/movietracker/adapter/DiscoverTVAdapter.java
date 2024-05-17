@@ -18,7 +18,7 @@ import com.hyep.movietracker.utils.Utils;
 
 import java.util.List;
 
-public class DiscoverTVAdapter extends RecyclerView.Adapter<DiscoverTVAdapter.CardViewHolder> {
+public class DiscoverTVAdapter extends RecyclerView.Adapter<DiscoverTVAdapter.DiscoverTVViewHolder> {
     private final List<TV> tvList;
     private Context con;
 
@@ -30,13 +30,13 @@ public class DiscoverTVAdapter extends RecyclerView.Adapter<DiscoverTVAdapter.Ca
 
     @NonNull
     @Override
-    public DiscoverTVAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DiscoverTVAdapter.DiscoverTVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
-        return new DiscoverTVAdapter.CardViewHolder(view);
+        return new DiscoverTVAdapter.DiscoverTVViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DiscoverTVAdapter.CardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DiscoverTVAdapter.DiscoverTVViewHolder holder, int position) {
         TV tv = tvList.get(position);
         if (tv == null) {
             return;
@@ -55,7 +55,7 @@ public class DiscoverTVAdapter extends RecyclerView.Adapter<DiscoverTVAdapter.Ca
         return 0;
     }
 
-    public static class CardViewHolder extends RecyclerView.ViewHolder {
+    public static class DiscoverTVViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvName;
         private TextView tvReleaseDate;
@@ -63,7 +63,7 @@ public class DiscoverTVAdapter extends RecyclerView.Adapter<DiscoverTVAdapter.Ca
         private ImageView imgPoster;
 
 
-        public CardViewHolder(@NonNull View itemView) {
+        public DiscoverTVViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvTitle);
             tvReleaseDate = itemView.findViewById(R.id.tvDate);
