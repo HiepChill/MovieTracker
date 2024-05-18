@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,9 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.DiscoverMovieAdapter;
 import com.hyep.movietracker.adapter.DiscoverTVAdapter;
+import com.hyep.movietracker.adapter.SearchAdapter;
 import com.hyep.movietracker.api.APIClient;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
+import com.hyep.movietracker.models.SearchModel;
+import com.hyep.movietracker.models.SearchResponse;
 import com.hyep.movietracker.models.TV;
 import com.hyep.movietracker.models.TVResponse;
 import com.hyep.movietracker.utils.Utils;
@@ -38,11 +42,12 @@ public class SearchScreen extends AppCompatActivity {
 
     private RecyclerView rcvMovie;
     private RecyclerView rcvTV;
-    private List<Movie> movies;
+    private RecyclerView rcvSearch;
+    private List<Movie> movies, list;
+    private List<SearchModel> results;
     private List<TV> tvList;
     private EditText edtSearch;
     private TextView txtMovie, txtTV;
-
 
     private ProgressDialog progressDialog;
 
@@ -60,16 +65,19 @@ public class SearchScreen extends AppCompatActivity {
         txtMovie = findViewById(R.id.txtMovie);
         txtTV = findViewById(R.id.txtTV);
 
+        rcvSearch = findViewById(R.id.rcvSearchView);
         rcvMovie = findViewById(R.id.rcvMovie);
         rcvTV = findViewById(R.id.rcvTV);
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this);
         rcvMovie.setLayoutManager(linearLayoutManager1);
         rcvTV.setLayoutManager(linearLayoutManager2);
+        rcvSearch.setLayoutManager(linearLayoutManager3);
 
         progressDialog = new ProgressDialog(this);
 
-        //callMovieApi();
+        callMovieApi();
         callTVApi();
 
         edtSearch.addTextChangedListener(new TextWatcher() {
@@ -99,15 +107,15 @@ public class SearchScreen extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (!edtSearch.getText().toString().equals("")) {
+                    rcvMovie.setVisibility(View.GONE);
                     String query = edtSearch.getText().toString();
-                    txtMovie.setText("Result for movie with " + query + " key word");
                     APIClient.getApiInterface().getListMovieBySearch(Utils.API_KEY, query, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<MovieResponse>() {
                         @Override
                         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                             progressDialog.dismiss();
-                            movies = response.body().getMovies();
-                            DiscoverMovieAdapter movieAdapter = new DiscoverMovieAdapter(movies, getApplicationContext());
-                            rcvMovie.setAdapter(movieAdapter);
+                            list = response.body().getMovies();
+                            DiscoverMovieAdapter searchAdapter = new DiscoverMovieAdapter(list, getApplicationContext());
+                            rcvSearch.setAdapter(searchAdapter);
                             Log.d("data", movies.toString());
                         }
                         @Override
@@ -118,6 +126,41 @@ public class SearchScreen extends AppCompatActivity {
                 }
             }
         });
+
+//        edtSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if (!edtSearch.getText().toString().equals("")) {
+//                    rcvMovie.setVisibility(View.GONE);
+//                    String query = edtSearch.getText().toString();
+//                    APIClient.getApiInterface().getListBySearch(Utils.API_KEY, query, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<SearchResponse>() {
+//                        @Override
+//                        public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+//                            progressDialog.dismiss();
+//                            results = response.body().getListItem();
+//                            SearchAdapter searchAdapter = new SearchAdapter(results, getApplicationContext());
+//                            rcvSearch.setAdapter(searchAdapter);
+//                            Log.d("data", movies.toString());
+//                        }
+//                        @Override
+//                        public void onFailure(Call<SearchResponse> call, Throwable throwable) {
+//                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                }
+//            }
+//        });
+
     }
 
 

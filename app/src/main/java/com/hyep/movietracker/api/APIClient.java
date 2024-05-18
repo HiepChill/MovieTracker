@@ -4,6 +4,7 @@ import static com.hyep.movietracker.utils.Utils.API_KEY;
 import static com.hyep.movietracker.utils.Utils.BASE_URL;
 
 import com.hyep.movietracker.models.MovieResponse;
+import com.hyep.movietracker.models.SearchResponse;
 import com.hyep.movietracker.models.TVResponse;
 
 import io.reactivex.rxjava3.core.Single;
@@ -67,6 +68,12 @@ public class APIClient {
         Call<MovieResponse> getListMovieBySearch(@Query("api_key") String api_key,
                                                  @Query("query") String query,
                                                  @Query("language") String language);
+
+        @GET("search/multi")
+        Call<SearchResponse> getListBySearch(@Query("api_key") String api_key,
+                                             @Query("query") String query,
+                                             @Query("language") String language);
+
     }
 
 }
