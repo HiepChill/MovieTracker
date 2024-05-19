@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyep.movietracker.Listeners.OnItemClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.CardViewAdapter;
 import com.hyep.movietracker.api.APIClient;
@@ -30,7 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class UpcomingScreen extends AppCompatActivity {
+public class UpcomingScreen extends AppCompatActivity implements OnItemClickListener {
 
     private RecyclerView rcvMovieCard;
     private List<Movie> movies;
@@ -72,7 +73,7 @@ public class UpcomingScreen extends AppCompatActivity {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 progressDialog.dismiss();
                 movies = response.body().getMovies();
-                CardViewAdapter cardViewAdapter = new CardViewAdapter(movies, getApplicationContext());
+                CardViewAdapter cardViewAdapter = new CardViewAdapter(movies, getApplicationContext(), UpcomingScreen.this::onMovieClicked);
                 rcvMovieCard.setAdapter(cardViewAdapter);
 
                 Log.d("data", movies.toString());
@@ -88,4 +89,8 @@ public class UpcomingScreen extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onMovieClicked(int id) {
+        Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+    }
 }

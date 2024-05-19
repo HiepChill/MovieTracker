@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,16 +17,15 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyep.movietracker.Listeners.OnItemClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.DiscoverMovieAdapter;
 import com.hyep.movietracker.adapter.DiscoverTVAdapter;
-import com.hyep.movietracker.adapter.SearchAdapter;
 import com.hyep.movietracker.adapter.SearchMovieAdapter;
 import com.hyep.movietracker.api.APIClient;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
 import com.hyep.movietracker.models.SearchModel;
-import com.hyep.movietracker.models.SearchResponse;
 import com.hyep.movietracker.models.TV;
 import com.hyep.movietracker.models.TVResponse;
 import com.hyep.movietracker.utils.Utils;
@@ -39,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchScreen extends AppCompatActivity {
+public class SearchScreen extends AppCompatActivity implements OnItemClickListener {
 
     private RecyclerView rcvMovie;
     private RecyclerView rcvTV;
@@ -140,7 +137,7 @@ public class SearchScreen extends AppCompatActivity {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 progressDialog.dismiss();
                 movies = response.body().getMovies();
-                DiscoverMovieAdapter movieAdapter = new DiscoverMovieAdapter(movies, getApplicationContext());
+                DiscoverMovieAdapter movieAdapter = new DiscoverMovieAdapter(movies, getApplicationContext(), SearchScreen.this::onMovieClicked);
                 rcvMovie.setAdapter(movieAdapter);
                 Log.d("data", movies.toString());
             }
@@ -159,7 +156,7 @@ public class SearchScreen extends AppCompatActivity {
             public void onResponse(Call<TVResponse> call, Response<TVResponse> response) {
                 progressDialog.dismiss();
                 tvList = response.body().getTvList();
-                DiscoverTVAdapter tvAdapter = new DiscoverTVAdapter(tvList, getApplicationContext());
+                DiscoverTVAdapter tvAdapter = new DiscoverTVAdapter(tvList, getApplicationContext(), SearchScreen.this::onMovieClicked);
                 rcvTV.setAdapter(tvAdapter);
                 Log.d("data", tvList.toString());
             }
@@ -175,7 +172,7 @@ public class SearchScreen extends AppCompatActivity {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 list = response.body().getMovies();
-                SearchMovieAdapter searchAdapter = new SearchMovieAdapter(list, getApplicationContext());
+                SearchMovieAdapter searchAdapter = new SearchMovieAdapter(list, getApplicationContext(), SearchScreen.this::onMovieClicked);
                 rcvSearch.setAdapter(searchAdapter);
                 Log.d("data", movies.toString());
             }
@@ -184,5 +181,10 @@ public class SearchScreen extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Can not find", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onMovieClicked(int id) {
+        Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
     }
 }

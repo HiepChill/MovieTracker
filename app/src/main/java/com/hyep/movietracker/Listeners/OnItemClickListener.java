@@ -1,5 +1,5 @@
 package com.hyep.movietracker.Listeners;
 
-public interface OnMovieClickListener {
+public interface OnItemClickListener {
     void onMovieClicked (int id);
 }

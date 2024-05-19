@@ -9,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import com.hyep.movietracker.Listeners.OnItemClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.utils.Utils;
@@ -22,8 +24,16 @@ import java.util.List;
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder> {
     private final List<Movie> movieList;
     private Context con;
+    OnItemClickListener listener;
 
     String dateTimeFormat = "MMM dd, yyyy";
+
+    public CardViewAdapter(List<Movie> movieList, Context con, OnItemClickListener listener) {
+        this.movieList = movieList;
+        this.con = con;
+        this.listener = listener;
+    }
+
     public CardViewAdapter(List<Movie> movieList, Context con) {
         this.movieList = movieList;
         this.con = con;
@@ -46,6 +56,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         holder.tvTitle.setText(movieList.get(position).getTitle());
         holder.tvGenre.setText("Movie");
         holder.tvReleaseDate.setText(String.valueOf(DateFormat.format(dateTimeFormat, movieList.get(position).getReleaseDate())));
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onMovieClicked(movie.getId());
+            }
+        });
     }
 
     @Override
@@ -62,7 +78,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         private TextView tvReleaseDate;
         private  TextView tvGenre;
         private ImageView imgPoster;
-
+        private CardView container;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,6 +86,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
             tvReleaseDate = itemView.findViewById(R.id.tvDate);
             tvGenre = itemView.findViewById(R.id.tvGenre);
             imgPoster = itemView.findViewById(R.id.imagePoster);
+            container = itemView.findViewById(R.id.cvLayout);
         }
     }
 }

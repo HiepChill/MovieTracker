@@ -9,9 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.hyep.movietracker.Listeners.OnItemClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.TV;
 import com.hyep.movietracker.utils.Utils;
@@ -21,8 +23,16 @@ import java.util.List;
 public class DiscoverTVAdapter extends RecyclerView.Adapter<DiscoverTVAdapter.DiscoverTVViewHolder> {
     private final List<TV> tvList;
     private Context con;
+    OnItemClickListener listener;
 
     String dateTimeFormat = "MMM dd, yyyy";
+
+    public DiscoverTVAdapter(List<TV> tvList, Context con, OnItemClickListener listener) {
+        this.tvList = tvList;
+        this.con = con;
+        this.listener = listener;
+    }
+
     public DiscoverTVAdapter(List<TV> tvList, Context con) {
         this.tvList = tvList;
         this.con = con;
@@ -45,6 +55,13 @@ public class DiscoverTVAdapter extends RecyclerView.Adapter<DiscoverTVAdapter.Di
         holder.tvName.setText(tvList.get(position).getName());
         holder.tvGenre.setText("TV Show");
         holder.tvReleaseDate.setText(String.valueOf(DateFormat.format(dateTimeFormat, tvList.get(position).getReleaseDate())));
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onMovieClicked(tv.getId());
+            }
+        });
     }
 
     @Override
@@ -61,6 +78,7 @@ public class DiscoverTVAdapter extends RecyclerView.Adapter<DiscoverTVAdapter.Di
         private TextView tvReleaseDate;
         private  TextView tvGenre;
         private ImageView imgPoster;
+        private CardView container;
 
 
         public DiscoverTVViewHolder(@NonNull View itemView) {
@@ -69,6 +87,7 @@ public class DiscoverTVAdapter extends RecyclerView.Adapter<DiscoverTVAdapter.Di
             tvReleaseDate = itemView.findViewById(R.id.tvDate);
             tvGenre = itemView.findViewById(R.id.tvGenre);
             imgPoster = itemView.findViewById(R.id.imagePoster);
+            container = itemView.findViewById(R.id.cvLayout);
         }
     }
 }
