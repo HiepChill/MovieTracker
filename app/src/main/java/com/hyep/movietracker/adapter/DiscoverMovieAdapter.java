@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.hyep.movietracker.Listeners.OnMovieClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.utils.Utils;
@@ -21,6 +22,13 @@ import java.util.List;
 public class DiscoverMovieAdapter extends RecyclerView.Adapter<DiscoverMovieAdapter.DiscoverMovieViewHolder> {
     private final List<Movie> movieList;
     private Context con;
+    OnMovieClickListener listener;
+
+    public DiscoverMovieAdapter(List<Movie> movieList, Context con, OnMovieClickListener listener) {
+        this.movieList = movieList;
+        this.con = con;
+        this.listener = listener;
+    }
 
     String dateTimeFormat = "MMM dd, yyyy";
     public DiscoverMovieAdapter(List<Movie> movieList, Context con) {

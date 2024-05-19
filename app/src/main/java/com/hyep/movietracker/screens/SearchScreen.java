@@ -23,6 +23,7 @@ import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.DiscoverMovieAdapter;
 import com.hyep.movietracker.adapter.DiscoverTVAdapter;
 import com.hyep.movietracker.adapter.SearchAdapter;
+import com.hyep.movietracker.adapter.SearchMovieAdapter;
 import com.hyep.movietracker.api.APIClient;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
@@ -68,12 +69,11 @@ public class SearchScreen extends AppCompatActivity {
         rcvSearch = findViewById(R.id.rcvSearchView);
         rcvMovie = findViewById(R.id.rcvMovie);
         rcvTV = findViewById(R.id.rcvTV);
-        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
-        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this);
-        rcvMovie.setLayoutManager(linearLayoutManager1);
-        rcvTV.setLayoutManager(linearLayoutManager2);
-        rcvSearch.setLayoutManager(linearLayoutManager3);
+
+
+        setLayout(rcvSearch);
+        setLayout(rcvMovie);
+        setLayout(rcvTV);
 
         progressDialog = new ProgressDialog(this);
 
@@ -96,20 +96,8 @@ public class SearchScreen extends AppCompatActivity {
                 if (!edtSearch.getText().toString().equals("")) {
 
                     String query = edtSearch.getText().toString();
-                    APIClient.getApiInterface().getListMovieBySearch(Utils.API_KEY, query, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<MovieResponse>() {
-                        @Override
-                        public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                            progressDialog.dismiss();
-                            list = response.body().getMovies();
-                            DiscoverMovieAdapter searchAdapter = new DiscoverMovieAdapter(list, getApplicationContext());
-                            rcvSearch.setAdapter(searchAdapter);
-                            Log.d("data", movies.toString());
-                        }
-                        @Override
-                        public void onFailure(Call<MovieResponse> call, Throwable throwable) {
-                            Toast.makeText(getApplicationContext(), "Can not find", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+
+                    searchMovie(Utils.API_KEY, query, Utils.LANGUAGE_ENGLISH);
                 }
             }
         });
@@ -130,24 +118,17 @@ public class SearchScreen extends AppCompatActivity {
 //                if (!edtSearch.getText().toString().equals("")) {
 //                    rcvMovie.setVisibility(View.GONE);
 //                    String query = edtSearch.getText().toString();
-//                    APIClient.getApiInterface().getListBySearch(Utils.API_KEY, query, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<SearchResponse>() {
-//                        @Override
-//                        public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-//                            progressDialog.dismiss();
-//                            results = response.body().getListItem();
-//                            SearchAdapter searchAdapter = new SearchAdapter(results, getApplicationContext());
-//                            rcvSearch.setAdapter(searchAdapter);
-//                            Log.d("data", movies.toString());
-//                        }
-//                        @Override
-//                        public void onFailure(Call<SearchResponse> call, Throwable throwable) {
-//                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
+//
+//                    searchMovie(Utils.API_KEY, query, Utils.LANGUAGE_ENGLISH);
 //                }
 //            }
 //        });
 
+    }
+
+    private void setLayout(RecyclerView recyclerView) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
 
@@ -189,21 +170,18 @@ public class SearchScreen extends AppCompatActivity {
         });
     }
 
-    private void searchMovie() {
-        progressDialog.show();
-
-        APIClient.getApiInterface().getListMovieBySearch(Utils.API_KEY, edtSearch.getText().toString(), Utils.LANGUAGE_ENGLISH).enqueue(new Callback<MovieResponse>() {
+    private void searchMovie(String api_key, String query, String language) {
+        APIClient.getApiInterface().getListMovieBySearch(Utils.API_KEY, query, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                progressDialog.dismiss();
-                movies = response.body().getMovies();
-                DiscoverMovieAdapter movieAdapter = new DiscoverMovieAdapter(movies, getApplicationContext());
-                rcvMovie.setAdapter(movieAdapter);
+                list = response.body().getMovies();
+                SearchMovieAdapter searchAdapter = new SearchMovieAdapter(list, getApplicationContext());
+                rcvSearch.setAdapter(searchAdapter);
                 Log.d("data", movies.toString());
             }
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Can not find", Toast.LENGTH_SHORT).show();
             }
         });
     }
