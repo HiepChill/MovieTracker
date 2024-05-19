@@ -83,20 +83,7 @@ public class SearchScreen extends AppCompatActivity {
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                APIClient.getApiInterface().getDiscoverMovie(Utils.API_KEY, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<MovieResponse>() {
-                    @Override
-                    public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                        progressDialog.dismiss();
-                        movies = response.body().getMovies();
-                        DiscoverMovieAdapter movieAdapter = new DiscoverMovieAdapter(movies, getApplicationContext());
-                        rcvMovie.setAdapter(movieAdapter);
-                        Log.d("data", movies.toString());
-                    }
-                    @Override
-                    public void onFailure(Call<MovieResponse> call, Throwable throwable) {
-                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
             }
 
             @Override
@@ -107,7 +94,7 @@ public class SearchScreen extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (!edtSearch.getText().toString().equals("")) {
-                    rcvMovie.setVisibility(View.GONE);
+
                     String query = edtSearch.getText().toString();
                     APIClient.getApiInterface().getListMovieBySearch(Utils.API_KEY, query, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<MovieResponse>() {
                         @Override
@@ -120,7 +107,7 @@ public class SearchScreen extends AppCompatActivity {
                         }
                         @Override
                         public void onFailure(Call<MovieResponse> call, Throwable throwable) {
-                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Can not find", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
