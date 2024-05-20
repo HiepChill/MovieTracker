@@ -2,24 +2,27 @@ package com.hyep.movietracker.models;
 
 public class PersonalSpace {
 
-    private String title;
+    private String name;
+
     private int number;
-    private int icon;
+
     private String color;
 
-    public PersonalSpace(String title, int number, int icon, String color) {
-        this.title = title;
+    private int iconId;
+
+    public PersonalSpace(String name, int number, String color, int iconId) {
+        this.name = name;
         this.number = number;
-        this.icon = icon;
         this.color = color;
+        this.iconId = iconId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getNumber() {
@@ -30,19 +33,19 @@ public class PersonalSpace {
         this.number = number;
     }
 
-    public int getIcon() {
-        return icon;
-    }
-
-    public void setIcon(int icon) {
-        this.icon = icon;
-    }
-
     public String getColor() {
         return color;
     }
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public int getIconId() {
+        return iconId;
+    }
+
+    public void setIconId(int iconId) {
+        this.iconId = iconId;
     }
 }
