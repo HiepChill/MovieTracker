@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyep.movietracker.R;
@@ -67,7 +68,9 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
         holder.tvPersonalSpaceName.setText(personalSpaceModelArrayList.get(position).getName());
         holder.tvPersonalSpaceNumber.setText(personalSpaceModelArrayList.get(position).getNumber() + " Movies");
         holder.imvPersonalSpaceIcon.setImageResource(personalSpaceIcons[personalSpaceModelArrayList.get(position).getIcon()]);
-        holder.itemView.setBackgroundColor(personalSpaceColors[personalSpaceModelArrayList.get(position).getColor()]);
+        int color = ContextCompat.getColor(holder.itemView.getContext(), personalSpaceColors[personalSpaceModelArrayList.get(position).getColor()]);
+        ColorStateList colorStateList = ColorStateList.valueOf(color);
+        ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
     }
 
     @Override
