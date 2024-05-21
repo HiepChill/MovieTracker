@@ -22,4 +22,5 @@
     <color name="skyBlue">#32C5FF</color>
     <color name="cardColor">#10121B</color>
     <color name="cardContent">#686b73</color>
+    <color name="transparent">#00000000</color>
 </resources>
