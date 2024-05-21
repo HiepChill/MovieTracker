@@ -10,13 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyep.movietracker.Listeners.OnItemClickListener;
 import com.hyep.movietracker.R;
-import com.hyep.movietracker.adapter.CardViewAdapter;
+import com.hyep.movietracker.adapter.UpcomingAdapter;
 import com.hyep.movietracker.api.APIClient;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
@@ -73,8 +72,8 @@ public class UpcomingScreen extends AppCompatActivity implements OnItemClickList
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 progressDialog.dismiss();
                 movies = response.body().getMovies();
-                CardViewAdapter cardViewAdapter = new CardViewAdapter(movies, getApplicationContext(), UpcomingScreen.this::onMovieClicked);
-                rcvMovieCard.setAdapter(cardViewAdapter);
+                UpcomingAdapter upcomingAdapter = new UpcomingAdapter(movies, getApplicationContext(), UpcomingScreen.this::onMovieClicked);
+                rcvMovieCard.setAdapter(upcomingAdapter);
 
                 Log.d("data", movies.toString());
             }

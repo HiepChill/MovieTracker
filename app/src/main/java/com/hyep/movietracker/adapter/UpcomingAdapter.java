@@ -21,20 +21,20 @@ import com.hyep.movietracker.utils.Utils;
 
 import java.util.List;
 
-public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder> {
+public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.CardViewHolder> {
     private final List<Movie> movieList;
     private Context con;
     OnItemClickListener listener;
 
     String dateTimeFormat = "MMM dd, yyyy";
 
-    public CardViewAdapter(List<Movie> movieList, Context con, OnItemClickListener listener) {
+    public UpcomingAdapter(List<Movie> movieList, Context con, OnItemClickListener listener) {
         this.movieList = movieList;
         this.con = con;
         this.listener = listener;
     }
 
-    public CardViewAdapter(List<Movie> movieList, Context con) {
+    public UpcomingAdapter(List<Movie> movieList, Context con) {
         this.movieList = movieList;
         this.con = con;
     }
