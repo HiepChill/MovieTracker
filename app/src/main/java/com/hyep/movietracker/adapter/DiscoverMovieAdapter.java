@@ -13,7 +13,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-
 import com.hyep.movietracker.Listeners.OnItemClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
@@ -21,33 +20,38 @@ import com.hyep.movietracker.utils.Utils;
 
 import java.util.List;
 
-public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder> {
+public class DiscoverMovieAdapter extends RecyclerView.Adapter<DiscoverMovieAdapter.DiscoverMovieViewHolder> {
     private final List<Movie> movieList;
     private Context con;
     OnItemClickListener listener;
 
-    String dateTimeFormat = "MMM dd, yyyy";
-
-    public CardViewAdapter(List<Movie> movieList, Context con, OnItemClickListener listener) {
+    public DiscoverMovieAdapter(List<Movie> movieList, Context con, OnItemClickListener listener) {
         this.movieList = movieList;
         this.con = con;
         this.listener = listener;
     }
 
-    public CardViewAdapter(List<Movie> movieList, Context con) {
+    String dateTimeFormat = "MMM dd, yyyy";
+    public DiscoverMovieAdapter(List<Movie> movieList, Context con) {
+//        if (movieList.size() > 2) {
+//            this.movieList = movieList.subList(0, 2);
+//        }
+//        else {
+//            this.movieList = movieList;
+//        }
         this.movieList = movieList;
         this.con = con;
     }
 
     @NonNull
     @Override
-    public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DiscoverMovieAdapter.DiscoverMovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
-        return new CardViewHolder(view);
+        return new DiscoverMovieAdapter.DiscoverMovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DiscoverMovieAdapter.DiscoverMovieViewHolder holder, int position) {
         Movie movie = movieList.get(position);
         if (movie == null) {
             return;
@@ -72,7 +76,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         return 0;
     }
 
-    public static class CardViewHolder extends RecyclerView.ViewHolder {
+    public static class DiscoverMovieViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvTitle;
         private TextView tvReleaseDate;
@@ -80,7 +84,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         private ImageView imgPoster;
         private CardView container;
 
-        public CardViewHolder(@NonNull View itemView) {
+
+        public DiscoverMovieViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvReleaseDate = itemView.findViewById(R.id.tvDate);
