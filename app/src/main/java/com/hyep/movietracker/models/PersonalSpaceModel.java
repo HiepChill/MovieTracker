@@ -6,15 +6,15 @@ public class PersonalSpaceModel {
 
     private int number;
 
-    private String color;
+    private int color;
 
-    private int iconId;
+    private int icon;
 
-    public PersonalSpaceModel(String name, int number, String color, int iconId) {
+    public PersonalSpaceModel(String name, int number, int color, int icon) {
         this.name = name;
         this.number = number;
         this.color = color;
-        this.iconId = iconId;
+        this.icon = icon;
     }
 
     public String getName() {
@@ -33,19 +33,19 @@ public class PersonalSpaceModel {
         this.number = number;
     }
 
-    public String getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
-    public int getIconId() {
-        return iconId;
+    public int getIcon() {
+        return icon;
     }
 
-    public void setIconId(int iconId) {
-        this.iconId = iconId;
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 }

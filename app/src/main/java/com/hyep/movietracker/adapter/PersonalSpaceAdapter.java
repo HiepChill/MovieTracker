@@ -37,10 +37,37 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
 
     @Override
     public void onBindViewHolder(@NonNull PersonalSpaceAdapter.MyViewHolder holder, int position) {
+        int[] personalSpaceIcons = {
+                R.drawable.ic_space_logo_1,
+                R.drawable.ic_space_logo_2,
+                R.drawable.ic_space_logo_3,
+                R.drawable.ic_space_logo_4,
+                R.drawable.ic_space_logo_5,
+                R.drawable.ic_space_logo_6,
+        };
+
+        int[] personalSpaceColors = {
+                R.color.royalBlue,
+                R.color.purple,
+                R.color.magenta,
+                R.color.aquaGreen,
+                R.color.chromeYellow,
+                R.color.bluePurple,
+                R.color.blazeOrange,
+                R.color.red,
+                R.color.claret,
+                R.color.smokeyGrey,
+                R.color.purpleJam,
+                R.color.brown,
+                R.color.green,
+                R.color.cobaltBlue,
+                R.color.skyBlue,
+        };
+
         holder.tvPersonalSpaceName.setText(personalSpaceModelArrayList.get(position).getName());
         holder.tvPersonalSpaceNumber.setText(personalSpaceModelArrayList.get(position).getNumber() + " Movies");
-        holder.imvPersonalSpaceIcon.setImageResource(personalSpaceModelArrayList.get(position).getIconId());
-        //holder.itemView.setBackground(R.color. + personalSpaceModelArrayList.get(position).getColor());
+        holder.imvPersonalSpaceIcon.setImageResource(personalSpaceIcons[personalSpaceModelArrayList.get(position).getIcon()]);
+        holder.itemView.setBackgroundColor(personalSpaceColors[personalSpaceModelArrayList.get(position).getColor()]);
     }
 
     @Override

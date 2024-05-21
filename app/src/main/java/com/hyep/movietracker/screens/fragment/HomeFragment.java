@@ -71,14 +71,14 @@ public class HomeFragment extends Fragment {
 
     private void setUpPersonalSpaceArrayList() {
         PersonalSpaceModel[] personalSpaceModels = {
-                new PersonalSpaceModel("Phim cua Duong", 6,  "royalBlue", R.drawable.ic_space_logo_1),
-                new PersonalSpaceModel("Phim cua Hiep", 7,  "aquaGreen", R.drawable.ic_space_logo_2),
-                new PersonalSpaceModel("Phim cua Thanh", 8,  "chromeYellow", R.drawable.ic_space_logo_3),
-                new PersonalSpaceModel("Phim cua Thuy", 9,  "magenta", R.drawable.ic_space_logo_4),
-                new PersonalSpaceModel("Phim cua Duong", 6,  "royalBlue", R.drawable.ic_space_logo_1),
-                new PersonalSpaceModel("Phim cua Hiep", 7,  "aquaGreen", R.drawable.ic_space_logo_2),
-                new PersonalSpaceModel("Phim cua Thanh", 8,  "chromeYellow", R.drawable.ic_space_logo_3),
-                new PersonalSpaceModel("Phim cua Thuy", 9,  "magenta", R.drawable.ic_space_logo_4),
+                new PersonalSpaceModel("Phim cua Duong", 6,  0, 0),
+                new PersonalSpaceModel("Phim cua Hiep", 7,  1, 0),
+                new PersonalSpaceModel("Phim cua Thanh", 8,  2, 0),
+                new PersonalSpaceModel("Phim cua Thuy", 9,  3, 0),
+                new PersonalSpaceModel("Phim cua Duong", 6,  4, 1),
+                new PersonalSpaceModel("Phim cua Hiep", 7,  5, 1),
+                new PersonalSpaceModel("Phim cua Thanh", 8,  6, 1),
+                new PersonalSpaceModel("Phim cua Thuy", 9,  7, 1),
         };
 
         personalSpaceModelArrayList.addAll(Arrays.asList(personalSpaceModels));
