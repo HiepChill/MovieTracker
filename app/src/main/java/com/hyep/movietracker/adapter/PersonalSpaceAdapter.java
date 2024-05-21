@@ -1,7 +1,7 @@
 package com.hyep.movietracker.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,22 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyep.movietracker.R;
-import com.hyep.movietracker.models.PersonalSpace;
+import com.hyep.movietracker.models.PersonalSpaceModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdapter.MyViewHolder>{
 
     Context context;
-    ArrayList<PersonalSpace> personalSpaceArrayList;
+    ArrayList<PersonalSpaceModel> personalSpaceModelArrayList;
 
-    public PersonalSpaceAdapter(Context context, ArrayList<PersonalSpace> personalSpaceArrayList) {
+    public PersonalSpaceAdapter(Context context, ArrayList<PersonalSpaceModel> personalSpaceModelArrayList) {
         this.context = context;
-        this.personalSpaceArrayList = personalSpaceArrayList;
+        this.personalSpaceModelArrayList = personalSpaceModelArrayList;
     }
 
     @NonNull
@@ -37,14 +37,15 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
 
     @Override
     public void onBindViewHolder(@NonNull PersonalSpaceAdapter.MyViewHolder holder, int position) {
-        holder.tvPersonalSpaceName.setText(personalSpaceArrayList.get(position).getName());
-        holder.tvPersonalSpaceNumber.setText(personalSpaceArrayList.get(position).getNumber() + " Movies");
-        //holder.imvPersonalSpaceIcon.setImageResource(personalSpaceArrayList.get(position).getIconId());
+        holder.tvPersonalSpaceName.setText(personalSpaceModelArrayList.get(position).getName());
+        holder.tvPersonalSpaceNumber.setText(personalSpaceModelArrayList.get(position).getNumber() + " Movies");
+        holder.imvPersonalSpaceIcon.setImageResource(personalSpaceModelArrayList.get(position).getIconId());
+        //holder.itemView.setBackground(R.color. + personalSpaceModelArrayList.get(position).getColor());
     }
 
     @Override
     public int getItemCount() {
-        return personalSpaceArrayList.size();
+        return personalSpaceModelArrayList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{

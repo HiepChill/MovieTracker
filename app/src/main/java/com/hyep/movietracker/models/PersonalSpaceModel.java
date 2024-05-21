@@ -1,6 +1,6 @@
 package com.hyep.movietracker.models;
 
-public class PersonalSpace {
+public class PersonalSpaceModel {
 
     private String name;
 
@@ -10,7 +10,7 @@ public class PersonalSpace {
 
     private int iconId;
 
-    public PersonalSpace(String name, int number, String color, int iconId) {
+    public PersonalSpaceModel(String name, int number, String color, int iconId) {
         this.name = name;
         this.number = number;
         this.color = color;

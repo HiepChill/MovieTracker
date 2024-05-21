@@ -14,14 +14,14 @@ import android.widget.TextView;
 
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.PersonalSpaceAdapter;
-import com.hyep.movietracker.models.PersonalSpace;
+import com.hyep.movietracker.models.PersonalSpaceModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class HomeFragment extends Fragment {
 
-    ArrayList<PersonalSpace> personalSpaceArrayList = new ArrayList<>();
+    ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
 
     int[] personalSpaceIcons = {
             R.drawable.ic_space_logo_1,
@@ -48,12 +48,12 @@ public class HomeFragment extends Fragment {
 
         setUpPersonalSpaceArrayList();
 
-        personalSpaceAdapter = new PersonalSpaceAdapter(view.getContext(), personalSpaceArrayList);
+        personalSpaceAdapter = new PersonalSpaceAdapter(view.getContext(), personalSpaceModelArrayList);
         rcvPersonalSpace.setAdapter(personalSpaceAdapter);
         rcvPersonalSpace.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
 
 
-        if (!personalSpaceArrayList.isEmpty()) {
+        if (!personalSpaceModelArrayList.isEmpty()) {
             tvCreate.setVisibility(View.GONE);
             tvSpace.setVisibility(View.GONE);
             imvSpace.setVisibility(View.GONE);
@@ -70,17 +70,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void setUpPersonalSpaceArrayList() {
-        PersonalSpace[] personalSpaces = {
-                new PersonalSpace("Phim cua Duong", 6,  "royalBlue", R.drawable.ic_space_logo_1),
-                new PersonalSpace("Phim cua Hiep", 7,  "aquaGreen", R.drawable.ic_space_logo_2),
-                new PersonalSpace("Phim cua Thanh", 8,  "chromeYellow", R.drawable.ic_space_logo_3),
-                new PersonalSpace("Phim cua Thuy", 9,  "magenta", R.drawable.ic_space_logo_4),
-                new PersonalSpace("Phim cua Duong", 6,  "royalBlue", R.drawable.ic_space_logo_1),
-                new PersonalSpace("Phim cua Hiep", 7,  "aquaGreen", R.drawable.ic_space_logo_2),
-                new PersonalSpace("Phim cua Thanh", 8,  "chromeYellow", R.drawable.ic_space_logo_3),
-                new PersonalSpace("Phim cua Thuy", 9,  "magenta", R.drawable.ic_space_logo_4),
+        PersonalSpaceModel[] personalSpaceModels = {
+                new PersonalSpaceModel("Phim cua Duong", 6,  "royalBlue", R.drawable.ic_space_logo_1),
+                new PersonalSpaceModel("Phim cua Hiep", 7,  "aquaGreen", R.drawable.ic_space_logo_2),
+                new PersonalSpaceModel("Phim cua Thanh", 8,  "chromeYellow", R.drawable.ic_space_logo_3),
+                new PersonalSpaceModel("Phim cua Thuy", 9,  "magenta", R.drawable.ic_space_logo_4),
+                new PersonalSpaceModel("Phim cua Duong", 6,  "royalBlue", R.drawable.ic_space_logo_1),
+                new PersonalSpaceModel("Phim cua Hiep", 7,  "aquaGreen", R.drawable.ic_space_logo_2),
+                new PersonalSpaceModel("Phim cua Thanh", 8,  "chromeYellow", R.drawable.ic_space_logo_3),
+                new PersonalSpaceModel("Phim cua Thuy", 9,  "magenta", R.drawable.ic_space_logo_4),
         };
 
-        personalSpaceArrayList.addAll(Arrays.asList(personalSpaces));
+        personalSpaceModelArrayList.addAll(Arrays.asList(personalSpaceModels));
     }
 }
