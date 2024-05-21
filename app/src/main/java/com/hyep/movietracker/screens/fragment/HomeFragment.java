@@ -2,7 +2,9 @@ package com.hyep.movietracker.screens.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +54,6 @@ public class HomeFragment extends Fragment {
         rcvPersonalSpace.setAdapter(personalSpaceAdapter);
         rcvPersonalSpace.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
 
-
         if (!personalSpaceModelArrayList.isEmpty()) {
             tvCreate.setVisibility(View.GONE);
             tvSpace.setVisibility(View.GONE);
@@ -65,6 +66,23 @@ public class HomeFragment extends Fragment {
             imvSpace.setVisibility(View.VISIBLE);
             rcvPersonalSpace.setVisibility(View.GONE);
         }
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                personalSpaceModelArrayList.remove(position);
+                personalSpaceAdapter.notifyItemRemoved(position);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(rcvPersonalSpace);
 
         return view;
     }
