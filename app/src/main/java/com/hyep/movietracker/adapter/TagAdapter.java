@@ -59,11 +59,12 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.MyViewHolder> {
                 R.color.skyBlue,
         };
 
-        holder.tvTagName.setText(tagModelArrayList.get(position).getName());
-
         int color = ContextCompat.getColor(holder.itemView.getContext(), tagColors[tagModelArrayList.get(position).getColor()]);
         ColorStateList colorStateList = ColorStateList.valueOf(color);
         ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
+
+        holder.tvTagName.setText("#" + tagModelArrayList.get(position).getName());
+        holder.tvTagName.setTextColor(color);
     }
 
     @Override
