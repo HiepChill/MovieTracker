@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.DetailMovieScreen"
+    android:orientation="vertical"
+    android:background="@color/background"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="60dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:id="@+id/ivLogoInDetailMovie"
+                        android:layout_width="235dp"
+                        android:layout_height="354dp"
+                        android:background="@drawable/gradient_background"
+                        android:contentDescription="LOGO" />
+                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/btnBackInDetailMovie"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="40dp"
+                    android:contentDescription="BACK"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:background="@color/transparent"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_back"/>
+                <TextView
+                    android:id="@+id/tvIMDBScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="78%"
+                    android:textColor="@color/white"
+                    android:textSize="44sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="35dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="300dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+                    <TextView
+                        android:id="@+id/tvMovieTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Title"
+                        android:textStyle="bold"
+                        android:textSize="22dp"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:layout_marginBottom="10sp"
+                        />
+                    <TextView
+                        android:id="@+id/tvMovieGenres"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Action, Fantasy, Science Fiction"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:textStyle="italic"
+                        android:textSize="14sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvMovieTags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="#Tag name Changgg #Good Chóp #Hihi HEHE #Retro Movie"
+                        android:textColor="@color/white"
+                        android:maxLines="2"
+                        android:textAlignment="center"
+                        android:layout_margin="20dp"/>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    >
+                    <ImageButton
+                        android:id="@+id/imgBtnAddToSpace"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/btn_action_in_movie_detail"
+                        android:src="@drawable/ic_add_to_space"
+                        android:layout_margin="20dp"
+                        />
+                    <ImageButton
+                        android:id="@+id/imgBtnAddToWatched"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/btn_action_in_movie_detail"
+                        android:src="@drawable/ic_add_to_watched"
+                        android:layout_margin="20dp"/>
+                    <ImageButton
+                        android:id="@+id/imgBtnAddTag"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/btn_action_in_movie_detail"
+                        android:src="@drawable/ic_add_tag"
+                        android:layout_margin="20dp"/>
+                </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <View
+                    android:id="@+id/wgInformation"
+                    android:layout_width="5dp"
+                    android:layout_height="32dp"
+
+                    android:background="@color/chromeYellow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Information"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/wgInformation"
+                    app:layout_constraintTop_toTopOf="@+id/wgInformation" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>
