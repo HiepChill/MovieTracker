@@ -18,9 +18,7 @@
         <activity
             android:name=".screens.SearchScreen"
             android:exported="true" />
-
         <activity
-
             android:name=".screens.DetailSpaceScreen"
             android:exported="false" />
         <activity

@@ -22,6 +22,8 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
 
     Context context;
     ArrayList<PersonalSpaceModel> personalSpaceModelArrayList;
+    PersonalSpaceModel recentlyDeletedItem;
+    int recentlyDeletedItemPosition;
 
     public PersonalSpaceAdapter(Context context, ArrayList<PersonalSpaceModel> personalSpaceModelArrayList) {
         this.context = context;
@@ -76,6 +78,19 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
     @Override
     public int getItemCount() {
         return personalSpaceModelArrayList.size();
+    }
+
+    public void deleteItem(int position) {
+        PersonalSpaceModel item = personalSpaceModelArrayList.get(position);
+        personalSpaceModelArrayList.remove(position);
+        notifyItemRemoved(position);
+        recentlyDeletedItem = item;
+        recentlyDeletedItemPosition = position;
+    }
+
+    public void undoDelete() {
+        personalSpaceModelArrayList.add(recentlyDeletedItemPosition, recentlyDeletedItem);
+        notifyItemInserted(recentlyDeletedItemPosition);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
