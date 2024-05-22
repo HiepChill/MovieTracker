@@ -144,7 +144,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <TextView
-                    android:id="@+id/textView"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -154,8 +154,42 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/wgInformation"
                     app:layout_constraintTop_toTopOf="@+id/wgInformation" />
-
-
+                <TextView
+                    android:id="@+id/tvInformation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nearly 5,000 years after he was bestowed with the almighty powers of the Egyptian gods—and imprisoned just as quickly—Black Adam is freed from his earthly tomb, ready to unleash his unique form of justice on the modern world."
+                    android:textColor="@color/white"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/wgInformation"
+                    android:layout_marginTop="35dp"
+                    app:layout_constraintTop_toTopOf="@+id/wgInformation"
+                    android:textSize="16sp"
+                    android:lineHeight="24dp"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/wgCast"
+                    android:layout_width="5dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/chromeYellow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Cast"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/wgCast"
+                    app:layout_constraintTop_toTopOf="@+id/wgCast" />
+                
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
