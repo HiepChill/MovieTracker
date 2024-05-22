@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class Movie {
+public class SearchModel {
     @SerializedName("id")
     @Expose
     private int id;
@@ -18,15 +18,17 @@ public class Movie {
     @Expose
     private String title;
 
+    @SerializedName("name")
+    @Expose
+    private String name;
+
     @SerializedName("release_date")
     @Expose
     private Date releaseDate;
 
-    public Movie(int id, String posterPath, String title) {
-        this.id = id;
-        this.posterPath = posterPath;
-        this.title = title;
-    }
+    @SerializedName("media_type")
+    @Expose
+    private String mediaType;
 
     public int getId() {
         return id;
@@ -52,11 +54,27 @@ public class Movie {
         this.title = title;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Date getReleaseDate() {
         return releaseDate;
     }
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
     }
 }

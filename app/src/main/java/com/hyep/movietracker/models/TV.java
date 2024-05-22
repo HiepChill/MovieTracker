@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class Movie {
+public class TV {
     @SerializedName("id")
     @Expose
     private int id;
@@ -14,19 +14,13 @@ public class Movie {
     @Expose
     private String posterPath;
 
-    @SerializedName("title")
+    @SerializedName("name")
     @Expose
-    private String title;
+    private String name;
 
-    @SerializedName("release_date")
+    @SerializedName("first_air_date")
     @Expose
     private Date releaseDate;
-
-    public Movie(int id, String posterPath, String title) {
-        this.id = id;
-        this.posterPath = posterPath;
-        this.title = title;
-    }
 
     public int getId() {
         return id;
@@ -44,12 +38,12 @@ public class Movie {
         this.posterPath = posterPath;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getReleaseDate() {

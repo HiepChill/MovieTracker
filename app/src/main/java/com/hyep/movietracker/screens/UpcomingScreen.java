@@ -10,12 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyep.movietracker.Listeners.OnItemClickListener;
 import com.hyep.movietracker.R;
-import com.hyep.movietracker.adapter.CardViewAdapter;
+import com.hyep.movietracker.adapter.UpcomingAdapter;
 import com.hyep.movietracker.api.APIClient;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
@@ -30,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class UpcomingScreen extends AppCompatActivity {
+public class UpcomingScreen extends AppCompatActivity implements OnItemClickListener {
 
     private RecyclerView rcvMovieCard;
     private List<Movie> movies;
@@ -55,8 +55,6 @@ public class UpcomingScreen extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvMovieCard.setLayoutManager(linearLayoutManager);
 
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        rcvMovieCard.addItemDecoration(itemDecoration);
 
         movies = new ArrayList<>();
         progressDialog = new ProgressDialog(this);
@@ -74,8 +72,8 @@ public class UpcomingScreen extends AppCompatActivity {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 progressDialog.dismiss();
                 movies = response.body().getMovies();
-                CardViewAdapter cardViewAdapter = new CardViewAdapter(movies, getApplicationContext());
-                rcvMovieCard.setAdapter(cardViewAdapter);
+                UpcomingAdapter upcomingAdapter = new UpcomingAdapter(movies, getApplicationContext(), UpcomingScreen.this::onMovieClicked);
+                rcvMovieCard.setAdapter(upcomingAdapter);
 
                 Log.d("data", movies.toString());
             }
@@ -90,4 +88,8 @@ public class UpcomingScreen extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onMovieClicked(int id) {
+        Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+    }
 }

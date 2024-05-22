@@ -9,36 +9,44 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-
+import com.hyep.movietracker.Listeners.OnItemClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
-import com.hyep.movietracker.models.MovieResponse;
 import com.hyep.movietracker.utils.Utils;
 
 import java.util.List;
 
-public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardViewHolder> {
+public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder> {
     private final List<Movie> movieList;
     private Context con;
+    OnItemClickListener listener;
 
     String dateTimeFormat = "MMM dd, yyyy";
-    public CardViewAdapter(List<Movie> movieList, Context con) {
+
+    public SearchMovieAdapter(List<Movie> movieList, Context con, OnItemClickListener listener) {
+        this.movieList = movieList;
+        this.con = con;
+        this.listener = listener;
+    }
+
+    public SearchMovieAdapter(List<Movie> movieList, Context con) {
         this.movieList = movieList;
         this.con = con;
     }
 
     @NonNull
     @Override
-    public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_upcoming_movies, parent, false);
-        return new CardViewHolder(view);
+    public SearchMovieAdapter.SearchMovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
+        return new SearchMovieAdapter.SearchMovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchMovieAdapter.SearchMovieViewHolder holder, int position) {
         Movie movie = movieList.get(position);
         if (movie == null) {
             return;
@@ -47,6 +55,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         holder.tvTitle.setText(movieList.get(position).getTitle());
         holder.tvGenre.setText("Movie");
         holder.tvReleaseDate.setText(String.valueOf(DateFormat.format(dateTimeFormat, movieList.get(position).getReleaseDate())));
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onMovieClicked(movie.getId());
+            }
+        });
     }
 
     @Override
@@ -57,20 +71,22 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         return 0;
     }
 
-    public static class CardViewHolder extends RecyclerView.ViewHolder {
+
+    public static class SearchMovieViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvTitle;
         private TextView tvReleaseDate;
         private  TextView tvGenre;
         private ImageView imgPoster;
+        private CardView container;
 
-
-        public CardViewHolder(@NonNull View itemView) {
+        public SearchMovieViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvReleaseDate = itemView.findViewById(R.id.tvDate);
             tvGenre = itemView.findViewById(R.id.tvGenre);
             imgPoster = itemView.findViewById(R.id.imagePoster);
+            container = itemView.findViewById(R.id.cvLayout);
         }
     }
 }
