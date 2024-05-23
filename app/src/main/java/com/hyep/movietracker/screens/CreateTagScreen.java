@@ -1,12 +1,10 @@
 package com.hyep.movietracker.screens;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -50,8 +48,8 @@ public class CreateTagScreen extends AppCompatActivity {
         case14 = findViewById(R.id.mau12);
         case15 = findViewById(R.id.mau13);
 
-        View camelCase = findViewById(R.id.camelCase);
-        camelCase.setOnTouchListener(new View.OnTouchListener() {
+        View container = findViewById(R.id.main);
+        container.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 hideKeyboard();
