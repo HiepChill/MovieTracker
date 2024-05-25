@@ -1,7 +1,6 @@
 package com.hyep.movietracker.screens;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -68,6 +67,7 @@ public class MainScreen extends AppCompatActivity {
             }
             return false;
         });
+
     }
 
     private void replaceFragment(Fragment fragment) {
