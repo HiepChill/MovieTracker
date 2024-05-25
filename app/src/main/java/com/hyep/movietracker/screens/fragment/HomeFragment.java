@@ -74,6 +74,18 @@ public class HomeFragment extends Fragment {
                 int position = viewHolder.getAdapterPosition();
                 personalSpaceAdapter.deleteItem(position);
                 showUndoSnackbar();
+                if (!personalSpaceModelArrayList.isEmpty()) {
+                    tvCreate.setVisibility(View.GONE);
+                    tvSpace.setVisibility(View.GONE);
+                    imvSpace.setVisibility(View.GONE);
+                    rcvPersonalSpace.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tvCreate.setVisibility(View.VISIBLE);
+                    tvSpace.setVisibility(View.VISIBLE);
+                    imvSpace.setVisibility(View.VISIBLE);
+                    rcvPersonalSpace.setVisibility(View.GONE);
+                }
             }
 
             @Override
