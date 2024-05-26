@@ -11,7 +11,8 @@
     >
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/transparent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,15 +29,32 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     >
-                    <ImageView
-                        android:id="@+id/ivLogoInDetailMovie"
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivPoster"
                         android:layout_width="235dp"
                         android:layout_height="354dp"
                         android:background="@drawable/gradient_background"
-                        android:contentDescription="LOGO" />
+                        android:contentDescription="LOGO"
+                        app:shapeAppearanceOverlay="@style/circleBorder"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="60dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <View
+                        android:id="@+id/vLinear"
+                        android:layout_width="235dp"
+                        android:layout_height="354dp"
+                        android:background="@drawable/gradient_background"
+                         />
                 </LinearLayout>
                 <ImageButton
-                    android:id="@+id/btnBackInDetailMovie"
+                    android:id="@+id/imgBtnBack"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="40dp"
                     android:contentDescription="BACK"
@@ -108,28 +126,72 @@
                     android:orientation="horizontal"
                     android:gravity="center_horizontal"
                     >
-                    <ImageButton
-                        android:id="@+id/imgBtnAddToSpace"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
-                        android:background="@drawable/btn_action_in_movie_detail"
-                        android:src="@drawable/ic_add_to_space"
-                        android:layout_margin="20dp"
-                        />
-                    <ImageButton
-                        android:id="@+id/imgBtnAddToWatched"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
-                        android:background="@drawable/btn_action_in_movie_detail"
-                        android:src="@drawable/ic_add_to_watched"
-                        android:layout_margin="20dp"/>
-                    <ImageButton
-                        android:id="@+id/imgBtnAddTag"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
-                        android:background="@drawable/btn_action_in_movie_detail"
-                        android:src="@drawable/ic_add_tag"
-                        android:layout_margin="20dp"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp"
+                        android:gravity="center">
+                        <ImageButton
+                            android:id="@+id/imgBtnAddToSpace"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:background="@drawable/btn_action_in_movie_detail"
+                            android:src="@drawable/ic_add_to_space"
+
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add"
+                            android:textColor="@color/white"
+
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp"
+                        android:gravity="center">
+                        <ImageButton
+                            android:id="@+id/imgBtnAddToWatched"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:background="@drawable/btn_action_in_movie_detail"
+                            android:src="@drawable/ic_add_to_watched"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Watched"
+                            android:textColor="@color/white"
+
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp"
+                        android:gravity="center">
+                        <ImageButton
+                            android:id="@+id/imgBtnAddTag"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:background="@drawable/btn_action_in_movie_detail"
+                            android:src="@drawable/ic_add_tag"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Tag"
+                            android:textColor="@color/white"
+
+                            />
+                    </LinearLayout>
+
+
                 </LinearLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -189,8 +251,84 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/wgCast"
                     app:layout_constraintTop_toTopOf="@+id/wgCast" />
-                
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintStart_toStartOf="@id/wgCast"
+                    app:layout_constraintTop_toTopOf="@id/wgCast"
+                    android:orientation="horizontal"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/wgMedia"
+                    android:layout_width="5dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/chromeYellow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Media"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/wgMedia"
+                    app:layout_constraintTop_toTopOf="@+id/wgMedia" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintStart_toStartOf="@id/wgMedia"
+                    app:layout_constraintTop_toTopOf="@id/wgMedia"
+                    android:orientation="horizontal"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/wgRecommendation"
+                    android:layout_width="5dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/chromeYellow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Recommendations"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/wgRecommendation"
+                    app:layout_constraintTop_toTopOf="@+id/wgRecommendation" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRecommendation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintStart_toStartOf="@id/wgRecommendation"
+                    app:layout_constraintTop_toTopOf="@id/wgRecommendation"
+                    android:orientation="horizontal"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
 
 

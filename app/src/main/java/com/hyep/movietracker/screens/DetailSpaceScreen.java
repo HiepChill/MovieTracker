@@ -15,12 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexWrap;
-import com.google.android.flexbox.FlexboxLayoutManager;
-import com.google.android.flexbox.JustifyContent;
 import com.hyep.movietracker.R;
-import com.hyep.movietracker.adapter.CardMovieAdapter;
+import com.hyep.movietracker.adapter.DetailSpaceAdapter;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.screens.fragment.BottomSheetSettingSpaceFragment;
 
@@ -107,7 +103,7 @@ public class DetailSpaceScreen extends AppCompatActivity{
         movies.add(new Movie(618588,"/gxVcBc4VM0kAg9wX4HVg6KJHG46.jpg","Arthur the King"));
         movies.add(new Movie(1063879,"/dY98PkUAbIGUUg0FhXEcOkbzHIZ.jpg","Vermines"));
 
-        CardMovieAdapter adapter = new CardMovieAdapter(movies,this, getSupportFragmentManager());
+        DetailSpaceAdapter adapter = new DetailSpaceAdapter(movies,this, getSupportFragmentManager());
 
         rvItemSpace.setAdapter(adapter);
     }
