@@ -1,6 +1,8 @@
 package com.hyep.movietracker.screens;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.screens.fragment.HomeFragment;
 import com.hyep.movietracker.screens.fragment.SettingFragment;
@@ -23,6 +26,8 @@ public class MainScreen extends AppCompatActivity {
 
     FrameLayout frameLayout;
     BottomNavigationView bottomNavigationView;
+    FloatingActionButton fabAdd;
+    View popupCreateNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,8 @@ public class MainScreen extends AppCompatActivity {
             return false;
         });
 
+        fabAdd = findViewById(R.id.fabAdd);
+        popupCreateNew = findViewById(R.id.popupCreateNew);
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -75,5 +82,17 @@ public class MainScreen extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainer, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void toggleFABandPopup(View view) {
+        if (popupCreateNew.getVisibility() == View.GONE) {
+            fabAdd.setImageResource(R.drawable.ic_cancel);
+            fabAdd.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+            popupCreateNew.setVisibility(View.VISIBLE);
+        } else {
+            fabAdd.setImageResource(R.drawable.ic_add);
+            fabAdd.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.chromeYellow)));
+            popupCreateNew.setVisibility(View.GONE);
+        }
     }
 }
