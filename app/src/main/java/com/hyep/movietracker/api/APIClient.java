@@ -9,6 +9,7 @@ import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
 import com.hyep.movietracker.models.SearchResponse;
 import com.hyep.movietracker.models.TVResponse;
+import com.hyep.movietracker.models.TrailerResponse;
 
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.HttpUrl;
@@ -96,6 +97,10 @@ public class APIClient {
         Call<MovieResponse> getRecommendationById(@Path("movieId") int movieId,
                                                   @Query("api_key") String api_key,
                                                   @Query("language") String language);
+
+        @GET("movie/{movieId}/videos")
+        Call<TrailerResponse> getTrailerById(@Path("movieId") int movieId,
+                                             @Query("api_key") String api_key);
     }
 
 }

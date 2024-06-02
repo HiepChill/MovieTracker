@@ -2,7 +2,11 @@ package com.hyep.movietracker.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +38,8 @@ import com.hyep.movietracker.models.CastResponse;
 import com.hyep.movietracker.models.MediaModel;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
+import com.hyep.movietracker.models.TrailerModel;
+import com.hyep.movietracker.models.TrailerResponse;
 import com.hyep.movietracker.utils.Utils;
 
 import java.util.List;
@@ -59,6 +65,10 @@ public class DetailMovieScreen extends AppCompatActivity {
     private TextView tvIMDBScore,tvMovieTitle,tvMovieGenres, tvMovieTags, tvInformation;
 
     private ImageView ivPoster;
+
+    private String idTrailer;
+
+    private WebView wvTrailer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +114,9 @@ public class DetailMovieScreen extends AppCompatActivity {
         LinearLayoutManager rvRecommendationLayout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvRecommendation.setLayoutManager(rvRecommendationLayout);
 
+        //webview
+        wvTrailer = findViewById(R.id.wvTrailer);
+
 
         //onclick Button
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +131,7 @@ public class DetailMovieScreen extends AppCompatActivity {
         callListCastById(movieId);
         callMediaById(movieId);
         callRecommendationById(movieId);
+        callTrailerById(movieId);
     }
 
     private void callDetailMovieById(int movieId){
@@ -198,6 +212,35 @@ public class DetailMovieScreen extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable throwable) {
+
+            }
+        });
+    }
+
+    private void callTrailerById(int movieId){
+        APIClient.getApiInterface().getTrailerById(movieId,Utils.API_KEY).enqueue(new Callback<TrailerResponse>() {
+            @Override
+            public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
+                idTrailer = response.body().getListTrailer().get(0).getKey();
+                Toast.makeText(DetailMovieScreen.this, idTrailer, Toast.LENGTH_SHORT).show();
+                WebSettings webSettings = wvTrailer.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+                webSettings.setLoadWithOverviewMode(true);
+                webSettings.setUseWideViewPort(true);
+
+                // Đặt WebViewClient để mở URL trong WebView thay vì trình duyệt mặc định
+                wvTrailer.setWebViewClient(new WebViewClient());
+
+                // Tải IFrame Player API
+
+                String html ="<html><body style=\"margin:0;padding:0;overflow:hidden;\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/" + idTrailer + "?modestbranding=1&showinfo=0&rel=0&controls=1&disablekb=1&fs=0&iv_load_policy=3\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+
+
+                wvTrailer.loadData(html, "text/html", "utf-8");
+            }
+
+            @Override
+            public void onFailure(Call<TrailerResponse> call, Throwable throwable) {
 
             }
         });
