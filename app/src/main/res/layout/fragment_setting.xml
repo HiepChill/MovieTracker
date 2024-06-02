@@ -1,14 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.fragment.SettingFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".screens.fragment.SettingFragment"
+    android:background="@color/background"
+    android:layout_marginBottom="80dp">
 
-    <!-- TODO: Update blank fragment layout -->
+    <View
+        android:id="@+id/wg1"
+        android:layout_width="5dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/chromeYellow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Setting"/>
+        android:id="@+id/tvSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="SETTING"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/wg1"
+        app:layout_constraintTop_toTopOf="@+id/wg1" />
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/imgBtnEnglish"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_setting_language"
+        android:background="@drawable/btn_setting_language"
+        app:layout_constraintTop_toBottomOf="@id/tvSetting"
+        android:layout_marginTop="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imgBtnVietnamese"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <ImageButton
+        android:id="@+id/imgBtnVietnamese"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_setting_language"
+        android:background="@drawable/btn_setting_language"
+        app:layout_constraintTop_toBottomOf="@id/tvSetting"
+        android:layout_marginTop="100dp"
+        app:layout_constraintStart_toEndOf="@id/imgBtnEnglish"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="English"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/imgBtnEnglish"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtnEnglish"
+        app:layout_constraintEnd_toEndOf="@id/imgBtnEnglish"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vietnamese"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/imgBtnVietnamese"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtnVietnamese"
+        app:layout_constraintEnd_toEndOf="@id/imgBtnVietnamese"
+        android:layout_marginTop="20dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

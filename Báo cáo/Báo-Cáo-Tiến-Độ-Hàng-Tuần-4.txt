@@ -2,9 +2,9 @@
 
 ## Thông Tin Chung
 - **Tên Dự Án**: MovieTracker
-- **Tuần**: 3
-- **Ngày**: (12-5-2024 -> 19-5-2024)
-- **Nhóm Thực Hiện**: 
+- **Tuần**: 4
+- **Ngày**: (19-5-2024 -> 26-5-2024)
+- **Nhóm Thực hiện**: 
   - Thành viên 1: Chu Mạnh Vũ Hiệp
   - Thành viên 2: Nguyễn Mạnh Thành
   - Thành viên 3: Hồ Bá An Dương
@@ -12,36 +12,34 @@
 
 ## Mục Tiêu Tuần Này
 (Tóm tắt ngắn gọn mục tiêu chính của tuần này.)
-tiếp tục hoàn hiện thêm các màn hình mớixử lý màn search
+tiếp tục hoàn thành các màn còn lại và bắt đầu làm việc để xử lý lưu trữ danh sách movie
 
 ## Công Việc Đã Hoàn Thành
 (Tóm tắt các công việc đã hoàn thành trong tuần này.)
 hoàn thành khoảng 80% màn search
 
 ### Thành viên 1: Chu Mạnh Vũ Hiệp
-- Công việc 1: Xử lý màn hiển thị Recommend movie và tv
-- Công việc 2: xử lý search
+- Công việc 1: Tìm nền tảng lưu trữ cho app
+- Công việc 2: code test thử cách thức hoạt động
 
 ### Thành viên 2:Phạm Thu Thủy
-- Công việc 1:Xử lý màn hiển thị Create Tag
-- Công việc 2:
+- Công việc 1:Xử lý nốt màn Create Space
+- Công việc 2:Chỉnh lại màn Create Tag
 
 ### Thành viên 3:Hồ Bá An Dương
-- Công việc 1:màn home hiển thị danh sách personal space
-- Công việc 2:personal space có hiệu ứng swipe to remove
+- Công việc 1:Hoàn thành Tag Screen, Setting Screen, Create new Space or Tag
+- Công việc 2:
 
 ### Thành viên 4:Nguyễn Mạnh Thành
-- Công việc 1:Hoàn thành màn Detail space
-- Công việc 2:
+- Công việc 1:Hoàn thiện màn Detail Movie
+- Công việc 2:Chèn thêm Trailer movie
 
 ## Vấn Đề Gặp Phải
 (Tiêu điểm vào các vấn đề, thách thức mà nhóm gặp phải và cách giải quyết.)
--gặp vấn đề trong việc xử lý phần hiển thị các kết quả search và xử lý api search
--itemTouchHelper swipe to remove
+-Sử dụng Realm DB đang gặp khó khăn trong việc lưu trữ api vào db
 ## Kế Hoạch Tuần Tới
 (Phác thảo ngắn gọn các kế hoạch và mục tiêu dự kiến cho tuần tiếp theo.)
 -tiếp tục hoàn thành thêm các chức năng và màn hình
--thực hiện màn detail movie
 
 ## Nhận Xét và Đề Xuất
 (Mọi nhận xét và đề xuất để cải thiện quá trình làm việc nhóm và tiến độ dự án.)
