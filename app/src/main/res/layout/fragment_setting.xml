@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".screens.fragment.SettingFragment"
-    android:background="@color/background"
-    android:layout_marginBottom="80dp">
+    android:background="@color/background">
 
     <View
         android:id="@+id/wg1"
