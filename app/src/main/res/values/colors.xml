@@ -22,6 +22,7 @@
     <color name="skyBlue">#32C5FF</color>
     <color name="cardColor">#10121B</color>
     <color name="cardContent">#686b73</color>
-    <color name="selectedColor">#00000000</color> <!-- Transparent or any other color for the solid part -->
+    <color name="selectedColor">#00000000</color> 
     <color name="yellow">#FFFF00</color>
+    <color name="transparent">#00000000</color>
 </resources>
