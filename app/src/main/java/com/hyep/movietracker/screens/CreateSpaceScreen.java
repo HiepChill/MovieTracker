@@ -2,24 +2,19 @@ package com.hyep.movietracker.screens;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.hyep.movietracker.R;
 
-public class CreateTagIconScreen extends AppCompatActivity {
+public class CreateSpaceScreen extends AppCompatActivity {
 
     private EditText edtTag;
     private ImageView[] iconCases;
@@ -32,7 +27,7 @@ public class CreateTagIconScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.screen_create_icon_tag);
+        setContentView(R.layout.screen_create_space);
 
         // Initialize views
         edtTag = findViewById(R.id.tag_name);
@@ -107,7 +102,7 @@ public class CreateTagIconScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Get color from resources and update selected color
-                selectedColor = ContextCompat.getColor(CreateTagIconScreen.this, colorResId);
+                selectedColor = ContextCompat.getColor(CreateSpaceScreen.this, colorResId);
                 // Call updateColors() to update colors for both tag and icon
                 updateColors();
             }
