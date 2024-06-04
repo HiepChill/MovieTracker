@@ -22,6 +22,9 @@
             android:name=".screens.UpcomingScreen"
             android:exported="true" />
         <activity
+            android:name=".screens.CreateTagIconScreen"
+            android:exported="true" />
+        <activity
             android:name=".screens.MainScreen"
             android:exported="true">
             <intent-filter>

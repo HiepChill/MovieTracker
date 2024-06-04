@@ -1,36 +1,43 @@
 package com.hyep.movietracker.screens;
 
-import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.hyep.movietracker.R;
 
-public class CreateTagScreen extends AppCompatActivity {
+public class CreateTagIconScreen extends AppCompatActivity {
+
     private EditText edtTag;
-    private ImageView icon_enter_tag;
+    private ImageView[] iconCases;
     private Button btnDone;
     private RelativeLayout case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15;
-    private int selectedColor = Color.BLACK; // Default color for EditText
+
+    private int selectedColor = Color.BLACK; // Default color for EditText and icons
+    private ImageView selectedIcon; // Biến để lưu trữ icon được chọn
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.screen_create_tag);
+        setContentView(R.layout.screen_create_icon_tag);
 
-        icon_enter_tag = findViewById(R.id.icon_enter_tag);
-        btnDone = findViewById(R.id.btnDone);
+        // Initialize views
         edtTag = findViewById(R.id.tag_name);
+        btnDone = findViewById(R.id.btnDone);
+
         case1 = findViewById(R.id.royalBlue);
         case2 = findViewById(R.id.purple);
         case3 = findViewById(R.id.magenta);
@@ -47,41 +54,37 @@ public class CreateTagScreen extends AppCompatActivity {
         case14 = findViewById(R.id.cobaltBlue);
         case15 = findViewById(R.id.skyBlue);
 
-        View camelCase = findViewById(R.id.main);
-        camelCase.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                hideKeyboard();
-                return false;
-            }
-        });
+        // Initialize array to hold icon views
+        iconCases = new ImageView[6];
+        iconCases[0] = findViewById(R.id.icon1);
+        iconCases[1] = findViewById(R.id.icon2);
+        iconCases[2] = findViewById(R.id.icon3);
+        iconCases[3] = findViewById(R.id.icon4);
+        iconCases[4] = findViewById(R.id.icon5);
+        iconCases[5] = findViewById(R.id.icon6);
 
-        // Set click listeners for color options
-        setOnClickListeners();
-
-
-        btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Apply the selected color to EditText
-                edtTag.setTextColor(selectedColor);
-
-                // Perform other actions after the "Done" button is pressed
-                // For example, close the screen
-//                finish();
-            }
-        });
-
-        icon_enter_tag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CreateTagScreen.this, CreateTagIconScreen.class);
-                startActivity(intent);
-            }
-        });
+        setIconClickListeners();
+        setColorClickListeners();
     }
 
-    private void setOnClickListeners() {
+    private void setIconClickListeners() {
+        // Set event listener for each icon
+        for (final ImageView iconCase : iconCases) {
+            iconCase.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Set the selected icon
+                    selectedIcon = iconCase;
+                    // Update color for the selected icon
+                    updateColors();
+                }
+            });
+        }
+    }
+
+
+    private void setColorClickListeners() {
+        // Set event listener for color selection
         case1.setOnClickListener(getColorClickListener(R.color.royalBlue));
         case2.setOnClickListener(getColorClickListener(R.color.purple));
         case3.setOnClickListener(getColorClickListener(R.color.magenta));
@@ -103,17 +106,21 @@ public class CreateTagScreen extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedColor = ContextCompat.getColor(CreateTagScreen.this, colorResId);
-                edtTag.setTextColor(selectedColor);
+                // Get color from resources and update selected color
+                selectedColor = ContextCompat.getColor(CreateTagIconScreen.this, colorResId);
+                // Call updateColors() to update colors for both tag and icon
+                updateColors();
             }
         };
     }
 
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        View view = getCurrentFocus();
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private void updateColors() {
+        // Update color for EditText
+        edtTag.setTextColor(selectedColor);
+        // Update color for the selected icon
+        if (selectedIcon != null) {
+            selectedIcon.clearColorFilter();
+            selectedIcon.getDrawable().setColorFilter(selectedColor, PorterDuff.Mode.SRC_IN);
         }
     }
 }
