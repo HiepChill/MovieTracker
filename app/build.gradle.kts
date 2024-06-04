@@ -65,5 +65,12 @@ dependencies {
     //Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
+    //Realm
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.10")
+    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.8.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("io.realm:realm-android-library:10.10.1")
 
 }
