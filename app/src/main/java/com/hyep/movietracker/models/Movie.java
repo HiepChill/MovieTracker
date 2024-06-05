@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 public class Movie {
     @SerializedName("id")
@@ -22,11 +23,61 @@ public class Movie {
     @Expose
     private Date releaseDate;
 
+    @SerializedName("vote_average")
+    @Expose
+    private Float voteAverage;
+
+    @SerializedName("overview")
+    @Expose
+    private String overview;
+
+    @SerializedName("genres")
+    @Expose
+    private List<GenresModel> genres;
+
     public Movie(int id, String posterPath, String title) {
         this.id = id;
         this.posterPath = posterPath;
         this.title = title;
     }
+
+    public Movie(int id, String posterPath, String title, Date releaseDate, Float voteAverage, String overview, List<GenresModel> genres) {
+        this.id = id;
+        this.posterPath = posterPath;
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
+        this.overview = overview;
+        this.genres = genres;
+    }
+
+    public List<GenresModel> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<GenresModel> genres) {
+        this.genres = genres;
+    }
+
+    public Float getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(Float voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+
+
+
 
     public int getId() {
         return id;
