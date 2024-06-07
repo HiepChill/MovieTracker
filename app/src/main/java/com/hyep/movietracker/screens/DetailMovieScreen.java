@@ -60,7 +60,7 @@ public class DetailMovieScreen extends AppCompatActivity {
 
     private List<BackdropsModel> medias;
 
-    private ImageButton imgBtnBack, imgBtnAddToSpace,imgBtnAddToWatched,imgBtnAddTag;
+    private ImageButton imgBtnBack, imgBtnAddToSpace, imgBtnAddToWatched, imgBtnAddTag;
 
     private TextView tvIMDBScore,tvMovieTitle,tvMovieGenres, tvMovieTags, tvInformation;
 

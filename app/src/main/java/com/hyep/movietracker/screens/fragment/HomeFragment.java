@@ -1,5 +1,6 @@
 package com.hyep.movietracker.screens.fragment;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.PersonalSpaceAdapter;
 import com.hyep.movietracker.models.PersonalSpaceModel;
+import com.hyep.movietracker.screens.UpcomingScreen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +37,7 @@ public class HomeFragment extends Fragment {
     TextView tvSpace, tvCreate;
     RecyclerView rcvPersonalSpace;
     PersonalSpaceAdapter personalSpaceAdapter;
+    ImageButton btnUpComing, btnWatched;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +47,16 @@ public class HomeFragment extends Fragment {
         tvCreate = view.findViewById(R.id.tvCreate);
         imvSpace = view.findViewById(R.id.imvSpace);
         rcvPersonalSpace = view.findViewById(R.id.rcvPersonalSpace);
+        btnUpComing = view.findViewById(R.id.imgBtnUpcoming);
+
+
+        btnUpComing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), UpcomingScreen.class);
+                startActivity(intent);
+            }
+        });
 
         setUpPersonalSpaceArrayList();
 

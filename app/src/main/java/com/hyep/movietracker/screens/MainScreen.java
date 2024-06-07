@@ -1,9 +1,11 @@
 package com.hyep.movietracker.screens;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,6 +50,7 @@ public class MainScreen extends AppCompatActivity {
 
         frameLayout = findViewById(R.id.fragmentContainer);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
 
         replaceFragment(new HomeFragment());
 
