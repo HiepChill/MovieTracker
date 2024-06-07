@@ -50,8 +50,8 @@ public class SettingFragment extends Fragment {
             String email = user.getEmail();
 
 
-            Toast.makeText(getActivity(),"Name"+ name, Toast.LENGTH_SHORT).show();
-            tvName.setText(email);
+//            Toast.makeText(getActivity(),"Name"+ name, Toast.LENGTH_SHORT).show();
+            tvName.setText(name);
             imvProfile.setImageURI(uri);
 
         }

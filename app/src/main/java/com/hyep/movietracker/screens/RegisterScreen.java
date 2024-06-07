@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.hyep.movietracker.R;
 
 public class RegisterScreen extends AppCompatActivity {
@@ -98,8 +99,20 @@ public class RegisterScreen extends AppCompatActivity {
                                 if (!task.isSuccessful()){
                                     Toast.makeText(RegisterScreen.this, "Faile: "+task.getException(), Toast.LENGTH_SHORT).show();
                                 }else{
-                                    startActivity(new Intent(RegisterScreen.this, MainScreen.class));
-                                    finish();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(surName+" "+name).build();
+                                    assert user != null;
+                                    user.updateProfile(profileChangeRequest)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()){
+                                                                startActivity(new Intent(RegisterScreen.this, MainScreen.class));
+                                                                finish();
+                                                            }
+                                                        }
+                                                    });
+
                                 }
                             }
                         });
