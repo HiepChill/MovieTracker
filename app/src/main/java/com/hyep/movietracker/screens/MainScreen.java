@@ -1,5 +1,6 @@
 package com.hyep.movietracker.screens;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.screens.fragment.HomeFragment;
 import com.hyep.movietracker.screens.fragment.SettingFragment;
@@ -29,6 +32,8 @@ public class MainScreen extends AppCompatActivity {
     FloatingActionButton fabAdd;
     View popupCreateNew;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,8 @@ public class MainScreen extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        mAuth =  FirebaseAuth.getInstance();
 
         // Ensure that the content view fits the system windows
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
@@ -95,4 +102,6 @@ public class MainScreen extends AppCompatActivity {
             popupCreateNew.setVisibility(View.GONE);
         }
     }
+
+
 }
