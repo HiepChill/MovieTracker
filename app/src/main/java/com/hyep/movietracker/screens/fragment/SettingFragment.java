@@ -67,7 +67,10 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mAuth.signOut();
-                startActivity(new Intent(getActivity(), LoginScreen.class));
+                Intent intent = new Intent(getActivity(), LoginScreen.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
             }
         });
 
