@@ -88,7 +88,7 @@ public class RegisterScreen extends AppCompatActivity {
                     return;
                 }
                 if (password.length()<8){
-                    Toast.makeText(RegisterScreen.this, "Password must be less than 8 characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterScreen.this, "Password must be more than 7 characters", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 mAuth.createUserWithEmailAndPassword(email, password)
