@@ -1,7 +1,7 @@
 package com.hyep.movietracker.screens;
 
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +60,17 @@ public class CreateSpaceScreen extends AppCompatActivity {
 
         setIconClickListeners();
         setColorClickListeners();
+        setDoneButtonClickListener();
+    }
+
+    private void setDoneButtonClickListener() {
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateSpaceScreen.this, Mark_watched.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setIconClickListeners() {
@@ -68,13 +79,23 @@ public class CreateSpaceScreen extends AppCompatActivity {
             iconCase.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Set the selected icon
+                    // Loại bỏ viền và màu của icon trước đó (nếu có)
+                    if (selectedIcon != null) {
+                        selectedIcon.setSelected(false); // Bỏ chọn icon trước
+                        selectedIcon.setColorFilter(Color.WHITE);// Loại bỏ viền
+                        selectedIcon.setColorFilter(Color.WHITE); // Thiết lập lại màu mặc định
+                    }
+
+                    // Cập nhật icon mới được chọn
                     selectedIcon = iconCase;
-                    // Update color for the selected icon
+                    selectedIcon.setSelected(true); // Đánh dấu icon là được chọn
+
+                    // Cập nhật màu và viền cho icon mới được chọn
                     updateColors();
                 }
             });
         }
+
     }
 
 
@@ -109,13 +130,47 @@ public class CreateSpaceScreen extends AppCompatActivity {
         };
     }
 
+//    private void updateColors() {
+//        // Update color for EditText
+//        edtTag.setTextColor(selectedColor);
+//
+//        // Update color for the selected icon
+//        if (selectedIcon != null) {
+//            selectedIcon.setSelected(!selectedIcon.isSelected());
+//            selectedIcon.setColorFilter(selectedColor); // Thiết lập màu cho biểu tượng
+////            selectedIcon.setColorFilter(selectedColor);
+//            // Đảo ngược trạng thái chọn của biểu tượng (nếu cần thiết)
+//        }
+//        }
+
+
     private void updateColors() {
-        // Update color for EditText
+        // Cập nhật màu sắc cho EditText
         edtTag.setTextColor(selectedColor);
-        // Update color for the selected icon
+
+        // Cập nhật màu sắc và viền cho biểu tượng được chọn
         if (selectedIcon != null) {
-            selectedIcon.clearColorFilter();
-            selectedIcon.getDrawable().setColorFilter(selectedColor, PorterDuff.Mode.SRC_IN);
+            // Lưu lại trạng thái isSelected hiện tại
+            boolean isSelected = selectedIcon.isSelected();
+
+            // Cập nhật màu sắc cho biểu tượng
+            selectedIcon.setColorFilter(selectedColor);
+
+            // Cập nhật viền cho biểu tượng dựa trên trạng thái isSelected
+            if (isSelected) {
+                selectedIcon.setBackgroundResource(R.drawable.ic_vien);
+            } else {
+                // Không cần cập nhật lại viền nếu không được chọn,
+                // vì selector đã đảm bảo viền mặc định là trắng
+
+                selectedIcon.setColorFilter(Color.WHITE);
+            }
         }
     }
+
+
+
+
+
+
 }

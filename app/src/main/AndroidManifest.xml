@@ -22,10 +22,16 @@
             android:name=".screens.UpcomingScreen"
             android:exported="true" />
         <activity
-            android:name=".screens.CreateSpaceScreen"
+            android:name=".screens.Show_tag"
             android:exported="true" />
         <activity
             android:name=".screens.MainScreen"
+            android:exported="true" />
+        <activity
+            android:name=".screens.Mark_watched"
+            android:exported="true" />
+        <activity
+            android:name=".screens.CreateSpaceScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
