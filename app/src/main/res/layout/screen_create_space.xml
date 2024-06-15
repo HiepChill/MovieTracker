@@ -33,7 +33,7 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/baseline_arrow_back_ios_24" />
+                android:src="@drawable/ic_arrow_back" />
 
             <!-- Icon LinearLayout -->
             <LinearLayout
@@ -101,7 +101,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/magenta" />
 
                 <RelativeLayout
@@ -111,7 +111,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/magenta"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/aquaGreen" />
 
                 <RelativeLayout
@@ -121,7 +121,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/aquaGreen"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/chromeYellow" />
 
                 <RelativeLayout
@@ -131,7 +131,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/magenta"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/purple" />
 
                 <RelativeLayout
@@ -141,7 +141,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/purple"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/royalBlue" />
             </RelativeLayout>
 
@@ -156,7 +156,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/red" />
 
                 <RelativeLayout
@@ -166,7 +166,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/red"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/claret" />
 
                 <RelativeLayout
@@ -176,7 +176,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/claret"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/smokeyGrey" />
 
                 <RelativeLayout
@@ -186,7 +186,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/red"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/blazeOrange" />
 
                 <RelativeLayout
@@ -196,7 +196,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/blazeOrange"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/bluePurple" />
             </RelativeLayout>
 
@@ -211,7 +211,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/green" />
 
                 <RelativeLayout
@@ -221,7 +221,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/green"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/cobaltBlue" />
 
                 <RelativeLayout
@@ -231,7 +231,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/cobaltBlue"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/skyBlue" />
 
                 <RelativeLayout
@@ -241,7 +241,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/green"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/brown" />
 
                 <RelativeLayout
@@ -251,7 +251,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/brown"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_palette"
                     android:backgroundTint="@color/purpleJam" />
             </RelativeLayout>
         </LinearLayout>

@@ -75,8 +75,6 @@ public class CreateTagScreen extends AppCompatActivity {
         icon_enter_tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateTagScreen.this, CreateSpaceScreen.class);
-                startActivity(intent);
             }
         });
     }

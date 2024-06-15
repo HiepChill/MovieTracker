@@ -22,13 +22,7 @@
             android:name=".screens.UpcomingScreen"
             android:exported="true" />
         <activity
-            android:name=".screens.Show_tag"
-            android:exported="true" />
-        <activity
             android:name=".screens.MainScreen"
-            android:exported="true" />
-        <activity
-            android:name=".screens.Mark_watched"
             android:exported="true" />
         <activity
             android:name=".screens.CreateSpaceScreen"

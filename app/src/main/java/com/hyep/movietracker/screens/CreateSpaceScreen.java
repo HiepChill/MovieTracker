@@ -67,8 +67,6 @@ public class CreateSpaceScreen extends AppCompatActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateSpaceScreen.this, Mark_watched.class);
-                startActivity(intent);
             }
         });
     }
