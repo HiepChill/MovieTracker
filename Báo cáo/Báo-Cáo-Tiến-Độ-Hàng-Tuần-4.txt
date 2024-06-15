@@ -4,7 +4,7 @@
 - **Tên Dự Án**: MovieTracker
 - **Tuần**: 4
 - **Ngày**: (19-5-2024 -> 26-5-2024)
-- **Nhóm Thực hiện**: 
+- **Nhóm Thực hiện**:
   - Thành viên 1: Chu Mạnh Vũ Hiệp
   - Thành viên 2: Nguyễn Mạnh Thành
   - Thành viên 3: Hồ Bá An Dương

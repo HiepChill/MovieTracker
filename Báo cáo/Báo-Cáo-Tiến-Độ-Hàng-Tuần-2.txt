@@ -4,7 +4,7 @@
 - **Tên Dự Án**: MovieTracker
 - **Tuần**: 2
 - **Ngày**: (5-5-2024 -> 12-5-2024)
-- **Nhóm Thực Hiện**: 
+- **Nhóm Thực Hiện**:
   - Thành viên 1: Chu Mạnh Vũ Hiệp
   - Thành viên 2: Nguyễn Mạnh Thành
   - Thành viên 3: Hồ Bá An Dương
@@ -18,7 +18,7 @@
 
 ### Thành viên 1: Chu Mạnh Vũ Hiệp
 - Công việc 1: Xử lý màn hiển thị Upcoming screen
-- Công việc 2: 
+- Công việc 2:
 
 ### Thành viên 2:Phạm Thu Thủy
 - Công việc 1:Thiết kế giao diện

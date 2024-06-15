@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="0dp" /> <!-- Đây là thuộc tính để bỏ viền vào đây -->
+    <stroke
+        android:width="2dp"
+        android:color="#ffd700"/> <!-- Màu viền vàng với độ dày 2dp -->
+</shape>
