@@ -1,17 +1,17 @@
 package com.hyep.movietracker.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +19,13 @@ import com.bumptech.glide.Glide;
 //import com.bumptech.glide.RequestManager;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
+import com.hyep.movietracker.screens.DetailMovieScreen;
 import com.hyep.movietracker.screens.fragment.BottomSheetSettingItemInSpaceFragment;
 import com.hyep.movietracker.utils.Utils;
 
 import java.util.List;
 
-public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.CardMovieHolder> {
+public class DetailSpaceAdapter extends RecyclerView.Adapter<DetailSpaceAdapter.DetailSpaceHolder> {
 
 //    RequestManager glide;
 
@@ -34,27 +35,21 @@ public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.Card
 
 //    private AdapterView.OnItemClickListener itemClickListener;
 
-    public CardMovieAdapter(List<Movie> movieList, Context cont, FragmentManager fragmentManager) {
+    public DetailSpaceAdapter(List<Movie> movieList, Context cont, FragmentManager fragmentManager) {
         this.movieList = movieList;
         this.cont = cont;
         this.fragmentManager = fragmentManager;
     }
 
-//    public interface ItemClickListener {
-//        void onItemClick(int position, int movieId);
-//    }
-//    public void setItemClickListener(ItemClickListener itemClickListener) {
-//        this.itemClickListener = (AdapterView.OnItemClickListener) itemClickListener;
-//    }
     @NonNull
     @Override
-    public CardMovieAdapter.CardMovieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DetailSpaceAdapter.DetailSpaceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_movie_in_space,parent,false);
-        return new CardMovieHolder(view);
+        return new DetailSpaceHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardMovieAdapter.CardMovieHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DetailSpaceAdapter.DetailSpaceHolder holder, int position) {
         Movie movie = movieList.get(position);
         if(movie == null){
             return;
@@ -71,7 +66,9 @@ public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.Card
         holder.imgPoster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(cont, movie.getId()+"", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(cont, DetailMovieScreen.class);
+                intent.putExtra("movieId", movie.getId());
+                cont.startActivity(intent);
             }
         });
     }
@@ -84,7 +81,7 @@ public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.Card
         return 0;
     }
 
-    public static class CardMovieHolder extends RecyclerView.ViewHolder {
+    public static class DetailSpaceHolder extends RecyclerView.ViewHolder {
 
         private final ImageView imgPoster;
 
@@ -95,7 +92,7 @@ public class CardMovieAdapter extends RecyclerView.Adapter<CardMovieAdapter.Card
 
 
 
-        public CardMovieHolder(View viewItem) {
+        public DetailSpaceHolder(View viewItem) {
             super(viewItem);
             imgPoster = viewItem.findViewById(R.id.imgPoster);
             tvItemTitle = viewItem.findViewById(R.id.tvItemTitle);

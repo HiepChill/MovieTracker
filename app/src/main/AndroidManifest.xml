@@ -32,6 +32,27 @@
             android:exported="true" />
         <activity
             android:name=".screens.CreateSpaceScreen"
+            android:exported="true" />
+        <activity
+            android:name=".screens.NewPasswordScreen"
+            android:exported="false" />
+        <activity
+            android:name=".screens.ForgotPasswordScreen"
+            android:exported="false" />
+        <activity
+            android:name=".screens.RegisterScreen"
+            android:exported="false" />
+        <activity
+            android:name=".screens.DetailSpaceScreen"
+            android:exported="false" />
+        <activity
+            android:name=".screens.SearchScreen"
+            android:exported="true" />
+        <activity
+            android:name=".screens.DetailMovieScreen"
+            android:exported="false" />
+        <activity
+            android:name=".screens.LoginScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,9 +3,13 @@ package com.hyep.movietracker.api;
 import static com.hyep.movietracker.utils.Utils.API_KEY;
 import static com.hyep.movietracker.utils.Utils.BASE_URL;
 
+import com.hyep.movietracker.models.CastResponse;
+import com.hyep.movietracker.models.MediaModel;
+import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
 import com.hyep.movietracker.models.SearchResponse;
 import com.hyep.movietracker.models.TVResponse;
+import com.hyep.movietracker.models.TrailerResponse;
 
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.HttpUrl;
@@ -16,6 +20,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class APIClient {
@@ -74,6 +80,27 @@ public class APIClient {
                                              @Query("query") String query,
                                              @Query("language") String language);
 
+        @GET("movie/{movieId}")
+        Call<Movie> getDetailMovieById(@Path("movieId") int movieId,
+                                       @Query("api_key") String api_key,
+                                       @Query("language") String language);
+
+        @GET("movie/{movieId}/credits")
+        Call<CastResponse> getListCastById(@Path("movieId") int movieId,
+                                           @Query("api_key") String api_key);
+
+        @GET("movie/{movieId}/images")
+        Call<MediaModel> getMediaById(@Path("movieId") int movieId,
+                                      @Query("api_key") String api_key);
+
+        @GET("movie/{movieId}/recommendations")
+        Call<MovieResponse> getRecommendationById(@Path("movieId") int movieId,
+                                                  @Query("api_key") String api_key,
+                                                  @Query("language") String language);
+
+        @GET("movie/{movieId}/videos")
+        Call<TrailerResponse> getTrailerById(@Path("movieId") int movieId,
+                                             @Query("api_key") String api_key);
     }
 
 }

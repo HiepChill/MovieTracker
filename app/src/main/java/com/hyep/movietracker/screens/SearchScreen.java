@@ -1,6 +1,7 @@
 package com.hyep.movietracker.screens;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -185,6 +186,8 @@ public class SearchScreen extends AppCompatActivity implements OnItemClickListen
 
     @Override
     public void onMovieClicked(int id) {
-        Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, DetailMovieScreen.class);
+        intent.putExtra("movieId", id);
+        startActivity(intent);
     }
 }
