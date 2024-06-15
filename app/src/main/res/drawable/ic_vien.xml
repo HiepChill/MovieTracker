@@ -1,0 +1,22 @@
+<!-- res/drawable/icon_border_selector.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Trạng thái khi biểu tượng được chọn -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" /> <!-- Nền trong suốt -->
+            <stroke
+                android:width="2dp"
+                android:color="@color/chromeYellow" /> <!-- Viền màu vàng khi được chọn -->
+        </shape>
+    </item>
+
+    <!-- Trạng thái mặc định -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" /> <!-- Nền trong suốt -->
+            <stroke
+                android:width="2dp"
+                android:color="@android:color/white" /> <!-- Viền màu trắng mặc định -->
+        </shape>
+    </item>
+</selector>

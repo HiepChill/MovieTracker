@@ -4,7 +4,7 @@
 - **Tên Dự Án**: MovieTracker
 - **Tuần**: 1
 - **Ngày**: (28-4-2024 -> 5-5-2024)
-- **Nhóm Thực Hiện**: 
+- **Nhóm Thực Hiện**:
   - Thành viên 1: Chu Mạnh Vũ Hiệp
   - Thành viên 2: Nguyễn Mạnh Thành
   - Thành viên 3: Hồ Bá An Dương
@@ -20,7 +20,7 @@ Cả nhóm cùng suy nghĩ và đưa ra ý tưởng cho giao diện app xem phim
 
 ### Thành viên 1: Chu Mạnh Vũ Hiệp
 - Công việc 1: Nêu ý tưởng cho giao diện và mô tả thiết kế
-- Công việc 2: 
+- Công việc 2:
 
 ### Thành viên 2:Phạm Thu Thủy
 - Công việc 1:Nêu ý tưởng cho giao diện và thiết kế giao diện
