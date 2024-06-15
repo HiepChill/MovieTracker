@@ -10,16 +10,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.screens.LoginScreen;
 import com.hyep.movietracker.screens.MainScreen;
 import com.hyep.movietracker.screens.NewPasswordScreen;
+import com.hyep.movietracker.utils.FirestoreHelper;
 
 public class SettingFragment extends Fragment {
 
@@ -71,6 +74,17 @@ public class SettingFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
+            }
+        });
+
+        Button btnTest = view.findViewById(R.id.btnTest);
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(view.getContext(), user.getUid(), Toast.LENGTH_SHORT).show();
+                FirebaseFirestore.getInstance()
+                        .collection("users")
+                        .document(user.getUid());
             }
         });
 
