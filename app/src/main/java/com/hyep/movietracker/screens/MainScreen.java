@@ -32,7 +32,7 @@ public class MainScreen extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     FloatingActionButton fabAdd;
     View popupCreateNew;
-
+    ImageButton imgBtnCreateSpace, imgBtnCreateTag;
     private FirebaseAuth mAuth;
 
     @Override
@@ -84,6 +84,25 @@ public class MainScreen extends AppCompatActivity {
 
         fabAdd = findViewById(R.id.fabAdd);
         popupCreateNew = findViewById(R.id.popupCreateNew);
+
+        imgBtnCreateSpace = findViewById(R.id.imgBtnCreateSpace);
+        imgBtnCreateTag = findViewById(R.id.imgBtnCreateTag);
+
+        imgBtnCreateSpace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainScreen.this, CreateSpaceScreen.class);
+                startActivity(intent);
+            }
+        });
+
+        imgBtnCreateTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainScreen.this, CreateTagScreen.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void replaceFragment(Fragment fragment) {
