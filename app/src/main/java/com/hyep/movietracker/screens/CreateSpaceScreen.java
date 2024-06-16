@@ -13,7 +13,9 @@ import androidx.core.content.ContextCompat;
 
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.PersonalSpaceModel;
-import com.hyep.movietracker.Helpers.FirestoreHelper;
+
+import com.hyep.movietracker.helper.FirestoreHelper;
+
 import com.hyep.movietracker.utils.UniqueId;
 import com.hyep.movietracker.utils.Utils;
 

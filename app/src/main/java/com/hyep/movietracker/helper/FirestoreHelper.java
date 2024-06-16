@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:app/src/main/java/com/hyep/movietracker/Helpers/FirestoreHelper.java
 package com.hyep.movietracker.Helpers;
+========
+package com.hyep.movietracker.helper;
+>>>>>>>> duong/firestore:app/src/main/java/com/hyep/movietracker/helper/FirestoreHelper.java
 
 import android.content.Context;
 import android.util.Log;
