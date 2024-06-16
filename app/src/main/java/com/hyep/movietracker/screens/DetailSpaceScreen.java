@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -20,13 +22,14 @@ import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.DetailSpaceAdapter;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.screens.fragment.BottomSheetSettingSpaceFragment;
+import com.hyep.movietracker.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DetailSpaceScreen extends AppCompatActivity{
 
-    
+    private TextView tvSpaceName;
     private ImageButton imgBtnBack, imgBtnSpaceSetting, imgBtnSearch, imgBtnNote;
 
     private RecyclerView rvItemSpace;
@@ -48,8 +51,19 @@ public class DetailSpaceScreen extends AppCompatActivity{
         imgBtnSpaceSetting = (ImageButton) findViewById(R.id.imgBtnSpaceSetting); 
         imgBtnSearch = (ImageButton) findViewById(R.id.imgBtnSearch);
         imgBtnNote = (ImageButton) findViewById(R.id.imgBtnNote);
+        tvSpaceName = (TextView) findViewById(R.id.tvSpaceName);
 
-        ivLogo.getDrawable().setColorFilter(getResources().getColor(R.color.magenta), PorterDuff.Mode.SRC_IN);
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        int color = intent.getIntExtra("color",0);
+        int icon = intent.getIntExtra("icon",0);
+
+        tvSpaceName.setText(name);
+        tvSpaceName.setTextColor(ContextCompat.getColor(this, Utils.listColors[color]));
+        ivLogo.setImageResource(Utils.listIcons[icon]);
+        ivLogo.getDrawable().setColorFilter(getResources().getColor(Utils.listColors[color]), PorterDuff.Mode.SRC_IN);
+        imgBtnSearch.setBackgroundColor(ContextCompat.getColor(this, Utils.listColors[color]));
+        imgBtnNote.getDrawable().setColorFilter(getResources().getColor(Utils.listColors[color]), PorterDuff.Mode.SRC_IN);
 
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -54,7 +54,12 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PersonalSpaceModel clickedSpace = personalSpaceModelArrayList.get(position);
                 Intent intent = new Intent(context, DetailSpaceScreen.class);
+                intent.putExtra("name", clickedSpace.getName());
+                intent.putExtra("size", clickedSpace.getSize());
+                intent.putExtra("icon", clickedSpace.getIcon());
+                intent.putExtra("color", clickedSpace.getColor());
                 context.startActivity(intent);
             }
         });
