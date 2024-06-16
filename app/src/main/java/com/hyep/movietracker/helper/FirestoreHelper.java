@@ -65,22 +65,25 @@ public class FirestoreHelper {
 
     public void addMovieToSpace(String spaceId, String movieId) {
         db.collection("users")
-                .document(user.getUid())
-                .collection("spaces")
+                .document(user.getUid()).
+                collection("spaces")
                 .document(spaceId)
-                .update("movies", FieldValue.arrayUnion(movieId))
+                .collection("movies")
+                .document(movieId)
+                .set(new HashMap<>()) // Lưu trữ document rỗng với movieId làm ID
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Movie ID added successfully", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context, "Fail: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Failed to add movie ID: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.e("FirestoreError", "Error adding document", e);
                     }
                 });
     }
+
 }

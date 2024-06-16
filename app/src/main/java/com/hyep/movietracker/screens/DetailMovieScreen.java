@@ -27,7 +27,7 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
-import com.hyep.movietracker.Helpers.FirestoreHelper;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.CastDetailMovieAdapter;
 import com.hyep.movietracker.adapter.MediaDetailMovieAdapter;
