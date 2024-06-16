@@ -1,4 +1,4 @@
-package com.hyep.movietracker.utils;
+package com.hyep.movietracker.helper;
 
 import android.content.Context;
 import android.util.Log;

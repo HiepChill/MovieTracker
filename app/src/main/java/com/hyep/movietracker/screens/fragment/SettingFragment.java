@@ -4,31 +4,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.screens.LoginScreen;
-import com.hyep.movietracker.screens.MainScreen;
 import com.hyep.movietracker.screens.NewPasswordScreen;
-import com.hyep.movietracker.utils.FirestoreHelper;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SettingFragment extends Fragment {
 
