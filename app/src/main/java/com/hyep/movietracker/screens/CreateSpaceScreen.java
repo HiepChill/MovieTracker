@@ -18,6 +18,7 @@ public class CreateSpaceScreen extends AppCompatActivity {
 
     private EditText edtTag;
     private ImageView[] iconCases;
+    private ImageView imvArrowBack;
     private Button btnDone;
     private RelativeLayout case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15;
 
@@ -32,6 +33,7 @@ public class CreateSpaceScreen extends AppCompatActivity {
         // Initialize views
         edtTag = findViewById(R.id.tag_name);
         btnDone = findViewById(R.id.btnDone);
+        imvArrowBack = findViewById(R.id.imvArrowBack);
 
         case1 = findViewById(R.id.royalBlue);
         case2 = findViewById(R.id.purple);
@@ -61,6 +63,13 @@ public class CreateSpaceScreen extends AppCompatActivity {
         setIconClickListeners();
         setColorClickListeners();
         setDoneButtonClickListener();
+
+        imvArrowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setDoneButtonClickListener() {
@@ -127,20 +136,6 @@ public class CreateSpaceScreen extends AppCompatActivity {
             }
         };
     }
-
-//    private void updateColors() {
-//        // Update color for EditText
-//        edtTag.setTextColor(selectedColor);
-//
-//        // Update color for the selected icon
-//        if (selectedIcon != null) {
-//            selectedIcon.setSelected(!selectedIcon.isSelected());
-//            selectedIcon.setColorFilter(selectedColor); // Thiết lập màu cho biểu tượng
-////            selectedIcon.setColorFilter(selectedColor);
-//            // Đảo ngược trạng thái chọn của biểu tượng (nếu cần thiết)
-//        }
-//        }
-
 
     private void updateColors() {
         // Cập nhật màu sắc cho EditText

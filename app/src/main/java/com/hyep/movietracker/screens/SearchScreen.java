@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class SearchScreen extends AppCompatActivity implements OnItemClickListen
     private List<TV> tvList;
     private EditText edtSearch;
     private TextView txtMovie, txtTV;
+    private ImageButton imgBtnBack;
 
     private ProgressDialog progressDialog;
 
@@ -77,6 +79,9 @@ public class SearchScreen extends AppCompatActivity implements OnItemClickListen
 
         callMovieApi();
         callTVApi();
+
+        imgBtnBack = findViewById(R.id.imgBtnBack);
+        imgBtnBack.setOnClickListener(v -> finish());
 
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
