@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.DetailSpaceAdapter;
 import com.hyep.movietracker.models.Movie;
+import com.hyep.movietracker.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +49,14 @@ public class DetailTagScreen extends AppCompatActivity {
         Intent intent = getIntent();
         String nameTag = intent.getStringExtra("name");
         int colorId = intent.getIntExtra("color", 0);
-        Toast.makeText(this, String.valueOf(colorId), Toast.LENGTH_SHORT).show();
-//        int color = ContextCompat.getColor(this, colorId);
+        int color = ContextCompat.getColor(this, Utils.listColors[colorId]);
+
         imgBtnBack.setOnClickListener(view -> {
             finish();
         });
 
         tvNameTag.setText("#" + nameTag);
-//        tvNameTag.setTextColor(color);
+        tvNameTag.setTextColor(color);
 
         List<Movie> movies = new ArrayList<Movie>();
         movies.add(new Movie(653346,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Kingdom of the Planet of the Apes"));
