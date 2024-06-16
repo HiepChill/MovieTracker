@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -36,8 +38,7 @@ public class UpcomingScreen extends AppCompatActivity implements OnItemClickList
     private RecyclerView rcvMovieCard;
     private List<Movie> movies;
     private ProgressDialog progressDialog;
-
-
+    private ImageButton imgBtnBack;
 
 
     @Override
@@ -62,7 +63,13 @@ public class UpcomingScreen extends AppCompatActivity implements OnItemClickList
 
         callMovieApi();
 
-
+        imgBtnBack = findViewById(R.id.imgBtnBack);
+        imgBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void callMovieApi() {

@@ -1,5 +1,6 @@
 package com.hyep.movietracker.screens;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
@@ -69,7 +70,8 @@ public class DetailSpaceScreen extends AppCompatActivity{
         imgBtnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DetailSpaceScreen.this, "Search", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DetailSpaceScreen.this, SearchScreen.class);
+                startActivity(intent);
             }
         });
         
