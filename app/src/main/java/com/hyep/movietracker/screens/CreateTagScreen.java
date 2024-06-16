@@ -18,7 +18,7 @@ import com.hyep.movietracker.R;
 
 public class CreateTagScreen extends AppCompatActivity {
     private EditText edtTag;
-    private ImageView icon_enter_tag;
+    private ImageView imvArrowBack;
     private Button btnDone;
     private RelativeLayout case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15;
     private int selectedColor = Color.BLACK; // Default color for EditText
@@ -28,7 +28,7 @@ public class CreateTagScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_create_tag);
 
-        icon_enter_tag = findViewById(R.id.icon_enter_tag);
+        imvArrowBack = findViewById(R.id.imvArrowBack);
         btnDone = findViewById(R.id.btnDone);
         edtTag = findViewById(R.id.tag_name);
         case1 = findViewById(R.id.royalBlue);
@@ -72,9 +72,10 @@ public class CreateTagScreen extends AppCompatActivity {
             }
         });
 
-        icon_enter_tag.setOnClickListener(new View.OnClickListener() {
+        imvArrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
             }
         });
     }

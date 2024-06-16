@@ -1,6 +1,9 @@
 package com.hyep.movietracker.adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.utils.Utils;
+import com.hyep.movietracker.screens.DetailSpaceScreen;
 
 import java.util.ArrayList;
 
@@ -48,6 +52,14 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
         int color = ContextCompat.getColor(holder.itemView.getContext(), Utils.listColors[personalSpaceModelArrayList.get(position).getColor()]);
         ColorStateList colorStateList = ColorStateList.valueOf(color);
         ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailSpaceScreen.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
