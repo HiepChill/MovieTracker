@@ -27,6 +27,7 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.hyep.movietracker.Helpers.FirestoreHelper;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.CastDetailMovieAdapter;
 import com.hyep.movietracker.adapter.MediaDetailMovieAdapter;
@@ -69,6 +70,7 @@ public class DetailMovieScreen extends AppCompatActivity {
     private String idTrailer;
 
     private WebView wvTrailer;
+    private FirestoreHelper firestoreHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,12 +119,23 @@ public class DetailMovieScreen extends AppCompatActivity {
         //webview
         wvTrailer = findViewById(R.id.wvTrailer);
 
+        //firestorehelper
+        firestoreHelper = new FirestoreHelper(this);
+
 
         //onclick Button
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        imgBtnAddToSpace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String spaceId = "7ca002b0-0acc-4748-8091-ebd0c3129d2b";
+                firestoreHelper.addMovieToSpace(spaceId, String.valueOf(movieId));
             }
         });
 

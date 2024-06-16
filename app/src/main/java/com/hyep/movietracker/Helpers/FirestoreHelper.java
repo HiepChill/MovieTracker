@@ -1,4 +1,4 @@
-package com.hyep.movietracker.utils;
+package com.hyep.movietracker.Helpers;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.screens.CreateSpaceScreen;
@@ -45,6 +46,27 @@ public class FirestoreHelper {
                 .collection("spaces")
                 .document(space.getId())
                 .set(spaceData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Fail: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("FirestoreError", "Error adding document", e);
+                    }
+                });
+    }
+
+    public void addMovieToSpace(String spaceId, String movieId) {
+        db.collection("users")
+                .document(user.getUid())
+                .collection("spaces")
+                .document(spaceId)
+                .update("movies", FieldValue.arrayUnion(movieId))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
