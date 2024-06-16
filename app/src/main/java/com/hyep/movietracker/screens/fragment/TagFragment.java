@@ -1,5 +1,6 @@
 package com.hyep.movietracker.screens.fragment;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,11 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.TagAdapter;
 import com.hyep.movietracker.models.TagModel;
+import com.hyep.movietracker.screens.DetailTagScreen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +52,16 @@ public class TagFragment extends Fragment {
         setUpTagModelArrayList();
 
         tagAdapter = new TagAdapter(view.getContext(), tagModelArrayList);
+        tagAdapter.setOnItemClickListener(position -> {
+            TagModel clickedTag = tagModelArrayList.get(position);
+
+            Intent intent = new Intent(getActivity(), DetailTagScreen.class);
+            intent.putExtra("name",clickedTag.getName());
+            intent.putExtra("color", clickedTag.getColor());
+            startActivity(intent);
+        });
+
+
         rcvTag.setAdapter(tagAdapter);
         rcvTag.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
 
