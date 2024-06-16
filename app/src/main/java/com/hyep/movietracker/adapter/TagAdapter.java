@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.TagModel;
+import com.hyep.movietracker.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -41,25 +42,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull TagAdapter.MyViewHolder holder, int position) {
 
-        int[] tagColors = {
-                R.color.royalBlue,
-                R.color.purple,
-                R.color.magenta,
-                R.color.aquaGreen,
-                R.color.chromeYellow,
-                R.color.bluePurple,
-                R.color.blazeOrange,
-                R.color.red,
-                R.color.claret,
-                R.color.smokeyGrey,
-                R.color.purpleJam,
-                R.color.brown,
-                R.color.green,
-                R.color.cobaltBlue,
-                R.color.skyBlue,
-        };
-
-        int color = ContextCompat.getColor(holder.itemView.getContext(), tagColors[tagModelArrayList.get(position).getColor()]);
+        int color = ContextCompat.getColor(holder.itemView.getContext(), Utils.listColors[tagModelArrayList.get(position).getColor()]);
         ColorStateList colorStateList = ColorStateList.valueOf(color);
         ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
 
