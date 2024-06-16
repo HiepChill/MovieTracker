@@ -53,7 +53,7 @@ public class DetailSpaceScreen extends AppCompatActivity{
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DetailSpaceScreen.this, "Back", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
         
