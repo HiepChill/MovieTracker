@@ -1,6 +1,5 @@
 package com.hyep.movietracker.screens;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -30,7 +29,7 @@ public class CreateTagScreen extends AppCompatActivity {
 
         imvArrowBack = findViewById(R.id.imvArrowBack);
         btnDone = findViewById(R.id.btnDone);
-        edtTag = findViewById(R.id.tag_name);
+        edtTag = findViewById(R.id.edtSpaceName);
         case1 = findViewById(R.id.royalBlue);
         case2 = findViewById(R.id.purple);
         case3 = findViewById(R.id.magenta);

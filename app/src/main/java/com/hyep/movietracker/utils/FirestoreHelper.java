@@ -1,9 +1,20 @@
 package com.hyep.movietracker.utils;
 
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hyep.movietracker.models.PersonalSpaceModel;
+import com.hyep.movietracker.screens.CreateSpaceScreen;
 
 import java.text.Normalizer;
 import java.util.HashMap;
@@ -11,50 +22,41 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class FirestoreHelper {
-    FirebaseFirestore db;
-    FirebaseUser user;
-    String userId;
+    private FirebaseFirestore db;
+    private FirebaseUser user;
+    private Context context;
 
-    public FirestoreHelper() {
+    public FirestoreHelper(Context con) {
         db = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid();
+        context = con;
     }
 
-    public void createSpace() {
-        PersonalSpaceModel space = new PersonalSpaceModel(
-                "Movies of duong",
-                10,
-                1,
-                1
-        );
+    public void createSpace(PersonalSpaceModel space) {
+        Map<String, Object> spaceData = new HashMap<>();
+        spaceData.put("id", space.getId());
+        spaceData.put("name", space.getName());
+        spaceData.put("number", space.getSize());
+        spaceData.put("color", space.getColor());
+        spaceData.put("icon", space.getIcon());
+
         db.collection("users")
-                .document(userId);
-        Map<String, Object> spaceDetail = new HashMap<>();
-        spaceDetail.put("name", space.getName());
-        spaceDetail.put("color", space.getColor());
-        spaceDetail.put("icon", space.getIcon());
-//        db.collection("users")
-//                .document(userId)
-//                .collection("spaces")
-//                .document(generateId(space.getName()))
-//                .set(spaceDetail);
-    }
-
-    public String generateId(String string) {
-        String normalized = Normalizer.normalize(string, Normalizer.Form.NFD);
-
-        // Loại bỏ các dấu bằng cách loại bỏ các ký tự kết hợp
-        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        String noDiacritics = pattern.matcher(normalized).replaceAll("");
-
-        // Chuyển tất cả các ký tự thành chữ thường
-        noDiacritics = noDiacritics.toLowerCase();
-
-        // Loại bỏ khoảng trắng và ký tự đặc biệt
-        noDiacritics = noDiacritics.replaceAll("\\s+", "");
-        noDiacritics = noDiacritics.replaceAll("[^a-z0-9]", "");
-
-        return noDiacritics;
+                .document(user.getUid())
+                .collection("spaces")
+                .document(space.getId())
+                .set(spaceData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Fail: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("FirestoreError", "Error adding document", e);
+                    }
+                });
     }
 }

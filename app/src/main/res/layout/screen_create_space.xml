@@ -34,28 +34,17 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/ic_arrow_back" />
-
-            <!-- Icon LinearLayout -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="8dp">
-
-            </LinearLayout>
-
         </LinearLayout>
 
         <EditText
-            android:id="@+id/tag_name"
+            android:id="@+id/edtSpaceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="# Enter Tag"
+            android:hint="# Enter Space"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="24sp" />
-
     </LinearLayout>
 
     <!-- Color Selection Section -->
@@ -101,7 +90,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/magenta" />
 
                 <RelativeLayout
@@ -111,7 +100,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/magenta"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/aquaGreen" />
 
                 <RelativeLayout
@@ -121,7 +110,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/aquaGreen"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/chromeYellow" />
 
                 <RelativeLayout
@@ -131,7 +120,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/magenta"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/purple" />
 
                 <RelativeLayout
@@ -141,7 +130,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/purple"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/royalBlue" />
             </RelativeLayout>
 
@@ -156,7 +145,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/red" />
 
                 <RelativeLayout
@@ -166,7 +155,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/red"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/claret" />
 
                 <RelativeLayout
@@ -176,7 +165,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/claret"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/smokeyGrey" />
 
                 <RelativeLayout
@@ -186,7 +175,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/red"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/blazeOrange" />
 
                 <RelativeLayout
@@ -196,7 +185,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/blazeOrange"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/bluePurple" />
             </RelativeLayout>
 
@@ -211,7 +200,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/green" />
 
                 <RelativeLayout
@@ -221,7 +210,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/green"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/cobaltBlue" />
 
                 <RelativeLayout
@@ -231,7 +220,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/cobaltBlue"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/skyBlue" />
 
                 <RelativeLayout
@@ -241,7 +230,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/green"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/brown" />
 
                 <RelativeLayout
@@ -251,7 +240,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/brown"
-                    android:background="@drawable/bg_color_palette"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/purpleJam" />
             </RelativeLayout>
         </LinearLayout>
@@ -278,7 +267,7 @@
                     android:focusable="true"
                     android:padding="5dp"
                     android:src="@drawable/ic_space_logo_1"
-                    android:background="@drawable/ic_vien"
+                    android:background="@drawable/bg_icon_case"
                     android:layout_marginRight="20dp" />
 
                 <ImageView
@@ -289,7 +278,7 @@
                     android:focusable="true"
                     android:padding="5dp"
                     android:src="@drawable/ic_space_logo_2"
-                    android:background="@drawable/ic_vien"
+                    android:background="@drawable/bg_icon_case"
                     android:layout_marginRight="20dp" />
 
                 <ImageView
@@ -300,7 +289,7 @@
                     android:focusable="true"
                     android:padding="5dp"
                     android:src="@drawable/ic_space_logo_3"
-                    android:background="@drawable/ic_vien"
+                    android:background="@drawable/bg_icon_case"
                     android:layout_marginRight="20dp" />
 
                 <ImageView
@@ -311,7 +300,7 @@
                     android:focusable="true"
                     android:padding="5dp"
                     android:src="@drawable/ic_space_logo_4"
-                    android:background="@drawable/ic_vien" />
+                    android:background="@drawable/bg_icon_case" />
             </LinearLayout>
 
             <LinearLayout
@@ -331,7 +320,7 @@
                     android:padding="5dp"
                     android:focusable="true"
                     android:src="@drawable/ic_space_logo_5"
-                    android:background="@drawable/ic_vien"
+                    android:background="@drawable/bg_icon_case"
                     android:layout_marginRight="20dp" />
 
                 <ImageView
@@ -342,13 +331,8 @@
                     android:focusable="true"
                     android:padding="5dp"
                     android:src="@drawable/ic_space_logo_6"
-                    android:background="@drawable/ic_vien" />
+                    android:background="@drawable/bg_icon_case" />
             </LinearLayout>
-
-
-
-
-
         </LinearLayout>
     </LinearLayout>
 

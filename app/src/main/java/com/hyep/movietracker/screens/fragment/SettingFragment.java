@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +26,9 @@ import com.hyep.movietracker.screens.LoginScreen;
 import com.hyep.movietracker.screens.MainScreen;
 import com.hyep.movietracker.screens.NewPasswordScreen;
 import com.hyep.movietracker.utils.FirestoreHelper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingFragment extends Fragment {
 
@@ -45,15 +51,13 @@ public class SettingFragment extends Fragment {
         btnLogOut = view.findViewById(R.id.btnLogOut);
 
         mAuth = FirebaseAuth.getInstance();
-
         FirebaseUser user = mAuth.getCurrentUser();
+
         if (user!=null){
             String name = user.getDisplayName();
             Uri uri = user.getPhotoUrl();
             String email = user.getEmail();
 
-
-//            Toast.makeText(getActivity(),"Name"+ name, Toast.LENGTH_SHORT).show();
             tvName.setText(name);
             imvProfile.setImageURI(uri);
 
@@ -74,17 +78,6 @@ public class SettingFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
-            }
-        });
-
-        Button btnTest = view.findViewById(R.id.btnTest);
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(view.getContext(), user.getUid(), Toast.LENGTH_SHORT).show();
-                FirebaseFirestore.getInstance()
-                        .collection("users")
-                        .document(user.getUid());
             }
         });
 

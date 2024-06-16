@@ -1,7 +1,5 @@
 package com.hyep.movietracker.adapter;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -47,7 +45,7 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
     public void onBindViewHolder(@NonNull PersonalSpaceAdapter.MyViewHolder holder, int position) {
 
         holder.tvPersonalSpaceName.setText(personalSpaceModelArrayList.get(position).getName());
-        holder.tvPersonalSpaceNumber.setText(personalSpaceModelArrayList.get(position).getNumber() + " Movies");
+        holder.tvPersonalSpaceNumber.setText(personalSpaceModelArrayList.get(position).getSize() + " Movies");
         holder.imvPersonalSpaceIcon.setImageResource(Utils.listIcons[personalSpaceModelArrayList.get(position).getIcon()]);
         int color = ContextCompat.getColor(holder.itemView.getContext(), Utils.listColors[personalSpaceModelArrayList.get(position).getColor()]);
         ColorStateList colorStateList = ColorStateList.valueOf(color);
