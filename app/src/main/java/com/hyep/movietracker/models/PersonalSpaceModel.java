@@ -11,6 +11,9 @@ public class PersonalSpaceModel {
 
     private int icon;
 
+    public PersonalSpaceModel() {
+    }
+
     public PersonalSpaceModel(String id, String name, int size, int color, int icon) {
         this.id = id;
         this.name = name;

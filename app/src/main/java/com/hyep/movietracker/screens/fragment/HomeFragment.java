@@ -21,24 +21,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.hyep.movietracker.Listeners.LoadSpacesCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.PersonalSpaceAdapter;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.models.PersonalSpaceModel;
+import com.hyep.movietracker.screens.DetailSpaceScreen;
 import com.hyep.movietracker.screens.UpcomingScreen;
-import com.hyep.movietracker.utils.UniqueId;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class HomeFragment extends Fragment {
 
-    ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
-
-    ImageView imvSpace;
-    TextView tvSpace, tvCreate;
-    RecyclerView rcvPersonalSpace;
-    PersonalSpaceAdapter personalSpaceAdapter;
-    ImageButton btnUpComing, btnWatched;
+    private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
+    private ImageView imvSpace;
+    private TextView tvSpace, tvCreate;
+    private RecyclerView rcvPersonalSpace;
+    private PersonalSpaceAdapter personalSpaceAdapter;
+    private ImageButton btnUpComing, btnWatched;
+    private FirestoreHelper firestoreHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment {
         rcvPersonalSpace = view.findViewById(R.id.rcvPersonalSpace);
         btnUpComing = view.findViewById(R.id.imgBtnUpcoming);
 
+        firestoreHelper = new FirestoreHelper(view.getContext());
 
         btnUpComing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,24 +61,20 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        setUpPersonalSpaceArrayList();
-
         personalSpaceAdapter = new PersonalSpaceAdapter(view.getContext(), personalSpaceModelArrayList);
+
+        personalSpaceAdapter.setOnItemClickListener(position -> {
+            PersonalSpaceModel space = personalSpaceModelArrayList.get(position);
+
+            Intent intent = new Intent(view.getContext(), DetailSpaceScreen.class);
+            intent.putExtra("name", space.getName());
+            intent.putExtra("color", space.getColor());
+            intent.putExtra("icon", space.getIcon());
+            startActivity(intent);
+        });
+
         rcvPersonalSpace.setAdapter(personalSpaceAdapter);
         rcvPersonalSpace.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-
-        if (!personalSpaceModelArrayList.isEmpty()) {
-            tvCreate.setVisibility(View.GONE);
-            tvSpace.setVisibility(View.GONE);
-            imvSpace.setVisibility(View.GONE);
-            rcvPersonalSpace.setVisibility(View.VISIBLE);
-        }
-        else {
-            tvCreate.setVisibility(View.VISIBLE);
-            tvSpace.setVisibility(View.VISIBLE);
-            imvSpace.setVisibility(View.VISIBLE);
-            rcvPersonalSpace.setVisibility(View.GONE);
-        }
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -137,19 +135,33 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void setUpPersonalSpaceArrayList() {
-        PersonalSpaceModel[] personalSpaceModels = {
-                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Duong", 6,  0, 0),
-                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Hiep", 7,  1, 0),
-                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Thanh", 8,  2, 0),
-                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Thuy", 9,  3, 0),
-                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Duong", 6,  4, 1),
-                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Hiep", 7,  5, 1),
-                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Thanh", 8,  6, 1),
-                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Thuy", 9,  7, 1),
-        };
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpPersonalSpaceArrayList();
+    }
 
-        personalSpaceModelArrayList.addAll(Arrays.asList(personalSpaceModels));
+    private void setUpPersonalSpaceArrayList() {
+        firestoreHelper.loadSpaces(new LoadSpacesCallback() {
+            @Override
+            public void onLoaded(ArrayList<PersonalSpaceModel> spaces) {
+                personalSpaceModelArrayList.clear();
+                personalSpaceModelArrayList.addAll(spaces);
+                personalSpaceAdapter.notifyDataSetChanged();
+
+                if (!personalSpaceModelArrayList.isEmpty()) {
+                    tvCreate.setVisibility(View.GONE);
+                    tvSpace.setVisibility(View.GONE);
+                    imvSpace.setVisibility(View.GONE);
+                    rcvPersonalSpace.setVisibility(View.VISIBLE);
+                } else {
+                    tvCreate.setVisibility(View.VISIBLE);
+                    tvSpace.setVisibility(View.VISIBLE);
+                    imvSpace.setVisibility(View.VISIBLE);
+                    rcvPersonalSpace.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void showUndoSnackbar() {

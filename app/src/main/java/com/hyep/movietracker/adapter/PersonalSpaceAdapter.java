@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyep.movietracker.Listeners.OnItemClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.utils.Utils;
@@ -27,6 +28,15 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
     ArrayList<PersonalSpaceModel> personalSpaceModelArrayList;
     PersonalSpaceModel recentlyDeletedItem;
     int recentlyDeletedItemPosition;
+    OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public PersonalSpaceAdapter(Context context, ArrayList<PersonalSpaceModel> personalSpaceModelArrayList) {
         this.context = context;
@@ -38,7 +48,7 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
     public PersonalSpaceAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_personal_space, parent, false);
-        return new PersonalSpaceAdapter.MyViewHolder(view);
+        return new PersonalSpaceAdapter.MyViewHolder(view, listener);
     }
 
     @Override
@@ -50,19 +60,6 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
         int color = ContextCompat.getColor(holder.itemView.getContext(), Utils.listColors[personalSpaceModelArrayList.get(position).getColor()]);
         ColorStateList colorStateList = ColorStateList.valueOf(color);
         ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PersonalSpaceModel clickedSpace = personalSpaceModelArrayList.get(position);
-                Intent intent = new Intent(context, DetailSpaceScreen.class);
-                intent.putExtra("name", clickedSpace.getName());
-                intent.putExtra("size", clickedSpace.getSize());
-                intent.putExtra("icon", clickedSpace.getIcon());
-                intent.putExtra("color", clickedSpace.getColor());
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -84,17 +81,25 @@ public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdap
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        //similar to onCreate method
 
         TextView tvPersonalSpaceName, tvPersonalSpaceNumber;
         ImageView imvPersonalSpaceIcon;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             tvPersonalSpaceName = itemView.findViewById(R.id.tvPersonalSpaceName);
             tvPersonalSpaceNumber = itemView.findViewById(R.id.tvPersonalSpaceNumber);
             imvPersonalSpaceIcon = itemView.findViewById(R.id.imvPersonalSpaceIcon);
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            });
         }
     }
 }

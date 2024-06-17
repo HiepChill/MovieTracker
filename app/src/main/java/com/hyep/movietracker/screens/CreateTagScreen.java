@@ -71,6 +71,7 @@ public class CreateTagScreen extends AppCompatActivity {
                 TagModel tag = new TagModel(
                         UniqueId.generate(),
                         edtTagName.getText().toString(),
+                        0,
                         selectedColor
                 );
                 firestoreHelper.createTag(tag);
