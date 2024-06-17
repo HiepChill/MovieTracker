@@ -91,4 +91,30 @@ public class FirestoreHelper {
                 });
     }
 
+    public void createTag(TagModel tag) {
+        Map<String, Object> tagData = new HashMap<>();
+        tagData.put("id", tag.getId());
+        tagData.put("name", tag.getName());
+        tagData.put("color", tag.getColor());
+
+        db.collection("users")
+                .document(user.getUid())
+                .collection("tags")
+                .document(tag.getId())
+                .set(tagData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Fail: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("FirestoreError", "Error adding document", e);
+                    }
+                });
+    }
+
 }
