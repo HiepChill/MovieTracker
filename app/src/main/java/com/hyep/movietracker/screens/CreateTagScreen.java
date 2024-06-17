@@ -1,10 +1,7 @@
 package com.hyep.movietracker.screens;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,13 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.hyep.movietracker.R;
+import com.hyep.movietracker.helper.FirestoreHelper;
+import com.hyep.movietracker.models.TagModel;
+import com.hyep.movietracker.utils.UniqueId;
+import com.hyep.movietracker.utils.Utils;
 
 public class CreateTagScreen extends AppCompatActivity {
-    private EditText edtTag;
+    private EditText edtTagName;
     private ImageView imvArrowBack;
     private Button btnDone;
-    private RelativeLayout case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15;
-    private int selectedColor = Color.BLACK; // Default color for EditText
+    private RelativeLayout[] colorCases;
+    private int selectedColor = 0;
+    private FirestoreHelper firestoreHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,45 +31,39 @@ public class CreateTagScreen extends AppCompatActivity {
 
         imvArrowBack = findViewById(R.id.imvArrowBack);
         btnDone = findViewById(R.id.btnDone);
-        edtTag = findViewById(R.id.edtSpaceName);
-        case1 = findViewById(R.id.royalBlue);
-        case2 = findViewById(R.id.purple);
-        case3 = findViewById(R.id.magenta);
-        case4 = findViewById(R.id.aquaGreen);
-        case5 = findViewById(R.id.chromeYellow);
-        case6 = findViewById(R.id.bluePurple);
-        case7 = findViewById(R.id.blazeOrange);
-        case8 = findViewById(R.id.red);
-        case9 = findViewById(R.id.claret);
-        case10 = findViewById(R.id.smokeyGrey);
-        case11 = findViewById(R.id.purpleJam);
-        case12 = findViewById(R.id.brown);
-        case13 = findViewById(R.id.green);
-        case14 = findViewById(R.id.cobaltBlue);
-        case15 = findViewById(R.id.skyBlue);
+        edtTagName = findViewById(R.id.edtSpaceName);
 
-        View camelCase = findViewById(R.id.main);
-        camelCase.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                hideKeyboard();
-                return false;
-            }
-        });
+        colorCases = new RelativeLayout[15];
+        colorCases[0] = findViewById(R.id.royalBlue);
+        colorCases[1] = findViewById(R.id.purple);
+        colorCases[2] = findViewById(R.id.magenta);
+        colorCases[3] = findViewById(R.id.aquaGreen);
+        colorCases[4] = findViewById(R.id.chromeYellow);
+        colorCases[5] = findViewById(R.id.bluePurple);
+        colorCases[6] = findViewById(R.id.blazeOrange);
+        colorCases[7] = findViewById(R.id.red);
+        colorCases[8] = findViewById(R.id.claret);
+        colorCases[9] = findViewById(R.id.smokeyGrey);
+        colorCases[10] = findViewById(R.id.purpleJam);
+        colorCases[11] = findViewById(R.id.brown);
+        colorCases[12] = findViewById(R.id.green);
+        colorCases[13] = findViewById(R.id.cobaltBlue);
+        colorCases[14] = findViewById(R.id.skyBlue);
 
-        // Set click listeners for color options
-        setOnClickListeners();
+        Utils.setHideKeyboardOnTouch(this, findViewById(R.id.main));
+        setColorClickListeners();
 
+        firestoreHelper = new FirestoreHelper(this);
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Apply the selected color to EditText
-                edtTag.setTextColor(selectedColor);
-
-                // Perform other actions after the "Done" button is pressed
-                // For example, close the screen
-//                finish();
+                TagModel tag = new TagModel(
+                        UniqueId.generate(),
+                        edtTagName.getText().toString(),
+                        selectedColor
+                );
+                firestoreHelper.createTag(tag);
             }
         });
 
@@ -79,39 +75,17 @@ public class CreateTagScreen extends AppCompatActivity {
         });
     }
 
-    private void setOnClickListeners() {
-        case1.setOnClickListener(getColorClickListener(R.color.royalBlue));
-        case2.setOnClickListener(getColorClickListener(R.color.purple));
-        case3.setOnClickListener(getColorClickListener(R.color.magenta));
-        case4.setOnClickListener(getColorClickListener(R.color.aquaGreen));
-        case5.setOnClickListener(getColorClickListener(R.color.chromeYellow));
-        case6.setOnClickListener(getColorClickListener(R.color.bluePurple));
-        case7.setOnClickListener(getColorClickListener(R.color.blazeOrange));
-        case8.setOnClickListener(getColorClickListener(R.color.red));
-        case9.setOnClickListener(getColorClickListener(R.color.claret));
-        case10.setOnClickListener(getColorClickListener(R.color.smokeyGrey));
-        case11.setOnClickListener(getColorClickListener(R.color.purpleJam));
-        case12.setOnClickListener(getColorClickListener(R.color.brown));
-        case13.setOnClickListener(getColorClickListener(R.color.green));
-        case14.setOnClickListener(getColorClickListener(R.color.cobaltBlue));
-        case15.setOnClickListener(getColorClickListener(R.color.skyBlue));
-    }
-
-    private View.OnClickListener getColorClickListener(final int colorResId) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedColor = ContextCompat.getColor(CreateTagScreen.this, colorResId);
-                edtTag.setTextColor(selectedColor);
-            }
-        };
-    }
-
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        View view = getCurrentFocus();
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private void setColorClickListeners() {
+        for (int i = 0; i < colorCases.length; i++) {
+            int index = i;
+            colorCases[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedColor = index;
+                    int color = ContextCompat.getColor(CreateTagScreen.this, Utils.listColors[selectedColor]);
+                    edtTagName.setTextColor(color);
+                }
+            });
         }
     }
 }

@@ -25,6 +25,7 @@ import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.TagAdapter;
 import com.hyep.movietracker.models.TagModel;
 import com.hyep.movietracker.screens.DetailTagScreen;
+import com.hyep.movietracker.utils.UniqueId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -137,11 +138,11 @@ public class TagFragment extends Fragment {
 
     private void setUpTagModelArrayList() {
         TagModel[] tagModels = {
-                new TagModel("Action", 0),
-                new TagModel("Adventure", 1),
-                new TagModel("Animation", 2),
-                new TagModel("Comedy", 3),
-                new TagModel("Crime", 4),
+                new TagModel(UniqueId.generate(), "Action", 0),
+                new TagModel(UniqueId.generate(),"Adventure", 1),
+                new TagModel(UniqueId.generate(),"Animation", 2),
+                new TagModel(UniqueId.generate(),"Comedy", 3),
+                new TagModel(UniqueId.generate(),"Crime", 4),
         };
 
         tagModelArrayList.addAll(Arrays.asList(tagModels));

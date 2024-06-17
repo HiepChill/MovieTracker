@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hyep.movietracker.models.PersonalSpaceModel;
+import com.hyep.movietracker.models.TagModel;
 import com.hyep.movietracker.screens.CreateSpaceScreen;
 
 import java.text.Normalizer;
@@ -48,6 +49,32 @@ public class FirestoreHelper {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Fail: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("FirestoreError", "Error adding document", e);
+                    }
+                });
+    }
+
+    public void createTag(TagModel tag) {
+        Map<String, Object> tagData = new HashMap<>();
+        tagData.put("id", tag.getId());
+        tagData.put("name", tag.getName());
+        tagData.put("color", tag.getColor());
+
+        db.collection("users")
+                .document(user.getUid())
+                .collection("tags")
+                .document(tag.getId())
+                .set(tagData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
                         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
                     }
                 })

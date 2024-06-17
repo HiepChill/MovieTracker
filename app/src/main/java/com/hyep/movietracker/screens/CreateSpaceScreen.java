@@ -62,6 +62,7 @@ public class CreateSpaceScreen extends AppCompatActivity {
         iconCases[4] = findViewById(R.id.icon5);
         iconCases[5] = findViewById(R.id.icon6);
 
+        Utils.setHideKeyboardOnTouch(this, findViewById(R.id.main));
         setIconClickListeners();
         setColorClickListeners();
         setDoneButtonClickListener();
