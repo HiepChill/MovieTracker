@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.hyep.movietracker.Listeners.LoadSpacesCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.PersonalSpaceAdapter;
 import com.hyep.movietracker.helper.FirestoreHelper;
@@ -32,14 +33,13 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
-
-    ImageView imvSpace;
-    TextView tvSpace, tvCreate;
-    RecyclerView rcvPersonalSpace;
-    PersonalSpaceAdapter personalSpaceAdapter;
-    ImageButton btnUpComing, btnWatched;
-    FirestoreHelper firestoreHelper;
+    private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
+    private ImageView imvSpace;
+    private TextView tvSpace, tvCreate;
+    private RecyclerView rcvPersonalSpace;
+    private PersonalSpaceAdapter personalSpaceAdapter;
+    private ImageButton btnUpComing, btnWatched;
+    private FirestoreHelper firestoreHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,8 +61,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        setUpPersonalSpaceArrayList();
-
         personalSpaceAdapter = new PersonalSpaceAdapter(view.getContext(), personalSpaceModelArrayList);
 
         personalSpaceAdapter.setOnItemClickListener(position -> {
@@ -77,19 +75,6 @@ public class HomeFragment extends Fragment {
 
         rcvPersonalSpace.setAdapter(personalSpaceAdapter);
         rcvPersonalSpace.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-
-        if (!personalSpaceModelArrayList.isEmpty()) {
-            tvCreate.setVisibility(View.GONE);
-            tvSpace.setVisibility(View.GONE);
-            imvSpace.setVisibility(View.GONE);
-            rcvPersonalSpace.setVisibility(View.VISIBLE);
-        }
-        else {
-            tvCreate.setVisibility(View.VISIBLE);
-            tvSpace.setVisibility(View.VISIBLE);
-            imvSpace.setVisibility(View.VISIBLE);
-            rcvPersonalSpace.setVisibility(View.GONE);
-        }
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -150,8 +135,33 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void setUpPersonalSpaceArrayList() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpPersonalSpaceArrayList();
+    }
 
+    private void setUpPersonalSpaceArrayList() {
+        firestoreHelper.loadSpaces(new LoadSpacesCallback() {
+            @Override
+            public void onLoaded(ArrayList<PersonalSpaceModel> spaces) {
+                personalSpaceModelArrayList.clear();
+                personalSpaceModelArrayList.addAll(spaces);
+                personalSpaceAdapter.notifyDataSetChanged();
+
+                if (!personalSpaceModelArrayList.isEmpty()) {
+                    tvCreate.setVisibility(View.GONE);
+                    tvSpace.setVisibility(View.GONE);
+                    imvSpace.setVisibility(View.GONE);
+                    rcvPersonalSpace.setVisibility(View.VISIBLE);
+                } else {
+                    tvCreate.setVisibility(View.VISIBLE);
+                    tvSpace.setVisibility(View.VISIBLE);
+                    imvSpace.setVisibility(View.VISIBLE);
+                    rcvPersonalSpace.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void showUndoSnackbar() {

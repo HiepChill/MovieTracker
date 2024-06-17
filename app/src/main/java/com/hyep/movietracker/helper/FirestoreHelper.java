@@ -16,6 +16,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hyep.movietracker.Listeners.LoadSpacesCallback;
+import com.hyep.movietracker.Listeners.LoadTagsCallback;
 import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.models.TagModel;
 
@@ -42,28 +44,51 @@ public class FirestoreHelper {
                 .collection("tags");
     }
 
-    public void loadSpaces() {
-        ArrayList<PersonalSpaceModel> spacesList = new ArrayList<>();
+    public void loadSpaces(final LoadSpacesCallback loadSpacesCallback) {
         spaces.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            ArrayList<PersonalSpaceModel> spacesList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document != null) {
-                                    Log.d("Firestore", document.getId() + " => " + document.getData());
-                                    String id = document.getId();
-                                    String name = document.getString("name");
-                                    int size = Objects.requireNonNull(document.getLong("size")).intValue();
-                                    int color = Objects.requireNonNull(document.getLong("color")).intValue();
-                                    int icon = Objects.requireNonNull(document.getLong("icon")).intValue();
-                                    PersonalSpaceModel space = new PersonalSpaceModel(id, name, size, color, icon);
+                                    PersonalSpaceModel space = document.toObject(PersonalSpaceModel.class);
                                     spacesList.add(space);
                                 }
                             }
+                            Toast.makeText(context, "Loaded " + spacesList.size() + " spaces", Toast.LENGTH_SHORT).show();
+                            loadSpacesCallback.onLoaded(spacesList);
                         }
                         else {
+                            Toast.makeText(context, "Error getting documents: " + task.getException(), Toast.LENGTH_SHORT).show();
                             Log.e("FirestoreError", "Error getting documents", task.getException());
+                            loadSpacesCallback.onLoaded(new ArrayList<>());
+                        }
+                    }
+                });
+    }
+
+    public void loadTags(final LoadTagsCallback loadTagsCallback) {
+        tags.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<TagModel> tagsList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document != null) {
+                                    TagModel tag = document.toObject(TagModel.class);
+                                    tagsList.add(tag);
+                                }
+                            }
+                            Toast.makeText(context, "Loaded " + tagsList.size() + " tags", Toast.LENGTH_SHORT).show();
+                            loadTagsCallback.onLoaded(tagsList);
+                        }
+                        else {
+                            Toast.makeText(context, "Error getting documents: " + task.getException(), Toast.LENGTH_SHORT).show();
+                            Log.e("FirestoreError", "Error getting documents", task.getException());
+                            loadTagsCallback.onLoaded(new ArrayList<>());
                         }
                     }
                 });
