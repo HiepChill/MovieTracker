@@ -3,6 +3,7 @@
     <!-- Trạng thái khi biểu tượng được chọn -->
     <item android:state_selected="true">
         <shape android:shape="rectangle">
+            <corners android:radius="5dp"/>
             <solid android:color="@android:color/transparent" /> <!-- Nền trong suốt -->
             <stroke
                 android:width="2dp"
@@ -13,6 +14,7 @@
     <!-- Trạng thái mặc định -->
     <item>
         <shape android:shape="rectangle">
+            <corners android:radius="5dp"/>
             <solid android:color="@android:color/transparent" /> <!-- Nền trong suốt -->
             <stroke
                 android:width="2dp"

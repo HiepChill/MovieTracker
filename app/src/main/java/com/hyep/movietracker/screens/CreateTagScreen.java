@@ -7,8 +7,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.helper.FirestoreHelper;
@@ -28,10 +32,16 @@ public class CreateTagScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_create_tag);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         imvArrowBack = findViewById(R.id.imvArrowBack);
         btnDone = findViewById(R.id.btnDone);
-        edtTagName = findViewById(R.id.edtSpaceName);
+        edtTagName = findViewById(R.id.edtTagName);
 
         colorCases = new RelativeLayout[15];
         colorCases[0] = findViewById(R.id.royalBlue);
