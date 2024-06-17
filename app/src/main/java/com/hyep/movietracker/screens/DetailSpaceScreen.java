@@ -2,6 +2,7 @@ package com.hyep.movietracker.screens;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -58,12 +59,13 @@ public class DetailSpaceScreen extends AppCompatActivity{
         int color = intent.getIntExtra("color",0);
         int icon = intent.getIntExtra("icon",0);
 
+        int trueColor = ContextCompat.getColor(this, Utils.listColors[color]);
         tvSpaceName.setText(name);
-        tvSpaceName.setTextColor(ContextCompat.getColor(this, Utils.listColors[color]));
+        tvSpaceName.setTextColor(trueColor);
         ivLogo.setImageResource(Utils.listIcons[icon]);
         ivLogo.getDrawable().setColorFilter(getResources().getColor(Utils.listColors[color]), PorterDuff.Mode.SRC_IN);
-        imgBtnSearch.setBackgroundColor(ContextCompat.getColor(this, Utils.listColors[color]));
-        imgBtnNote.getDrawable().setColorFilter(getResources().getColor(Utils.listColors[color]), PorterDuff.Mode.SRC_IN);
+        imgBtnSearch.getBackground().setColorFilter(new PorterDuffColorFilter(trueColor, PorterDuff.Mode.SRC_IN));
+        imgBtnNote.getBackground().setColorFilter(new PorterDuffColorFilter(trueColor, PorterDuff.Mode.SRC_IN));
 
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
