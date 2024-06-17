@@ -138,11 +138,11 @@ public class TagFragment extends Fragment {
 
     private void setUpTagModelArrayList() {
         TagModel[] tagModels = {
-                new TagModel(UniqueId.generate(), "Action", 0),
-                new TagModel(UniqueId.generate(),"Adventure", 1),
-                new TagModel(UniqueId.generate(),"Animation", 2),
-                new TagModel(UniqueId.generate(),"Comedy", 3),
-                new TagModel(UniqueId.generate(),"Crime", 4),
+                new TagModel(UniqueId.generate(), "Action", 0, 0),
+                new TagModel(UniqueId.generate(),"Adventure", 0, 1),
+                new TagModel(UniqueId.generate(),"Animation", 0, 2),
+                new TagModel(UniqueId.generate(),"Comedy", 0, 3),
+                new TagModel(UniqueId.generate(),"Crime", 0, 4),
         };
 
         tagModelArrayList.addAll(Arrays.asList(tagModels));
