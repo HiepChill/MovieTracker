@@ -67,8 +67,8 @@ public class FirestoreHelper {
 
     public void addMovieToSpace(String spaceId, String movieId) {
         db.collection("users")
-                .document(user.getUid()).
-                collection("spaces")
+                .document(user.getUid())
+                .collection("spaces")
                 .document(spaceId)
                 .collection("movies")
                 .document(movieId)
@@ -76,7 +76,7 @@ public class FirestoreHelper {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Movie ID added successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Movie added successfully", Toast.LENGTH_SHORT).show();
 
                     }
                 })
@@ -84,7 +84,7 @@ public class FirestoreHelper {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
-                        Toast.makeText(context, "Failed to add movie ID: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Failed to add movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                         Log.e("FirestoreError", "Error adding document", e);
                     }
