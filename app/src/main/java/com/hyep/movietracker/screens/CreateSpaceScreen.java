@@ -1,6 +1,8 @@
 package com.hyep.movietracker.screens;
 
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,8 +10,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.PersonalSpaceModel;
@@ -28,12 +34,19 @@ public class CreateSpaceScreen extends AppCompatActivity {
     private int selectedColor = 0;
     private int selectedIcon = 0;
     private ImageView selectedIconCase = null;
+    private ImageView previousIconCase = null;
     private FirestoreHelper firestoreHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_create_space);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         edtSpaceName = findViewById(R.id.edtSpaceName);
         btnDone = findViewById(R.id.btnDone);
@@ -64,6 +77,7 @@ public class CreateSpaceScreen extends AppCompatActivity {
         iconCases[4] = findViewById(R.id.icon5);
         iconCases[5] = findViewById(R.id.icon6);
 
+        Utils.setHideKeyboardOnTouch(this, findViewById(R.id.main));
         setIconClickListeners();
         setColorClickListeners();
         setDoneButtonClickListener();
@@ -131,15 +145,25 @@ public class CreateSpaceScreen extends AppCompatActivity {
         int color = ContextCompat.getColor(CreateSpaceScreen.this, Utils.listColors[selectedColor]);
         edtSpaceName.setTextColor(color);
 
+        // Reset the color of the previously selected icon to white, if it exists
+        if (previousIconCase != null) {
+            previousIconCase.setColorFilter(Color.WHITE);
+            previousIconCase.getBackground().setColorFilter(null);  // Reset any background color filter
+        }
+
+        // Apply the selected color to the current icon
         if (selectedIconCase != null) {
             boolean isSelected = selectedIconCase.isSelected();
             selectedIconCase.setColorFilter(color);
 
             if (isSelected) {
-                selectedIconCase.setBackgroundResource(R.drawable.bg_icon_case);
+                selectedIconCase.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN));
             } else {
                 selectedIconCase.setColorFilter(Color.WHITE);
             }
+
+            // Update the previousIconCase to the currently selected icon
+            previousIconCase = selectedIconCase;
         }
     }
 }

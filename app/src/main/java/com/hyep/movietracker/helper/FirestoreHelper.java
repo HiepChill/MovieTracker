@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hyep.movietracker.models.PersonalSpaceModel;
+import com.hyep.movietracker.models.TagModel;
 import com.hyep.movietracker.screens.CreateSpaceScreen;
 
 import java.text.Normalizer;
@@ -63,6 +64,7 @@ public class FirestoreHelper {
                 });
     }
 
+
     public void addMovieToSpace(String spaceId, String movieId) {
         db.collection("users")
                 .document(user.getUid()).
@@ -75,12 +77,15 @@ public class FirestoreHelper {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(context, "Movie ID added successfully", Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+
                         Toast.makeText(context, "Failed to add movie ID: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                         Log.e("FirestoreError", "Error adding document", e);
                     }
                 });

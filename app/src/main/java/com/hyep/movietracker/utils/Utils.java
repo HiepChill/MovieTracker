@@ -1,5 +1,11 @@
 package com.hyep.movietracker.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
 import com.hyep.movietracker.R;
 
 public class Utils {
@@ -36,4 +42,22 @@ public class Utils {
             R.drawable.ic_space_logo_5,
             R.drawable.ic_space_logo_6,
     };
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public static void setHideKeyboardOnTouch(Activity activity, View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(activity);
+                return false;
+            }
+        });
+    }
 }

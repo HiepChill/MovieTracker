@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,15 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.MyViewHolder> {
     ArrayList<TagModel> tagModelArrayList;
     TagModel recentlyDeletedItem;
     int recentlyDeletedItemPosition;
+    OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public TagAdapter(Context context, ArrayList<TagModel> tagModelArrayList) {
         this.context = context;
@@ -36,7 +46,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.MyViewHolder> {
     public TagAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_tag, parent, false);
-        return new TagAdapter.MyViewHolder(view);
+        return new TagAdapter.MyViewHolder(view, listener);
     }
 
     @Override
@@ -71,10 +81,19 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.MyViewHolder> {
 
         TextView tvTagName;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             tvTagName = itemView.findViewById(R.id.tvTagName);
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            });
         }
     }
 }
