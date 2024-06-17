@@ -25,6 +25,7 @@ import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.PersonalSpaceAdapter;
 import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.screens.UpcomingScreen;
+import com.hyep.movietracker.utils.UniqueId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -138,14 +139,14 @@ public class HomeFragment extends Fragment {
 
     private void setUpPersonalSpaceArrayList() {
         PersonalSpaceModel[] personalSpaceModels = {
-                new PersonalSpaceModel("Phim cua Duong", 6,  0, 0),
-                new PersonalSpaceModel("Phim cua Hiep", 7,  1, 0),
-                new PersonalSpaceModel("Phim cua Thanh", 8,  2, 0),
-                new PersonalSpaceModel("Phim cua Thuy", 9,  3, 0),
-                new PersonalSpaceModel("Phim cua Duong", 6,  4, 1),
-                new PersonalSpaceModel("Phim cua Hiep", 7,  5, 1),
-                new PersonalSpaceModel("Phim cua Thanh", 8,  6, 1),
-                new PersonalSpaceModel("Phim cua Thuy", 9,  7, 1),
+                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Duong", 6,  0, 0),
+                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Hiep", 7,  1, 0),
+                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Thanh", 8,  2, 0),
+                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Thuy", 9,  3, 0),
+                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Duong", 6,  4, 1),
+                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Hiep", 7,  5, 1),
+                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Thanh", 8,  6, 1),
+                new PersonalSpaceModel(UniqueId.generate(),"Phim cua Thuy", 9,  7, 1),
         };
 
         personalSpaceModelArrayList.addAll(Arrays.asList(personalSpaceModels));

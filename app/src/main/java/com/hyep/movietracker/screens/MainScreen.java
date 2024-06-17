@@ -33,7 +33,6 @@ public class MainScreen extends AppCompatActivity {
     FloatingActionButton fabAdd;
     View popupCreateNew;
     ImageButton imgBtnCreateSpace, imgBtnCreateTag;
-
     private FirebaseAuth mAuth;
 
     @Override
@@ -104,7 +103,6 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void replaceFragment(Fragment fragment) {

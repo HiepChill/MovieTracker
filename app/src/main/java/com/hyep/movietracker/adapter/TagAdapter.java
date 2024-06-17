@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.TagModel;
+import com.hyep.movietracker.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,15 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.MyViewHolder> {
     ArrayList<TagModel> tagModelArrayList;
     TagModel recentlyDeletedItem;
     int recentlyDeletedItemPosition;
+    OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public TagAdapter(Context context, ArrayList<TagModel> tagModelArrayList) {
         this.context = context;
@@ -35,31 +46,13 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.MyViewHolder> {
     public TagAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_tag, parent, false);
-        return new TagAdapter.MyViewHolder(view);
+        return new TagAdapter.MyViewHolder(view, listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TagAdapter.MyViewHolder holder, int position) {
 
-        int[] tagColors = {
-                R.color.royalBlue,
-                R.color.purple,
-                R.color.magenta,
-                R.color.aquaGreen,
-                R.color.chromeYellow,
-                R.color.bluePurple,
-                R.color.blazeOrange,
-                R.color.red,
-                R.color.claret,
-                R.color.smokeyGrey,
-                R.color.purpleJam,
-                R.color.brown,
-                R.color.green,
-                R.color.cobaltBlue,
-                R.color.skyBlue,
-        };
-
-        int color = ContextCompat.getColor(holder.itemView.getContext(), tagColors[tagModelArrayList.get(position).getColor()]);
+        int color = ContextCompat.getColor(holder.itemView.getContext(), Utils.listColors[tagModelArrayList.get(position).getColor()]);
         ColorStateList colorStateList = ColorStateList.valueOf(color);
         ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
 
@@ -88,10 +81,19 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.MyViewHolder> {
 
         TextView tvTagName;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             tvTagName = itemView.findViewById(R.id.tvTagName);
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            });
         }
     }
 }
