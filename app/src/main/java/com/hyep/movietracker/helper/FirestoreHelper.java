@@ -12,39 +12,97 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.hyep.movietracker.Listeners.LoadSpacesCallback;
+import com.hyep.movietracker.Listeners.LoadTagsCallback;
 import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.models.TagModel;
-import com.hyep.movietracker.screens.CreateSpaceScreen;
 
-import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
+import java.util.Objects;
 
 public class FirestoreHelper {
     private FirebaseFirestore db;
     private FirebaseUser user;
     private Context context;
+    private CollectionReference spaces, tags;
 
     public FirestoreHelper(Context con) {
         db = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         context = con;
+        spaces = db.collection("users")
+                .document(user.getUid())
+                .collection("spaces");
+        tags = db.collection("users")
+                .document(user.getUid())
+                .collection("tags");
+    }
+
+    public void loadSpaces(final LoadSpacesCallback loadSpacesCallback) {
+        spaces.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<PersonalSpaceModel> spacesList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document != null) {
+                                    PersonalSpaceModel space = document.toObject(PersonalSpaceModel.class);
+                                    spacesList.add(space);
+                                }
+                            }
+                            Toast.makeText(context, "Loaded " + spacesList.size() + " spaces", Toast.LENGTH_SHORT).show();
+                            loadSpacesCallback.onLoaded(spacesList);
+                        }
+                        else {
+                            Toast.makeText(context, "Error getting documents: " + task.getException(), Toast.LENGTH_SHORT).show();
+                            Log.e("FirestoreError", "Error getting documents", task.getException());
+                            loadSpacesCallback.onLoaded(new ArrayList<>());
+                        }
+                    }
+                });
+    }
+
+    public void loadTags(final LoadTagsCallback loadTagsCallback) {
+        tags.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<TagModel> tagsList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document != null) {
+                                    TagModel tag = document.toObject(TagModel.class);
+                                    tagsList.add(tag);
+                                }
+                            }
+                            Toast.makeText(context, "Loaded " + tagsList.size() + " tags", Toast.LENGTH_SHORT).show();
+                            loadTagsCallback.onLoaded(tagsList);
+                        }
+                        else {
+                            Toast.makeText(context, "Error getting documents: " + task.getException(), Toast.LENGTH_SHORT).show();
+                            Log.e("FirestoreError", "Error getting documents", task.getException());
+                            loadTagsCallback.onLoaded(new ArrayList<>());
+                        }
+                    }
+                });
     }
 
     public void createSpace(PersonalSpaceModel space) {
         Map<String, Object> spaceData = new HashMap<>();
         spaceData.put("id", space.getId());
         spaceData.put("name", space.getName());
-        spaceData.put("number", space.getSize());
+        spaceData.put("size", space.getSize());
         spaceData.put("color", space.getColor());
         spaceData.put("icon", space.getIcon());
 
-        db.collection("users")
-                .document(user.getUid())
-                .collection("spaces")
-                .document(space.getId())
+        spaces.document(space.getId())
                 .set(spaceData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -65,12 +123,10 @@ public class FirestoreHelper {
         Map<String, Object> tagData = new HashMap<>();
         tagData.put("id", tag.getId());
         tagData.put("name", tag.getName());
+        tagData.put("size", tag.getSize());
         tagData.put("color", tag.getColor());
 
-        db.collection("users")
-                .document(user.getUid())
-                .collection("tags")
-                .document(tag.getId())
+        tags.document(tag.getId())
                 .set(tagData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

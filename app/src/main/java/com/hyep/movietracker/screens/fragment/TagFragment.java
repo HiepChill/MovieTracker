@@ -21,8 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.hyep.movietracker.Listeners.LoadTagsCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.TagAdapter;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.models.TagModel;
 import com.hyep.movietracker.screens.DetailTagScreen;
 import com.hyep.movietracker.utils.UniqueId;
@@ -32,12 +34,12 @@ import java.util.Arrays;
 
 public class TagFragment extends Fragment {
 
-    ArrayList<TagModel> tagModelArrayList = new ArrayList<>();
-
-    ImageView imvTag;
-    TextView tvNoTag, tvCreateTag;
-    RecyclerView rcvTag;
-    TagAdapter tagAdapter;
+    private ArrayList<TagModel> tagModelArrayList = new ArrayList<>();
+    private ImageView imvTag;
+    private TextView tvNoTag, tvCreateTag;
+    private RecyclerView rcvTag;
+    private TagAdapter tagAdapter;
+    private FirestoreHelper firestoreHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +52,7 @@ public class TagFragment extends Fragment {
         tvCreateTag = view.findViewById(R.id.tvCreateTag);
         rcvTag = view.findViewById(R.id.rcvTag);
 
-        setUpTagModelArrayList();
+        firestoreHelper = new FirestoreHelper(view.getContext());
 
         tagAdapter = new TagAdapter(view.getContext(), tagModelArrayList);
         tagAdapter.setOnItemClickListener(position -> {
@@ -65,18 +67,6 @@ public class TagFragment extends Fragment {
 
         rcvTag.setAdapter(tagAdapter);
         rcvTag.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-
-        if (!tagModelArrayList.isEmpty()) {
-            imvTag.setVisibility(View.GONE);
-            tvNoTag.setVisibility(View.GONE);
-            tvCreateTag.setVisibility(View.GONE);
-            rcvTag.setVisibility(View.VISIBLE);
-        } else {
-            imvTag.setVisibility(View.VISIBLE);
-            tvNoTag.setVisibility(View.VISIBLE);
-            tvCreateTag.setVisibility(View.VISIBLE);
-            rcvTag.setVisibility(View.GONE);
-        }
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -136,16 +126,33 @@ public class TagFragment extends Fragment {
         return view;
     }
 
-    private void setUpTagModelArrayList() {
-        TagModel[] tagModels = {
-                new TagModel(UniqueId.generate(), "Action", 0),
-                new TagModel(UniqueId.generate(),"Adventure", 1),
-                new TagModel(UniqueId.generate(),"Animation", 2),
-                new TagModel(UniqueId.generate(),"Comedy", 3),
-                new TagModel(UniqueId.generate(),"Crime", 4),
-        };
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpTagModelArrayList();
+    }
 
-        tagModelArrayList.addAll(Arrays.asList(tagModels));
+    private void setUpTagModelArrayList() {
+        firestoreHelper.loadTags(new LoadTagsCallback() {
+            @Override
+            public void onLoaded(ArrayList<TagModel> tags) {
+                tagModelArrayList.clear();
+                tagModelArrayList.addAll(tags);
+                tagAdapter.notifyDataSetChanged();
+
+                if (!tagModelArrayList.isEmpty()) {
+                    imvTag.setVisibility(View.GONE);
+                    tvNoTag.setVisibility(View.GONE);
+                    tvCreateTag.setVisibility(View.GONE);
+                    rcvTag.setVisibility(View.VISIBLE);
+                } else {
+                    imvTag.setVisibility(View.VISIBLE);
+                    tvNoTag.setVisibility(View.VISIBLE);
+                    tvCreateTag.setVisibility(View.VISIBLE);
+                    rcvTag.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void showUndoSnackbar() {
