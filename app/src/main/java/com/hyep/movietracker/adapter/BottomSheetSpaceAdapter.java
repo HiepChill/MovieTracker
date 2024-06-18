@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyep.movietracker.Listeners.OnSpaceClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.utils.Utils;
@@ -25,11 +26,12 @@ public class BottomSheetSpaceAdapter extends RecyclerView.Adapter<BottomSheetSpa
 
     Context context;
     ArrayList<PersonalSpaceModel> personalSpaceModelArrayList;
+    OnSpaceClickListener listener;
 
-
-    public BottomSheetSpaceAdapter(Context context, ArrayList<PersonalSpaceModel> personalSpaceModelArrayList) {
+    public BottomSheetSpaceAdapter(Context context, ArrayList<PersonalSpaceModel> personalSpaceModelArrayList, OnSpaceClickListener listener) {
         this.context = context;
         this.personalSpaceModelArrayList = personalSpaceModelArrayList;
+        this.listener = listener;
     }
     @NonNull
     @Override
@@ -51,7 +53,7 @@ public class BottomSheetSpaceAdapter extends RecyclerView.Adapter<BottomSheetSpa
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
+                listener.onSpaceClicked(id);
             }
         });
     }

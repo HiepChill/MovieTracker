@@ -3,6 +3,7 @@ package com.hyep.movietracker.screens.fragment;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.hyep.movietracker.Listeners.LoadSpacesCallback;
+import com.hyep.movietracker.Listeners.OnSpaceClickListener;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.BottomSheetSpaceAdapter;
 import com.hyep.movietracker.helper.FirestoreHelper;
@@ -19,17 +21,33 @@ import com.hyep.movietracker.models.PersonalSpaceModel;
 
 import java.util.ArrayList;
 
-public class BottomSheetSpaceDetailMovie extends BottomSheetDialogFragment {
+public class BottomSheetSpaceDetailMovie extends BottomSheetDialogFragment implements OnSpaceClickListener {
 
     private FirestoreHelper firestoreHelper;
     private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
     BottomSheetSpaceAdapter bottomSheetSpaceAdapter;
-
+    private static final String ARG_MOVIE_ID = "movie_id";
+    private int movieId;
 
     public BottomSheetSpaceDetailMovie() {
 
     }
 
+    public static BottomSheetSpaceDetailMovie newInstance(int movieId) {
+        BottomSheetSpaceDetailMovie fragment = new BottomSheetSpaceDetailMovie();
+        Bundle args = new Bundle();
+        args.putString(ARG_MOVIE_ID, String.valueOf(movieId));
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            movieId = Integer.parseInt(getArguments().getString(ARG_MOVIE_ID));
+        }
+    }
 
     @NonNull
     @Override
@@ -42,7 +60,7 @@ public class BottomSheetSpaceDetailMovie extends BottomSheetDialogFragment {
         RecyclerView rvSpace = view.findViewById(R.id.rvListSpace);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvSpace.setLayoutManager(linearLayoutManager);
-        bottomSheetSpaceAdapter = new BottomSheetSpaceAdapter(getContext(), personalSpaceModelArrayList);
+        bottomSheetSpaceAdapter = new BottomSheetSpaceAdapter(getContext(), personalSpaceModelArrayList, this);
         rvSpace.setAdapter(bottomSheetSpaceAdapter);
 
 
@@ -67,4 +85,8 @@ public class BottomSheetSpaceDetailMovie extends BottomSheetDialogFragment {
         });
     }
 
+    @Override
+    public void onSpaceClicked(String id) {
+        firestoreHelper.addMovieToSpace(id, String.valueOf(movieId));
+    }
 }

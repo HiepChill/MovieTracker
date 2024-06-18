@@ -84,6 +84,7 @@ public class DetailMovieScreen extends AppCompatActivity {
     private WebView wvTrailer;
     private FirestoreHelper firestoreHelper;
     private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
+    private int movieId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +97,7 @@ public class DetailMovieScreen extends AppCompatActivity {
         });
         Intent intent = getIntent();
 
-        int movieId = intent.getIntExtra("movieId",0);
+        movieId = intent.getIntExtra("movieId",0);
 
         //text view
         tvIMDBScore = findViewById(R.id.tvIMDBScore);
@@ -169,7 +170,7 @@ public class DetailMovieScreen extends AppCompatActivity {
     }
 
     private void showListSpace() {
-        BottomSheetSpaceDetailMovie bottomSheetSpaceDetailMovie = new BottomSheetSpaceDetailMovie();
+        BottomSheetSpaceDetailMovie bottomSheetSpaceDetailMovie = BottomSheetSpaceDetailMovie.newInstance(movieId);
         bottomSheetSpaceDetailMovie.show(getSupportFragmentManager(), bottomSheetSpaceDetailMovie.getTag());
     }
 
