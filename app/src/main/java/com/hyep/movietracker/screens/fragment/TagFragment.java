@@ -157,7 +157,12 @@ public class TagFragment extends Fragment {
 
     private void showUndoSnackbar() {
         Snackbar snackbar = Snackbar.make(rcvTag, "Tag deleted", Snackbar.LENGTH_LONG);
-        snackbar.setAction("Undo", v -> tagAdapter.undoDelete());
+        snackbar.setAction("Undo", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagAdapter.undoDelete();
+            }
+        });
         snackbar.show();
     }
 }

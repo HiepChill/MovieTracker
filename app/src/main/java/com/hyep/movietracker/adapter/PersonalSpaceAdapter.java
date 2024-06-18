@@ -24,11 +24,11 @@ import java.util.ArrayList;
 
 public class PersonalSpaceAdapter extends RecyclerView.Adapter<PersonalSpaceAdapter.MyViewHolder>{
 
-    Context context;
-    ArrayList<PersonalSpaceModel> personalSpaceModelArrayList;
-    PersonalSpaceModel recentlyDeletedItem;
-    int recentlyDeletedItemPosition;
-    OnItemClickListener listener;
+    private Context context;
+    private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList;
+    private PersonalSpaceModel recentlyDeletedItem;
+    private int recentlyDeletedItemPosition;
+    private OnItemClickListener listener;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
