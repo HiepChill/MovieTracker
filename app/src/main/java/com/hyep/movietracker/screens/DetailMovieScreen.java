@@ -1,14 +1,21 @@
 package com.hyep.movietracker.screens;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +34,8 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.hyep.movietracker.Listeners.LoadSpacesCallback;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.CastDetailMovieAdapter;
 import com.hyep.movietracker.adapter.MediaDetailMovieAdapter;
@@ -38,10 +47,14 @@ import com.hyep.movietracker.models.CastResponse;
 import com.hyep.movietracker.models.MediaModel;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
+import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.models.TrailerModel;
 import com.hyep.movietracker.models.TrailerResponse;
+import com.hyep.movietracker.screens.fragment.BottomSheetSpaceDetailMovie;
+import com.hyep.movietracker.screens.fragment.BottomSheetTagDetailMovie;
 import com.hyep.movietracker.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -69,6 +82,9 @@ public class DetailMovieScreen extends AppCompatActivity {
     private String idTrailer;
 
     private WebView wvTrailer;
+    private FirestoreHelper firestoreHelper;
+    private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
+    private int movieId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +97,7 @@ public class DetailMovieScreen extends AppCompatActivity {
         });
         Intent intent = getIntent();
 
-        int movieId = intent.getIntExtra("movieId",0);
+        movieId = intent.getIntExtra("movieId",0);
 
         //text view
         tvIMDBScore = findViewById(R.id.tvIMDBScore);
@@ -117,6 +133,9 @@ public class DetailMovieScreen extends AppCompatActivity {
         //webview
         wvTrailer = findViewById(R.id.wvTrailer);
 
+        //firestorehelper
+        firestoreHelper = new FirestoreHelper(this);
+
 
         //onclick Button
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +145,22 @@ public class DetailMovieScreen extends AppCompatActivity {
             }
         });
 
+        imgBtnAddToSpace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showListSpace();
+            }
+        });
+
+        imgBtnAddTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showListTag();
+            }
+        });
+
+
+
         // call api
         callDetailMovieById(movieId);
         callListCastById(movieId);
@@ -133,6 +168,24 @@ public class DetailMovieScreen extends AppCompatActivity {
         callRecommendationById(movieId);
         callTrailerById(movieId);
     }
+
+    private void showListSpace() {
+        BottomSheetSpaceDetailMovie bottomSheetSpaceDetailMovie = BottomSheetSpaceDetailMovie.newInstance(movieId);
+        bottomSheetSpaceDetailMovie.show(getSupportFragmentManager(), bottomSheetSpaceDetailMovie.getTag());
+    }
+
+    private void showListTag() {
+        BottomSheetTagDetailMovie bottomSheetTagDetailMovie = BottomSheetTagDetailMovie.newInstance(movieId);
+        bottomSheetTagDetailMovie.show(getSupportFragmentManager(), bottomSheetTagDetailMovie.getTag());
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
 
     private void callDetailMovieById(int movieId){
         APIClient.getApiInterface().getDetailMovieById(movieId, Utils.API_KEY, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<Movie>() {
