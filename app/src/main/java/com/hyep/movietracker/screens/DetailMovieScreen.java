@@ -51,6 +51,7 @@ import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.models.TrailerModel;
 import com.hyep.movietracker.models.TrailerResponse;
 import com.hyep.movietracker.screens.fragment.BottomSheetSpaceDetailMovie;
+import com.hyep.movietracker.screens.fragment.BottomSheetTagDetailMovie;
 import com.hyep.movietracker.utils.Utils;
 
 import java.util.ArrayList;
@@ -146,11 +147,18 @@ public class DetailMovieScreen extends AppCompatActivity {
         imgBtnAddToSpace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String spaceId = "7ca002b0-0acc-4748-8091-ebd0c3129d2b";
-//                firestoreHelper.addMovieToSpace(spaceId, String.valueOf(movieId));
                 showListSpace();
             }
         });
+
+        imgBtnAddTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showListTag();
+            }
+        });
+
+
 
         // call api
         callDetailMovieById(movieId);
@@ -165,22 +173,18 @@ public class DetailMovieScreen extends AppCompatActivity {
         bottomSheetSpaceDetailMovie.show(getSupportFragmentManager(), bottomSheetSpaceDetailMovie.getTag());
     }
 
+    private void showListTag() {
+        BottomSheetTagDetailMovie bottomSheetTagDetailMovie = new BottomSheetTagDetailMovie();
+        bottomSheetTagDetailMovie.show(getSupportFragmentManager(), bottomSheetTagDetailMovie.getTag());
+    }
+
+
     @Override
     public void onResume() {
         super.onResume();
-        setUpPersonalSpaceArrayList();
     }
 
-    private void setUpPersonalSpaceArrayList() {
-        firestoreHelper.loadSpaces(new LoadSpacesCallback() {
-            @Override
-            public void onLoaded(ArrayList<PersonalSpaceModel> spaces) {
-                personalSpaceModelArrayList.clear();
-                personalSpaceModelArrayList.addAll(spaces);
 
-            }
-        });
-    }
 
     private void callDetailMovieById(int movieId){
         APIClient.getApiInterface().getDetailMovieById(movieId, Utils.API_KEY, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<Movie>() {

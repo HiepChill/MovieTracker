@@ -46,11 +46,12 @@ public class BottomSheetSpaceAdapter extends RecyclerView.Adapter<BottomSheetSpa
         int color = ContextCompat.getColor(holder.itemView.getContext(), Utils.listColors[personalSpaceModelArrayList.get(position).getColor()]);
         ColorStateList colorStateList = ColorStateList.valueOf(color);
         ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
+        String id = personalSpaceModelArrayList.get(position).getId();
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -63,7 +64,7 @@ public class BottomSheetSpaceAdapter extends RecyclerView.Adapter<BottomSheetSpa
 
     public static class SpaceViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvPersonalSpaceName, tvPersonalSpaceNumber;
+        TextView tvPersonalSpaceName;
         ImageView imvPersonalSpaceIcon;
         CardView container;
 
