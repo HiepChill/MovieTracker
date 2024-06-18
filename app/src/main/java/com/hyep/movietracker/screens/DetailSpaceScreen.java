@@ -30,7 +30,8 @@ import java.util.List;
 
 public class DetailSpaceScreen extends AppCompatActivity{
 
-    private TextView tvSpaceName;
+    private TextView tvSpaceName, tvSize;
+
     private ImageButton imgBtnBack, imgBtnSpaceSetting, imgBtnSearch, imgBtnNote;
 
     private RecyclerView rvItemSpace;
@@ -53,15 +54,18 @@ public class DetailSpaceScreen extends AppCompatActivity{
         imgBtnSearch = (ImageButton) findViewById(R.id.imgBtnSearch);
         imgBtnNote = (ImageButton) findViewById(R.id.imgBtnNote);
         tvSpaceName = (TextView) findViewById(R.id.tvSpaceName);
+        tvSize = (TextView) findViewById(R.id.tvSize);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
+        int size = intent.getIntExtra("size",0);
         int color = intent.getIntExtra("color",0);
         int icon = intent.getIntExtra("icon",0);
 
         int trueColor = ContextCompat.getColor(this, Utils.listColors[color]);
         tvSpaceName.setText(name);
         tvSpaceName.setTextColor(trueColor);
+        tvSize.setText(size + " Movies & TV Show");
         ivLogo.setImageResource(Utils.listIcons[icon]);
         ivLogo.getDrawable().setColorFilter(getResources().getColor(Utils.listColors[color]), PorterDuff.Mode.SRC_IN);
         imgBtnSearch.getBackground().setColorFilter(new PorterDuffColorFilter(trueColor, PorterDuff.Mode.SRC_IN));
