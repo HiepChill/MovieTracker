@@ -1,14 +1,21 @@
 package com.hyep.movietracker.screens;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +34,7 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.hyep.movietracker.Listeners.LoadSpacesCallback;
 import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.CastDetailMovieAdapter;
@@ -39,10 +47,13 @@ import com.hyep.movietracker.models.CastResponse;
 import com.hyep.movietracker.models.MediaModel;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
+import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.models.TrailerModel;
 import com.hyep.movietracker.models.TrailerResponse;
+import com.hyep.movietracker.screens.fragment.BottomSheetSpaceDetailMovie;
 import com.hyep.movietracker.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -71,6 +82,7 @@ public class DetailMovieScreen extends AppCompatActivity {
 
     private WebView wvTrailer;
     private FirestoreHelper firestoreHelper;
+    private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,8 +146,9 @@ public class DetailMovieScreen extends AppCompatActivity {
         imgBtnAddToSpace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String spaceId = "7ca002b0-0acc-4748-8091-ebd0c3129d2b";
-                firestoreHelper.addMovieToSpace(spaceId, String.valueOf(movieId));
+//                String spaceId = "7ca002b0-0acc-4748-8091-ebd0c3129d2b";
+//                firestoreHelper.addMovieToSpace(spaceId, String.valueOf(movieId));
+                showListSpace();
             }
         });
 
@@ -145,6 +158,28 @@ public class DetailMovieScreen extends AppCompatActivity {
         callMediaById(movieId);
         callRecommendationById(movieId);
         callTrailerById(movieId);
+    }
+
+    private void showListSpace() {
+        BottomSheetSpaceDetailMovie bottomSheetSpaceDetailMovie = new BottomSheetSpaceDetailMovie();
+        bottomSheetSpaceDetailMovie.show(getSupportFragmentManager(), bottomSheetSpaceDetailMovie.getTag());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpPersonalSpaceArrayList();
+    }
+
+    private void setUpPersonalSpaceArrayList() {
+        firestoreHelper.loadSpaces(new LoadSpacesCallback() {
+            @Override
+            public void onLoaded(ArrayList<PersonalSpaceModel> spaces) {
+                personalSpaceModelArrayList.clear();
+                personalSpaceModelArrayList.addAll(spaces);
+
+            }
+        });
     }
 
     private void callDetailMovieById(int movieId){
