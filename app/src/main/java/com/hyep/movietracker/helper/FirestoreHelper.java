@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.firestore.CollectionReference;
 
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -148,6 +149,7 @@ public class FirestoreHelper {
                         Log.e("FirestoreError", "Error adding document", e);
                     }
                 });
+        spaces.document(spaceId).update("size", FieldValue.increment(1));
     }
 
     public void addMovieToTag(String tagId, String movieId) {
@@ -174,6 +176,7 @@ public class FirestoreHelper {
                         Log.e("FirestoreError", "Error adding document", e);
                     }
                 });
+        spaces.document(tagId).update("size", FieldValue.increment(1));
     }
 
     public void createTag(TagModel tag) {

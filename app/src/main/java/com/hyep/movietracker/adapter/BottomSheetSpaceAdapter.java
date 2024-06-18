@@ -50,6 +50,7 @@ public class BottomSheetSpaceAdapter extends RecyclerView.Adapter<BottomSheetSpa
         ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
         String id = personalSpaceModelArrayList.get(position).getId();
 
+
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
