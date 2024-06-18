@@ -11,10 +11,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyep.movietracker.Listeners.OnTagClickListener;
 import com.hyep.movietracker.R;
 
 import com.hyep.movietracker.models.TagModel;
@@ -26,11 +28,13 @@ public class BottomSheetTagAdapter extends RecyclerView.Adapter<BottomSheetTagAd
 
     Context context;
     ArrayList<TagModel> tagModelArrayList;
+    OnTagClickListener listener;
 
 
-    public BottomSheetTagAdapter(Context context, ArrayList<TagModel> tagModelArrayList) {
+    public BottomSheetTagAdapter(Context context, ArrayList<TagModel> tagModelArrayList, OnTagClickListener listener) {
         this.context = context;
         this.tagModelArrayList = tagModelArrayList;
+        this.listener = listener;
     }
     @NonNull
     @Override
@@ -48,6 +52,13 @@ public class BottomSheetTagAdapter extends RecyclerView.Adapter<BottomSheetTagAd
         ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
         String id = tagModelArrayList.get(position).getId();
 
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onTagClicked(id);
+            }
+        });
+
     }
 
     @Override
@@ -59,12 +70,13 @@ public class BottomSheetTagAdapter extends RecyclerView.Adapter<BottomSheetTagAd
     public static class TagViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvTagName;
+        ConstraintLayout container;
 
         public TagViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvTagName = itemView.findViewById(R.id.tvTagName);
-
+            container = itemView.findViewById(R.id.container);
         }
     }
 }

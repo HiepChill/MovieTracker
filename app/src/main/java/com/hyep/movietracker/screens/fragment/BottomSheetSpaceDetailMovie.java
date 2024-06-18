@@ -1,8 +1,10 @@
 package com.hyep.movietracker.screens.fragment;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,11 +20,13 @@ import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.BottomSheetSpaceAdapter;
 import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.models.PersonalSpaceModel;
+import com.hyep.movietracker.screens.CreateSpaceScreen;
 
 import java.util.ArrayList;
 
 public class BottomSheetSpaceDetailMovie extends BottomSheetDialogFragment implements OnSpaceClickListener {
 
+    private ImageButton btnCreateSpace;
     private FirestoreHelper firestoreHelper;
     private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
     BottomSheetSpaceAdapter bottomSheetSpaceAdapter;
@@ -57,6 +61,14 @@ public class BottomSheetSpaceDetailMovie extends BottomSheetDialogFragment imple
         bottomSheetDialog.setContentView(view);
         firestoreHelper = new FirestoreHelper(getContext());
 
+        btnCreateSpace = view.findViewById(R.id.btnCreateSpace);
+        btnCreateSpace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CreateSpaceScreen.class);
+                startActivity(intent);
+            }
+        });
         RecyclerView rvSpace = view.findViewById(R.id.rvListSpace);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvSpace.setLayoutManager(linearLayoutManager);

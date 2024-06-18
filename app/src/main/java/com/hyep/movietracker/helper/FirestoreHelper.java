@@ -150,6 +150,32 @@ public class FirestoreHelper {
                 });
     }
 
+    public void addMovieToTag(String tagId, String movieId) {
+        db.collection("users")
+                .document(user.getUid())
+                .collection("tags")
+                .document(tagId)
+                .collection("movies")
+                .document(movieId)
+                .set(new HashMap<>()) // Lưu trữ document rỗng với movieId làm ID
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Movie added successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Toast.makeText(context, "Failed to add movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        Log.e("FirestoreError", "Error adding document", e);
+                    }
+                });
+    }
+
     public void createTag(TagModel tag) {
         Map<String, Object> tagData = new HashMap<>();
         tagData.put("id", tag.getId());

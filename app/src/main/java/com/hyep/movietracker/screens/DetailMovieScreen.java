@@ -175,7 +175,7 @@ public class DetailMovieScreen extends AppCompatActivity {
     }
 
     private void showListTag() {
-        BottomSheetTagDetailMovie bottomSheetTagDetailMovie = new BottomSheetTagDetailMovie();
+        BottomSheetTagDetailMovie bottomSheetTagDetailMovie = BottomSheetTagDetailMovie.newInstance(movieId);
         bottomSheetTagDetailMovie.show(getSupportFragmentManager(), bottomSheetTagDetailMovie.getTag());
     }
 
