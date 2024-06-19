@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.firestore.CollectionReference;
 
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -151,7 +152,10 @@ public class FirestoreHelper {
     }
 
     public void addMovieToSpace(String spaceId, String movieId) {
-        spaces.document(spaceId)
+        db.collection("users")
+                .document(user.getUid())
+                .collection("spaces")
+                .document(spaceId)
                 .collection("movies")
                 .document(movieId)
                 .set(new HashMap<>()) // Lưu trữ document rỗng với movieId làm ID
@@ -171,10 +175,14 @@ public class FirestoreHelper {
                         Log.e("FirestoreError", "Error adding document", e);
                     }
                 });
+        spaces.document(spaceId).update("size", FieldValue.increment(1));
     }
 
     public void addMovieToTag(String tagId, String movieId) {
-        tags.document(tagId)
+        db.collection("users")
+                .document(user.getUid())
+                .collection("tags")
+                .document(tagId)
                 .collection("movies")
                 .document(movieId)
                 .set(new HashMap<>()) // Lưu trữ document rỗng với movieId làm ID
@@ -194,6 +202,7 @@ public class FirestoreHelper {
                         Log.e("FirestoreError", "Error adding document", e);
                     }
                 });
+        spaces.document(tagId).update("size", FieldValue.increment(1));
     }
 
     public void loadMoviesInSpace(String spaceId, final LoadMoviesCallback loadMoviesCallback) {
