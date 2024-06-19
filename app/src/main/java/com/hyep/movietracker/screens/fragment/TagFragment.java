@@ -59,6 +59,7 @@ public class TagFragment extends Fragment {
             TagModel clickedTag = tagModelArrayList.get(position);
 
             Intent intent = new Intent(getActivity(), DetailTagScreen.class);
+            intent.putExtra("id", clickedTag.getId());
             intent.putExtra("name",clickedTag.getName());
             intent.putExtra("color", clickedTag.getColor());
             startActivity(intent);
@@ -79,17 +80,7 @@ public class TagFragment extends Fragment {
                 int position = viewHolder.getAdapterPosition();
                 tagAdapter.deleteItem(position);
                 showUndoSnackbar();
-                if (!tagModelArrayList.isEmpty()) {
-                    imvTag.setVisibility(View.GONE);
-                    tvNoTag.setVisibility(View.GONE);
-                    tvCreateTag.setVisibility(View.GONE);
-                    rcvTag.setVisibility(View.VISIBLE);
-                } else {
-                    imvTag.setVisibility(View.VISIBLE);
-                    tvNoTag.setVisibility(View.VISIBLE);
-                    tvCreateTag.setVisibility(View.VISIBLE);
-                    rcvTag.setVisibility(View.GONE);
-                }
+                updateEmptyViewVisibility();
             }
 
             @Override
@@ -139,25 +130,34 @@ public class TagFragment extends Fragment {
                 tagModelArrayList.clear();
                 tagModelArrayList.addAll(tags);
                 tagAdapter.notifyDataSetChanged();
-
-                if (!tagModelArrayList.isEmpty()) {
-                    imvTag.setVisibility(View.GONE);
-                    tvNoTag.setVisibility(View.GONE);
-                    tvCreateTag.setVisibility(View.GONE);
-                    rcvTag.setVisibility(View.VISIBLE);
-                } else {
-                    imvTag.setVisibility(View.VISIBLE);
-                    tvNoTag.setVisibility(View.VISIBLE);
-                    tvCreateTag.setVisibility(View.VISIBLE);
-                    rcvTag.setVisibility(View.GONE);
-                }
+                updateEmptyViewVisibility();
             }
         });
     }
 
     private void showUndoSnackbar() {
         Snackbar snackbar = Snackbar.make(rcvTag, "Tag deleted", Snackbar.LENGTH_LONG);
-        snackbar.setAction("Undo", v -> tagAdapter.undoDelete());
+        snackbar.setAction("Undo", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagAdapter.undoDelete();
+                updateEmptyViewVisibility();
+            }
+        });
         snackbar.show();
+    }
+
+    private void updateEmptyViewVisibility() {
+        if (!tagModelArrayList.isEmpty()) {
+            imvTag.setVisibility(View.GONE);
+            tvNoTag.setVisibility(View.GONE);
+            tvCreateTag.setVisibility(View.GONE);
+            rcvTag.setVisibility(View.VISIBLE);
+        } else {
+            imvTag.setVisibility(View.VISIBLE);
+            tvNoTag.setVisibility(View.VISIBLE);
+            tvCreateTag.setVisibility(View.VISIBLE);
+            rcvTag.setVisibility(View.GONE);
+        }
     }
 }

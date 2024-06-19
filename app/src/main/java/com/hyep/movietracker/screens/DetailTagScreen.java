@@ -15,8 +15,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyep.movietracker.Listeners.LoadMoviesCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.DetailSpaceAdapter;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.utils.Utils;
 
@@ -30,6 +32,12 @@ public class DetailTagScreen extends AppCompatActivity {
     private TextView tvNameTag;
 
     private RecyclerView rcvMovie;
+
+    private List<Movie> movies;
+
+    private DetailSpaceAdapter adapter;
+
+    private FirestoreHelper firestoreHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +66,17 @@ public class DetailTagScreen extends AppCompatActivity {
         tvNameTag.setText("#" + nameTag);
         tvNameTag.setTextColor(color);
 
-        List<Movie> movies = new ArrayList<Movie>();
-        movies.add(new Movie(653346,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Kingdom of the Planet of the Apes"));
-        movies.add(new Movie(1111873,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Abigail"));
-        movies.add(new Movie(748783,"/zK2sFxZcelHJRPVr242rxy5VK4T.jpg","The Garfield Movie"));
-        movies.add(new Movie(872585,"/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg","Oppenheimer"));
-        movies.add(new Movie(1041613,"/fdZpvODTX5wwkD0ikZNaClE4AoW.jpg","Immaculate"));
-        movies.add(new Movie(618588,"/gxVcBc4VM0kAg9wX4HVg6KJHG46.jpg","Arthur the King"));
-        movies.add(new Movie(1063879,"/dY98PkUAbIGUUg0FhXEcOkbzHIZ.jpg","Vermines"));
+        movies = new ArrayList<Movie>();
+
+        firestoreHelper = new FirestoreHelper(this);
+
+//        movies.add(new Movie(653346,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Kingdom of the Planet of the Apes"));
+//        movies.add(new Movie(1111873,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Abigail"));
+//        movies.add(new Movie(748783,"/zK2sFxZcelHJRPVr242rxy5VK4T.jpg","The Garfield Movie"));
+//        movies.add(new Movie(872585,"/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg","Oppenheimer"));
+//        movies.add(new Movie(1041613,"/fdZpvODTX5wwkD0ikZNaClE4AoW.jpg","Immaculate"));
+//        movies.add(new Movie(618588,"/gxVcBc4VM0kAg9wX4HVg6KJHG46.jpg","Arthur the King"));
+//        movies.add(new Movie(1063879,"/dY98PkUAbIGUUg0FhXEcOkbzHIZ.jpg","Vermines"));
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -77,9 +88,28 @@ public class DetailTagScreen extends AppCompatActivity {
         });
         rcvMovie.setLayoutManager(layoutManager);
 
-        DetailSpaceAdapter adapter = new DetailSpaceAdapter(movies,this, getSupportFragmentManager());
+        adapter = new DetailSpaceAdapter(movies,this, getSupportFragmentManager());
+
+        setUpMoviesList(getIntent().getStringExtra("id"));
 
         rcvMovie.setAdapter(adapter);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpMoviesList(getIntent().getStringExtra("id"));
+    }
+
+    private void setUpMoviesList(String tagId) {
+        firestoreHelper.loadMoviesInTag(tagId, new LoadMoviesCallback() {
+            @Override
+            public void onLoaded(List<Movie> moviesList) {
+                movies.clear();
+                movies.addAll(moviesList);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }
