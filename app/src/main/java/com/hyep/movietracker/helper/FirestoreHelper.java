@@ -20,13 +20,16 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hyep.movietracker.Listeners.LoadMoviesCallback;
 import com.hyep.movietracker.Listeners.LoadSpacesCallback;
 import com.hyep.movietracker.Listeners.LoadTagsCallback;
+import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.models.TagModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -123,59 +126,6 @@ public class FirestoreHelper {
                 });
     }
 
-
-    public void addMovieToSpace(String spaceId, String movieId) {
-        db.collection("users")
-                .document(user.getUid())
-                .collection("spaces")
-                .document(spaceId)
-                .collection("movies")
-                .document(movieId)
-                .set(new HashMap<>()) // Lưu trữ document rỗng với movieId làm ID
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Movie added successfully", Toast.LENGTH_SHORT).show();
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                        Toast.makeText(context, "Failed to add movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                        Log.e("FirestoreError", "Error adding document", e);
-                    }
-                });
-    }
-
-    public void addMovieToTag(String tagId, String movieId) {
-        db.collection("users")
-                .document(user.getUid())
-                .collection("tags")
-                .document(tagId)
-                .collection("movies")
-                .document(movieId)
-                .set(new HashMap<>()) // Lưu trữ document rỗng với movieId làm ID
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Movie added successfully", Toast.LENGTH_SHORT).show();
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                        Toast.makeText(context, "Failed to add movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                        Log.e("FirestoreError", "Error adding document", e);
-                    }
-                });
-    }
-
     public void createTag(TagModel tag) {
         Map<String, Object> tagData = new HashMap<>();
         tagData.put("id", tag.getId());
@@ -200,4 +150,69 @@ public class FirestoreHelper {
                 });
     }
 
+    public void addMovieToSpace(String spaceId, String movieId) {
+        spaces.document(spaceId)
+                .collection("movies")
+                .document(movieId)
+                .set(new HashMap<>()) // Lưu trữ document rỗng với movieId làm ID
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Movie added successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Toast.makeText(context, "Failed to add movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        Log.e("FirestoreError", "Error adding document", e);
+                    }
+                });
+    }
+
+    public void addMovieToTag(String tagId, String movieId) {
+        tags.document(tagId)
+                .collection("movies")
+                .document(movieId)
+                .set(new HashMap<>()) // Lưu trữ document rỗng với movieId làm ID
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Movie added successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Toast.makeText(context, "Failed to add movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        Log.e("FirestoreError", "Error adding document", e);
+                    }
+                });
+    }
+
+    public void loadMoviesInSpace(String spaceId, final LoadMoviesCallback loadMoviesCallback) {
+        spaces.document(spaceId)
+                .collection("movies")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<Movie> movies = new ArrayList<>();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
 }

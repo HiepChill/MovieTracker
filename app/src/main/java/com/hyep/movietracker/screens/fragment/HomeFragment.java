@@ -67,6 +67,7 @@ public class HomeFragment extends Fragment {
             PersonalSpaceModel space = personalSpaceModelArrayList.get(position);
 
             Intent intent = new Intent(view.getContext(), DetailSpaceScreen.class);
+            intent.putExtra("id", space.getId());
             intent.putExtra("name", space.getName());
             intent.putExtra("color", space.getColor());
             intent.putExtra("icon", space.getIcon());
@@ -87,18 +88,7 @@ public class HomeFragment extends Fragment {
                 int position = viewHolder.getAdapterPosition();
                 personalSpaceAdapter.deleteItem(position);
                 showUndoSnackbar();
-                if (!personalSpaceModelArrayList.isEmpty()) {
-                    tvCreate.setVisibility(View.GONE);
-                    tvSpace.setVisibility(View.GONE);
-                    imvSpace.setVisibility(View.GONE);
-                    rcvPersonalSpace.setVisibility(View.VISIBLE);
-                }
-                else {
-                    tvCreate.setVisibility(View.VISIBLE);
-                    tvSpace.setVisibility(View.VISIBLE);
-                    imvSpace.setVisibility(View.VISIBLE);
-                    rcvPersonalSpace.setVisibility(View.GONE);
-                }
+                updateEmptyViewVisibility();
             }
 
             @Override
@@ -148,18 +138,7 @@ public class HomeFragment extends Fragment {
                 personalSpaceModelArrayList.clear();
                 personalSpaceModelArrayList.addAll(spaces);
                 personalSpaceAdapter.notifyDataSetChanged();
-
-                if (!personalSpaceModelArrayList.isEmpty()) {
-                    tvCreate.setVisibility(View.GONE);
-                    tvSpace.setVisibility(View.GONE);
-                    imvSpace.setVisibility(View.GONE);
-                    rcvPersonalSpace.setVisibility(View.VISIBLE);
-                } else {
-                    tvCreate.setVisibility(View.VISIBLE);
-                    tvSpace.setVisibility(View.VISIBLE);
-                    imvSpace.setVisibility(View.VISIBLE);
-                    rcvPersonalSpace.setVisibility(View.GONE);
-                }
+                updateEmptyViewVisibility();
             }
         });
     }
@@ -170,8 +149,23 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 personalSpaceAdapter.undoDelete();
+                updateEmptyViewVisibility();
             }
         });
         snackbar.show();
+    }
+
+    private void updateEmptyViewVisibility() {
+        if (!personalSpaceModelArrayList.isEmpty()) {
+            tvCreate.setVisibility(View.GONE);
+            tvSpace.setVisibility(View.GONE);
+            imvSpace.setVisibility(View.GONE);
+            rcvPersonalSpace.setVisibility(View.VISIBLE);
+        } else {
+            tvCreate.setVisibility(View.VISIBLE);
+            tvSpace.setVisibility(View.VISIBLE);
+            imvSpace.setVisibility(View.VISIBLE);
+            rcvPersonalSpace.setVisibility(View.GONE);
+        }
     }
 }

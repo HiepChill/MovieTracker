@@ -79,17 +79,7 @@ public class TagFragment extends Fragment {
                 int position = viewHolder.getAdapterPosition();
                 tagAdapter.deleteItem(position);
                 showUndoSnackbar();
-                if (!tagModelArrayList.isEmpty()) {
-                    imvTag.setVisibility(View.GONE);
-                    tvNoTag.setVisibility(View.GONE);
-                    tvCreateTag.setVisibility(View.GONE);
-                    rcvTag.setVisibility(View.VISIBLE);
-                } else {
-                    imvTag.setVisibility(View.VISIBLE);
-                    tvNoTag.setVisibility(View.VISIBLE);
-                    tvCreateTag.setVisibility(View.VISIBLE);
-                    rcvTag.setVisibility(View.GONE);
-                }
+                updateEmptyViewVisibility();
             }
 
             @Override
@@ -139,18 +129,7 @@ public class TagFragment extends Fragment {
                 tagModelArrayList.clear();
                 tagModelArrayList.addAll(tags);
                 tagAdapter.notifyDataSetChanged();
-
-                if (!tagModelArrayList.isEmpty()) {
-                    imvTag.setVisibility(View.GONE);
-                    tvNoTag.setVisibility(View.GONE);
-                    tvCreateTag.setVisibility(View.GONE);
-                    rcvTag.setVisibility(View.VISIBLE);
-                } else {
-                    imvTag.setVisibility(View.VISIBLE);
-                    tvNoTag.setVisibility(View.VISIBLE);
-                    tvCreateTag.setVisibility(View.VISIBLE);
-                    rcvTag.setVisibility(View.GONE);
-                }
+                updateEmptyViewVisibility();
             }
         });
     }
@@ -161,8 +140,23 @@ public class TagFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 tagAdapter.undoDelete();
+                updateEmptyViewVisibility();
             }
         });
         snackbar.show();
+    }
+
+    private void updateEmptyViewVisibility() {
+        if (!tagModelArrayList.isEmpty()) {
+            imvTag.setVisibility(View.GONE);
+            tvNoTag.setVisibility(View.GONE);
+            tvCreateTag.setVisibility(View.GONE);
+            rcvTag.setVisibility(View.VISIBLE);
+        } else {
+            imvTag.setVisibility(View.VISIBLE);
+            tvNoTag.setVisibility(View.VISIBLE);
+            tvCreateTag.setVisibility(View.VISIBLE);
+            rcvTag.setVisibility(View.GONE);
+        }
     }
 }

@@ -57,6 +57,7 @@ public class DetailSpaceScreen extends AppCompatActivity{
         tvSize = (TextView) findViewById(R.id.tvSize);
 
         Intent intent = getIntent();
+        String id = intent.getStringExtra("id");
         String name = intent.getStringExtra("name");
         int size = intent.getIntExtra("size",0);
         int color = intent.getIntExtra("color",0);
