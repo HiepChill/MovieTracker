@@ -19,8 +19,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hyep.movietracker.Listeners.LoadMoviesCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.DetailSpaceAdapter;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.screens.fragment.BottomSheetSettingSpaceFragment;
 import com.hyep.movietracker.utils.Utils;
@@ -37,6 +39,12 @@ public class DetailSpaceScreen extends AppCompatActivity{
     private RecyclerView rvItemSpace;
 
     private ImageView ivLogo;
+
+    private FirestoreHelper firestoreHelper;
+
+    private List<Movie> movies;
+
+    private DetailSpaceAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +52,7 @@ public class DetailSpaceScreen extends AppCompatActivity{
         setContentView(R.layout.screen_detail_space);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
             return insets;
         });
         ivLogo = findViewById(R.id.ivLogo);
@@ -57,7 +65,6 @@ public class DetailSpaceScreen extends AppCompatActivity{
         tvSize = (TextView) findViewById(R.id.tvSize);
 
         Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
         String name = intent.getStringExtra("name");
         int size = intent.getIntExtra("size",0);
         int color = intent.getIntExtra("color",0);
@@ -66,7 +73,11 @@ public class DetailSpaceScreen extends AppCompatActivity{
         int trueColor = ContextCompat.getColor(this, Utils.listColors[color]);
         tvSpaceName.setText(name);
         tvSpaceName.setTextColor(trueColor);
-        tvSize.setText(size + " Movies & TV Show");
+        if (size < 2) {
+            tvSize.setText(size + " Movie");
+        } else {
+            tvSize.setText(size + " Movies");
+        }
         ivLogo.setImageResource(Utils.listIcons[icon]);
         ivLogo.getDrawable().setColorFilter(getResources().getColor(Utils.listColors[color]), PorterDuff.Mode.SRC_IN);
         imgBtnSearch.getBackground().setColorFilter(new PorterDuffColorFilter(trueColor, PorterDuff.Mode.SRC_IN));
@@ -117,18 +128,39 @@ public class DetailSpaceScreen extends AppCompatActivity{
 
 
 
-        List<Movie> movies = new ArrayList<Movie>();
-        movies.add(new Movie(653346,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Kingdom of the Planet of the Apes"));
-        movies.add(new Movie(1111873,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Abigail"));
-        movies.add(new Movie(748783,"/zK2sFxZcelHJRPVr242rxy5VK4T.jpg","The Garfield Movie"));
-        movies.add(new Movie(872585,"/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg","Oppenheimer"));
-        movies.add(new Movie(1041613,"/fdZpvODTX5wwkD0ikZNaClE4AoW.jpg","Immaculate"));
-        movies.add(new Movie(618588,"/gxVcBc4VM0kAg9wX4HVg6KJHG46.jpg","Arthur the King"));
-        movies.add(new Movie(1063879,"/dY98PkUAbIGUUg0FhXEcOkbzHIZ.jpg","Vermines"));
+        movies = new ArrayList<Movie>();
 
-        DetailSpaceAdapter adapter = new DetailSpaceAdapter(movies,this, getSupportFragmentManager());
+        firestoreHelper = new FirestoreHelper(this);
 
+//        movies.add(new Movie(653346,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Kingdom of the Planet of the Apes"));
+//        movies.add(new Movie(1111873,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Abigail"));
+//        movies.add(new Movie(748783,"/zK2sFxZcelHJRPVr242rxy5VK4T.jpg","The Garfield Movie"));
+//        movies.add(new Movie(872585,"/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg","Oppenheimer"));
+//        movies.add(new Movie(1041613,"/fdZpvODTX5wwkD0ikZNaClE4AoW.jpg","Immaculate"));
+//        movies.add(new Movie(618588,"/gxVcBc4VM0kAg9wX4HVg6KJHG46.jpg","Arthur the King"));
+//        movies.add(new Movie(1063879,"/dY98PkUAbIGUUg0FhXEcOkbzHIZ.jpg","Vermines"));
+
+        adapter = new DetailSpaceAdapter(movies,this, getSupportFragmentManager());
+        setUpMoviesList(getIntent().getStringExtra("id"));
         rvItemSpace.setAdapter(adapter);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpMoviesList(getIntent().getStringExtra("id"));
+    }
+
+    private void setUpMoviesList(String spaceId) {
+        firestoreHelper.loadMoviesInSpace(spaceId, new LoadMoviesCallback() {
+            @Override
+            public void onLoaded(List<Movie> movieList) {
+                movies.clear();
+                movies.addAll(movieList);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
 }

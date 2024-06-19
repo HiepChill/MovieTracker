@@ -59,6 +59,7 @@ public class TagFragment extends Fragment {
             TagModel clickedTag = tagModelArrayList.get(position);
 
             Intent intent = new Intent(getActivity(), DetailTagScreen.class);
+            intent.putExtra("id", clickedTag.getId());
             intent.putExtra("name",clickedTag.getName());
             intent.putExtra("color", clickedTag.getColor());
             startActivity(intent);

@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
 
             Intent intent = new Intent(view.getContext(), DetailSpaceScreen.class);
             intent.putExtra("id", space.getId());
+            intent.putExtra("size", space.getSize());
             intent.putExtra("name", space.getName());
             intent.putExtra("color", space.getColor());
             intent.putExtra("icon", space.getIcon());
