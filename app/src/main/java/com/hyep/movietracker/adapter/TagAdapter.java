@@ -21,11 +21,11 @@ import java.util.ArrayList;
 
 public class TagAdapter extends RecyclerView.Adapter<TagAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList<TagModel> tagModelArrayList;
-    TagModel recentlyDeletedItem;
-    int recentlyDeletedItemPosition;
-    OnItemClickListener listener;
+    private Context context;
+    private ArrayList<TagModel> tagModelArrayList;
+    private TagModel recentlyDeletedItem;
+    private int recentlyDeletedItemPosition;
+    private OnItemClickListener listener;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
