@@ -1,6 +1,8 @@
 package com.hyep.movietracker.screens.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -71,16 +73,37 @@ public class BottomSheetSettingSpaceFragment extends BottomSheetDialogFragment {
         btnDeleteSpace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                firestoreHelper.deleteSpace(spaceId, new DeleteSpaceCallback() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(cont);
+                builder.setTitle("Confirm Deletion");
+                builder.setMessage("Are you sure you want to delete this space?");
+
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onDeleted() {
-                        Intent intent = new Intent(cont, MainScreen.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                    public void onClick(DialogInterface dialog, int which) {
+                        firestoreHelper.deleteSpace(spaceId, new DeleteSpaceCallback() {
+                            @Override
+                            public void onDeleted() {
+                                Intent intent = new Intent(cont, MainScreen.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                cont.startActivity(intent);
+                            }
+                        });
                     }
                 });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Dismiss the dialog
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
+
 
         return view;
     }
