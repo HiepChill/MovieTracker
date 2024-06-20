@@ -85,13 +85,7 @@ public class DetailSpaceScreen extends AppCompatActivity{
         color = intent.getIntExtra("color",0);
         icon = intent.getIntExtra("icon",0);
 
-        if (size < 2) {
-            tvSize.setText(size + " Movie");
-        } else {
-            tvSize.setText(size + " Movies");
-        }
-
-        setUpDetailSpace(name, color, icon);
+        setUpDetailSpace(size, name, color, icon);
 
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +143,12 @@ public class DetailSpaceScreen extends AppCompatActivity{
         updateDetailSpace();
     }
 
-    private void setUpDetailSpace(String name, int color, int icon) {
+    private void setUpDetailSpace(int size, String name, int color, int icon) {
+        if (size < 2) {
+            tvSize.setText(size + " Movie");
+        } else {
+            tvSize.setText(size + " Movies");
+        }
         trueColor = ContextCompat.getColor(this, Utils.listColors[color]);
         tvSpaceName.setText(name);
         tvSpaceName.setTextColor(trueColor);
@@ -177,7 +176,8 @@ public class DetailSpaceScreen extends AppCompatActivity{
                                 name = document.getString("name");
                                 color = document.getLong("color").intValue();
                                 icon = document.getLong("icon").intValue();
-                                setUpDetailSpace(name, color, icon);
+                                size = document.getLong("size").intValue();
+                                setUpDetailSpace(size, name, color, icon);
                             }
                             else {
                                 Toast.makeText(DetailSpaceScreen.this, "Document does not exist", Toast.LENGTH_SHORT).show();

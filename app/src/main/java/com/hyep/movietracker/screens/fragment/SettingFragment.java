@@ -66,7 +66,6 @@ public class SettingFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), LoginScreen.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-
             }
         });
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.hyep.movietracker.Listeners.DeleteTagCallback;
 import com.hyep.movietracker.Listeners.LoadTagsCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.TagAdapter;
@@ -40,6 +42,8 @@ public class TagFragment extends Fragment {
     private RecyclerView rcvTag;
     private TagAdapter tagAdapter;
     private FirestoreHelper firestoreHelper;
+    private Handler handler;
+    private Runnable deleteRunnable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +57,7 @@ public class TagFragment extends Fragment {
         rcvTag = view.findViewById(R.id.rcvTag);
 
         firestoreHelper = new FirestoreHelper(view.getContext());
+        handler = new Handler();
 
         tagAdapter = new TagAdapter(view.getContext(), tagModelArrayList);
         tagAdapter.setOnItemClickListener(position -> {
@@ -78,8 +83,9 @@ public class TagFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
+                TagModel deletedTag = tagModelArrayList.get(position);
                 tagAdapter.deleteItem(position);
-                showUndoSnackbar();
+                showUndoSnackbar(deletedTag, position);
                 updateEmptyViewVisibility();
             }
 
@@ -135,13 +141,33 @@ public class TagFragment extends Fragment {
         });
     }
 
-    private void showUndoSnackbar() {
+    private void showUndoSnackbar(TagModel deletedTag, int position) {
         Snackbar snackbar = Snackbar.make(rcvTag, "Tag deleted", Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacks(deleteRunnable);
                 tagAdapter.undoDelete();
                 updateEmptyViewVisibility();
+            }
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                    deleteRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            firestoreHelper.deleteTag(deletedTag.getId(), new DeleteTagCallback() {
+                                @Override
+                                public void onDeleted() {
+                                    setUpTagModelArrayList();
+                                }
+                            });
+                        }
+                    };
+                    handler.postDelayed(deleteRunnable, Snackbar.LENGTH_LONG);
+                }
             }
         });
         snackbar.show();

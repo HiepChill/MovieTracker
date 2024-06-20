@@ -15,9 +15,12 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.hyep.movietracker.Listeners.DeleteSpaceCallback;
 import com.hyep.movietracker.R;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.screens.CreateSpaceScreen;
 import com.hyep.movietracker.screens.DetailSpaceScreen;
+import com.hyep.movietracker.screens.MainScreen;
 
 public class BottomSheetSettingSpaceFragment extends BottomSheetDialogFragment {
 
@@ -28,6 +31,8 @@ public class BottomSheetSettingSpaceFragment extends BottomSheetDialogFragment {
     private String spaceId;
 
     private String mode = "update";
+
+    private FirestoreHelper firestoreHelper;
 
     public BottomSheetSettingSpaceFragment() {
         // Required empty public constructor
@@ -51,10 +56,11 @@ public class BottomSheetSettingSpaceFragment extends BottomSheetDialogFragment {
         btnEditSpace = view.findViewById(R.id.btnEditSpace);
         btnDeleteSpace = view.findViewById(R.id.btnDeleteSpace);
 
+        firestoreHelper = new FirestoreHelper(cont);
+
         btnEditSpace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(cont, "Edit Space", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(cont, CreateSpaceScreen.class);
                 intent.putExtra("id", spaceId);
                 intent.putExtra("mode", mode);
@@ -65,7 +71,14 @@ public class BottomSheetSettingSpaceFragment extends BottomSheetDialogFragment {
         btnDeleteSpace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(cont, "Delete Space", Toast.LENGTH_SHORT).show();
+                firestoreHelper.deleteSpace(spaceId, new DeleteSpaceCallback() {
+                    @Override
+                    public void onDeleted() {
+                        Intent intent = new Intent(cont, MainScreen.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                });
             }
         });
 

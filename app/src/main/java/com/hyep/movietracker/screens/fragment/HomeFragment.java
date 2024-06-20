@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.hyep.movietracker.Listeners.DeleteSpaceCallback;
 import com.hyep.movietracker.Listeners.LoadSpacesCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.PersonalSpaceAdapter;
@@ -40,6 +42,8 @@ public class HomeFragment extends Fragment {
     private PersonalSpaceAdapter personalSpaceAdapter;
     private ImageButton btnUpComing, btnWatched;
     private FirestoreHelper firestoreHelper;
+    private Handler handler;
+    private Runnable deleteRunnable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +56,7 @@ public class HomeFragment extends Fragment {
         btnUpComing = view.findViewById(R.id.imgBtnUpcoming);
 
         firestoreHelper = new FirestoreHelper(view.getContext());
+        handler = new Handler();
 
         btnUpComing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +92,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
+                PersonalSpaceModel deletedSpace = personalSpaceModelArrayList.get(position);
                 personalSpaceAdapter.deleteItem(position);
-                showUndoSnackbar();
+                showUndoSnackbar(deletedSpace, position);
                 updateEmptyViewVisibility();
             }
 
@@ -144,13 +150,33 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void showUndoSnackbar() {
+    private void showUndoSnackbar(PersonalSpaceModel deletedSpace, int position) {
         Snackbar snackbar = Snackbar.make(getView(), "Personal space deleted", Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacks(deleteRunnable);
                 personalSpaceAdapter.undoDelete();
                 updateEmptyViewVisibility();
+            }
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                    deleteRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            firestoreHelper.deleteSpace(deletedSpace.getId(), new DeleteSpaceCallback() {
+                                @Override
+                                public void onDeleted() {
+                                    setUpPersonalSpaceArrayList();
+                                }
+                            });
+                        }
+                    };
+                    handler.postDelayed(deleteRunnable, Snackbar.LENGTH_LONG);
+                }
             }
         });
         snackbar.show();
