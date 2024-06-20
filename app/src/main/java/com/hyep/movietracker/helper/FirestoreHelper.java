@@ -21,6 +21,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hyep.movietracker.Listeners.DeleteSpaceCallback;
+import com.hyep.movietracker.Listeners.DeleteTagCallback;
 import com.hyep.movietracker.Listeners.LoadMovieByIdCallback;
 import com.hyep.movietracker.Listeners.LoadMoviesCallback;
 import com.hyep.movietracker.Listeners.LoadSpacesCallback;
@@ -72,7 +74,6 @@ public class FirestoreHelper {
                                     spacesList.add(space);
                                 }
                             }
-                            Toast.makeText(context, "Loaded " + spacesList.size() + " spaces", Toast.LENGTH_SHORT).show();
                             loadSpacesCallback.onLoaded(spacesList);
                         }
                         else {
@@ -97,7 +98,6 @@ public class FirestoreHelper {
                                     tagsList.add(tag);
                                 }
                             }
-                            Toast.makeText(context, "Loaded " + tagsList.size() + " tags", Toast.LENGTH_SHORT).show();
                             loadTagsCallback.onLoaded(tagsList);
                         }
                         else {
@@ -158,7 +158,65 @@ public class FirestoreHelper {
                     }
                 });
     }
-    
+
+    public void updateSpace(String id, String name, int color, int icon) {
+        Map<String, Object> spaceData = new HashMap<>();
+        spaceData.put("name", name);
+        spaceData.put("color", color);
+        spaceData.put("icon", icon);
+        spaces.document(id)
+                .update(spaceData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(context, "Space updated successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Failed to update space name: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("FirestoreError", "Error updating document", e);
+                    }
+                });
+    }
+
+    public void deleteSpace(String id, final DeleteSpaceCallback deleteSpaceCallback) {
+        spaces.document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(context, "Space deleted successfully", Toast.LENGTH_SHORT).show();
+                        deleteSpaceCallback.onDeleted();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Failed to delete space: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void deleteTag(String id, final DeleteTagCallback deleteTagCallback) {
+        tags.document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(context, "Tag deleted successfully", Toast.LENGTH_SHORT).show();
+                        deleteTagCallback.onDeleted();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Failed to delete tag: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     public void addMovieToSpace(String spaceId, String movieId) {
         CollectionReference moviesRef = spaces.document(spaceId).collection("movies");
 

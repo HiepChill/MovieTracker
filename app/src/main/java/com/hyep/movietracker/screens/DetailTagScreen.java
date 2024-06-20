@@ -82,7 +82,6 @@ public class DetailTagScreen extends AppCompatActivity {
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-
                 return 1;
             }
         });
