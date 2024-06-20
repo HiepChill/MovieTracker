@@ -27,6 +27,7 @@ import com.hyep.movietracker.Listeners.LoadMovieByIdCallback;
 import com.hyep.movietracker.Listeners.LoadMoviesCallback;
 import com.hyep.movietracker.Listeners.LoadSpacesCallback;
 import com.hyep.movietracker.Listeners.LoadTagsCallback;
+import com.hyep.movietracker.Listeners.LoadTagsInMovieCallback;
 import com.hyep.movietracker.api.APIClient;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.PersonalSpaceModel;
@@ -37,7 +38,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +47,7 @@ public class FirestoreHelper {
     private FirebaseFirestore db;
     private FirebaseUser user;
     private Context context;
-    private CollectionReference spaces, tags;
+    private CollectionReference spaces, tags, movies;
 
     public FirestoreHelper(Context con) {
         db = FirebaseFirestore.getInstance();
@@ -59,6 +59,9 @@ public class FirestoreHelper {
         tags = db.collection("users")
                 .document(user.getUid())
                 .collection("tags");
+        movies = db.collection("users")
+                .document(user.getUid())
+                .collection("movies");
     }
 
     public void loadSpaces(final LoadSpacesCallback loadSpacesCallback) {
@@ -265,6 +268,7 @@ public class FirestoreHelper {
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(context, "Movie added successfully", Toast.LENGTH_SHORT).show();
                                         tags.document(tagId).update("size", FieldValue.increment(1));
+                                        addTagToMovie(movieId, tagId);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -279,6 +283,58 @@ public class FirestoreHelper {
                 .addOnFailureListener(e -> {
                     Toast.makeText(context, "Failed to check movie: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.e("FirestoreError", "Error checking document", e);
+                });
+    }
+
+    public void addTagToMovie(String movieId, String tagId) {
+        tags.document(tagId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String tagName = documentSnapshot.getString("name");
+
+                        Map<String, Object> tagData = new HashMap<>();
+                        tagData.put("id", tagId);
+                        tagData.put("name", tagName);
+
+                        movies.document(movieId)
+                                .collection("tags")
+                                .document(tagId)
+                                .set(tagData)
+                                .addOnSuccessListener(unused -> Log.d("FirestoreSuccess", "Tag added to movie successfully"))
+                                .addOnFailureListener(e -> Log.e("FirestoreError", "Error adding document", e));
+                    } else {
+                        Log.e("FirestoreError", "Tag document does not exist");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("FirestoreError", "Error getting tag document", e));
+    }
+
+    public void loadTagsInMovie(String movieId, final LoadTagsInMovieCallback loadTagsInMovieCallback) {
+        movies.document(movieId)
+                .collection("tags")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<String> tagsList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document != null) {
+                                    String tagName = document.getString("name");
+                                    if (tagName != null) {
+                                        tagsList.add(tagName);
+                                    }
+                                }
+                            }
+                            loadTagsInMovieCallback.onLoaded(tagsList);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 });
     }
 
