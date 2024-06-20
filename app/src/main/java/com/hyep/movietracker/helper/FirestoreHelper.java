@@ -225,7 +225,7 @@ public class FirestoreHelper {
                         Log.e("FirestoreError", "Error adding document", e);
                     }
                 });
-        spaces.document(tagId).update("size", FieldValue.increment(1));
+        tags.document(tagId).update("size", FieldValue.increment(1));
     }
 
     public void loadMoviesInSpace(String spaceId, final LoadMoviesCallback loadMoviesCallback) {
