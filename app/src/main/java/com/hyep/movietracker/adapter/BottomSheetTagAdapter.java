@@ -48,6 +48,7 @@ public class BottomSheetTagAdapter extends RecyclerView.Adapter<BottomSheetTagAd
     public void onBindViewHolder(@NonNull BottomSheetTagAdapter.TagViewHolder holder, int position) {
         holder.tvTagName.setText("#" + tagModelArrayList.get(position).getName());
         int color = ContextCompat.getColor(holder.itemView.getContext(), Utils.listColors[tagModelArrayList.get(position).getColor()]);
+        holder.tvTagName.setTextColor(color);
         ColorStateList colorStateList = ColorStateList.valueOf(color);
         ViewCompat.setBackgroundTintList(holder.itemView, colorStateList);
         String id = tagModelArrayList.get(position).getId();
