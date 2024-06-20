@@ -92,6 +92,7 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainScreen.this, CreateSpaceScreen.class);
+                intent.putExtra("mode", "create");
                 startActivity(intent);
             }
         });

@@ -158,6 +158,28 @@ public class FirestoreHelper {
                 });
     }
 
+    public void updateSpace(String id, String name, int color, int icon) {
+        Map<String, Object> spaceData = new HashMap<>();
+        spaceData.put("name", name);
+        spaceData.put("color", color);
+        spaceData.put("icon", icon);
+        spaces.document(id)
+                .update(spaceData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(context, "Space updated successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Failed to update space name: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("FirestoreError", "Error updating document", e);
+                    }
+                });
+    }
+
     public void addMovieToSpace(String spaceId, String movieId) {
         spaces.document(spaceId)
                 .collection("movies")

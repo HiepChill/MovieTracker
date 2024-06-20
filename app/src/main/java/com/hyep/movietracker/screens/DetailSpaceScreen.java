@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -19,6 +20,14 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.hyep.movietracker.Listeners.LoadMoviesCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.DetailSpaceAdapter;
@@ -45,6 +54,11 @@ public class DetailSpaceScreen extends AppCompatActivity{
     private List<Movie> movies;
 
     private DetailSpaceAdapter adapter;
+
+    private String id, name;
+
+    private int size, color, icon, trueColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,23 +79,19 @@ public class DetailSpaceScreen extends AppCompatActivity{
         tvSize = (TextView) findViewById(R.id.tvSize);
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        int size = intent.getIntExtra("size",0);
-        int color = intent.getIntExtra("color",0);
-        int icon = intent.getIntExtra("icon",0);
+        id = intent.getStringExtra("id");
+        size = intent.getIntExtra("size",0);
+        name = intent.getStringExtra("name");
+        color = intent.getIntExtra("color",0);
+        icon = intent.getIntExtra("icon",0);
 
-        int trueColor = ContextCompat.getColor(this, Utils.listColors[color]);
-        tvSpaceName.setText(name);
-        tvSpaceName.setTextColor(trueColor);
         if (size < 2) {
             tvSize.setText(size + " Movie");
         } else {
             tvSize.setText(size + " Movies");
         }
-        ivLogo.setImageResource(Utils.listIcons[icon]);
-        ivLogo.getDrawable().setColorFilter(getResources().getColor(Utils.listColors[color]), PorterDuff.Mode.SRC_IN);
-        imgBtnSearch.getBackground().setColorFilter(new PorterDuffColorFilter(trueColor, PorterDuff.Mode.SRC_IN));
-        imgBtnNote.getBackground().setColorFilter(new PorterDuffColorFilter(trueColor, PorterDuff.Mode.SRC_IN));
+
+        setUpDetailSpace(name, color, icon);
 
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,13 +99,12 @@ public class DetailSpaceScreen extends AppCompatActivity{
                 finish();
             }
         });
-        
-        
+
         imgBtnSpaceSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheetSettingSpaceFragment bottomSheetSettingSpaceFragment = new BottomSheetSettingSpaceFragment();
-                bottomSheetSettingSpaceFragment.show(getSupportFragmentManager(),bottomSheetSettingSpaceFragment.getTag());
+                BottomSheetSettingSpaceFragment bottomSheetSettingSpaceFragment = new BottomSheetSettingSpaceFragment(id);
+                bottomSheetSettingSpaceFragment.show(getSupportFragmentManager(), bottomSheetSettingSpaceFragment.getTag());
             }
         });
 
@@ -114,42 +123,77 @@ public class DetailSpaceScreen extends AppCompatActivity{
             }
         });
 
-
-
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-
                 return 1;
             }
         });
+
         rvItemSpace.setLayoutManager(layoutManager);
-
-
 
         movies = new ArrayList<Movie>();
 
         firestoreHelper = new FirestoreHelper(this);
 
-//        movies.add(new Movie(653346,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Kingdom of the Planet of the Apes"));
-//        movies.add(new Movie(1111873,"/gKkl37BQuKTanygYQG1pyYgLVgf.jpg","Abigail"));
-//        movies.add(new Movie(748783,"/zK2sFxZcelHJRPVr242rxy5VK4T.jpg","The Garfield Movie"));
-//        movies.add(new Movie(872585,"/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg","Oppenheimer"));
-//        movies.add(new Movie(1041613,"/fdZpvODTX5wwkD0ikZNaClE4AoW.jpg","Immaculate"));
-//        movies.add(new Movie(618588,"/gxVcBc4VM0kAg9wX4HVg6KJHG46.jpg","Arthur the King"));
-//        movies.add(new Movie(1063879,"/dY98PkUAbIGUUg0FhXEcOkbzHIZ.jpg","Vermines"));
-
         adapter = new DetailSpaceAdapter(movies,this, getSupportFragmentManager());
-        setUpMoviesList(getIntent().getStringExtra("id"));
+        setUpMoviesList(id);
         rvItemSpace.setAdapter(adapter);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         setUpMoviesList(getIntent().getStringExtra("id"));
+        updateDetailSpace();
+    }
+
+    private void setUpDetailSpace(String name, int color, int icon) {
+        trueColor = ContextCompat.getColor(this, Utils.listColors[color]);
+        tvSpaceName.setText(name);
+        tvSpaceName.setTextColor(trueColor);
+
+        ivLogo.setImageResource(Utils.listIcons[icon]);
+        ivLogo.getDrawable().setColorFilter(getResources().getColor(Utils.listColors[color]), PorterDuff.Mode.SRC_IN);
+        imgBtnSearch.getBackground().setColorFilter(new PorterDuffColorFilter(trueColor, PorterDuff.Mode.SRC_IN));
+        imgBtnNote.getBackground().setColorFilter(new PorterDuffColorFilter(trueColor, PorterDuff.Mode.SRC_IN));
+    }
+
+    private void updateDetailSpace() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(user.getUid())
+                .collection("spaces")
+                .document(id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                name = document.getString("name");
+                                color = document.getLong("color").intValue();
+                                icon = document.getLong("icon").intValue();
+                                setUpDetailSpace(name, color, icon);
+                            }
+                            else {
+                                Toast.makeText(DetailSpaceScreen.this, "Document does not exist", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(DetailSpaceScreen.this, "Error getting document", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(DetailSpaceScreen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void setUpMoviesList(String spaceId) {

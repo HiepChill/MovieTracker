@@ -1,6 +1,7 @@
 package com.hyep.movietracker.screens.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.hyep.movietracker.R;
+import com.hyep.movietracker.screens.CreateSpaceScreen;
 import com.hyep.movietracker.screens.DetailSpaceScreen;
 
 public class BottomSheetSettingSpaceFragment extends BottomSheetDialogFragment {
@@ -22,10 +24,18 @@ public class BottomSheetSettingSpaceFragment extends BottomSheetDialogFragment {
     private Button btnEditSpace, btnDeleteSpace;
 
     private Context cont = getContext();
+
+    private String spaceId;
+
+    private String mode = "update";
+
     public BottomSheetSettingSpaceFragment() {
         // Required empty public constructor
     }
 
+    public BottomSheetSettingSpaceFragment(String spaceId) {
+        this.spaceId = spaceId;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -45,6 +55,10 @@ public class BottomSheetSettingSpaceFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(cont, "Edit Space", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(cont, CreateSpaceScreen.class);
+                intent.putExtra("id", spaceId);
+                intent.putExtra("mode", mode);
+                startActivity(intent);
             }
         });
 

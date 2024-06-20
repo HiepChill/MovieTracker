@@ -75,6 +75,7 @@ public class CreateTagScreen extends AppCompatActivity {
                         selectedColor
                 );
                 firestoreHelper.createTag(tag);
+                finish();
             }
         });
 

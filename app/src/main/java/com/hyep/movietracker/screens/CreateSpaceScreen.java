@@ -36,6 +36,7 @@ public class CreateSpaceScreen extends AppCompatActivity {
     private ImageView selectedIconCase = null;
     private ImageView previousIconCase = null;
     private FirestoreHelper firestoreHelper;
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,6 @@ public class CreateSpaceScreen extends AppCompatActivity {
         Utils.setHideKeyboardOnTouch(this, findViewById(R.id.main));
         setIconClickListeners();
         setColorClickListeners();
-        setDoneButtonClickListener();
 
         imvArrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,9 +90,32 @@ public class CreateSpaceScreen extends AppCompatActivity {
         });
 
         firestoreHelper = new FirestoreHelper(this);
+
+        mode = getIntent().getStringExtra("mode");
+        if (mode.equals("update")) {
+            String id = getIntent().getStringExtra("id");
+            updateSpace(id);
+        }
+        if (mode.equals("create")) {
+            createNewSpace();
+        }
     }
 
-    private void setDoneButtonClickListener() {
+    private void updateSpace(String id) {
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firestoreHelper.updateSpace(
+                        id,
+                        edtSpaceName.getText().toString(),
+                        selectedColor,
+                        selectedIcon);
+                finish();
+            }
+        });
+    }
+
+    private void createNewSpace() {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +127,7 @@ public class CreateSpaceScreen extends AppCompatActivity {
                         selectedIcon
                 );
                 firestoreHelper.createSpace(space);
+                finish();
             }
         });
     }
