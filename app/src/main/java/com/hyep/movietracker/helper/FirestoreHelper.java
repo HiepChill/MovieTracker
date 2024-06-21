@@ -12,17 +12,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.firestore.CollectionReference;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hyep.movietracker.Listeners.DeleteSpaceCallback;
 import com.hyep.movietracker.Listeners.DeleteTagCallback;
+import com.hyep.movietracker.Listeners.DeleteTagFromMovieCallback;
 import com.hyep.movietracker.Listeners.LoadMovieByIdCallback;
 import com.hyep.movietracker.Listeners.LoadMoviesCallback;
 import com.hyep.movietracker.Listeners.LoadSpacesCallback;
@@ -38,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -203,20 +207,40 @@ public class FirestoreHelper {
     }
 
     public void deleteTag(String id, final DeleteTagCallback deleteTagCallback) {
-        tags.document(id)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(context, "Tag deleted successfully", Toast.LENGTH_SHORT).show();
-                        deleteTagCallback.onDeleted();
+        // Step 1: Delete all documents in the "movies" sub-collection of the tag document
+        tags.document(id).collection("movies").get()
+                .continueWithTask(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        List<Task<Void>> deletionTasks = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                            deletionTasks.add(document.getReference().delete());
+                        }
+                        return Tasks.whenAll(deletionTasks);
+                    } else {
+                        throw task.getException() != null ? task.getException() : new Exception("Failed to retrieve movies sub-collection.");
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context, "Failed to delete tag: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                // Step 2: Delete the tag document itself
+                .continueWithTask(task -> tags.document(id).delete())
+                // Step 3: Delete the tag references in the "tags" sub-collection of all documents in the "movies" collection
+                .continueWithTask(task -> movies.get())
+                .continueWithTask(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        List<Task<Void>> deletionTasks = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                            deletionTasks.add(document.getReference().collection("tags").document(id).delete());
+                        }
+                        return Tasks.whenAll(deletionTasks);
+                    } else {
+                        throw task.getException() != null ? task.getException() : new Exception("Failed to retrieve movies collection.");
                     }
+                })
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(context, "Tag deleted successfully", Toast.LENGTH_SHORT).show();
+                    deleteTagCallback.onDeleted();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Failed to delete tag: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
