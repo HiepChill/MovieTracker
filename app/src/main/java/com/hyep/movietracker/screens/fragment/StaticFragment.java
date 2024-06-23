@@ -1,5 +1,6 @@
 package com.hyep.movietracker.screens.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.hyep.movietracker.R;
 
@@ -60,14 +62,24 @@ public class StaticFragment extends Fragment {
         BarDataSet barDataSet = new BarDataSet(barEntries, "Movies Watched by Month");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         BarData barData = new BarData(barDataSet);
+        barData.setValueTextColor(R.color.black);
         barChart.setData(barData);
+        barChart.getDescription().setTextColor(Color.WHITE); // Outside chart text color
+        barChart.getXAxis().setTextColor(Color.WHITE); // Outside chart text color
+        barChart.getAxisLeft().setTextColor(Color.WHITE); // Outside chart text color
+        barChart.getAxisRight().setTextColor(Color.WHITE); // Outside chart text color
+        barChart.getLegend().setTextColor(Color.WHITE);
         barChart.invalidate();
 
         // Setup PieChart
         PieDataSet pieDataSet = new PieDataSet(pieEntries, "Movies Watched by Genre");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         PieData pieData = new PieData(pieDataSet);
+        pieData.setValueTextColor(R.color.black);
+        pieData.setValueFormatter(new PercentFormatter());
         pieChart.setData(pieData);
+        pieChart.getDescription().setTextColor(Color.WHITE); // Outside chart text color
+        pieChart.getLegend().setTextColor(Color.WHITE);
         pieChart.invalidate();
     }
 }
