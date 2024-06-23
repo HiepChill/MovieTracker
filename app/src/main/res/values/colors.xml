@@ -25,4 +25,8 @@
     <color name="selectedColor">#00000000</color>
     <color name="yellow">#FFFF00</color>
     <color name="transparent">#00000000</color>
+    <color name="dark">#15192D</color>
+    <color name="yellow_tip">#F7BE13</color>
+
+
 </resources>
