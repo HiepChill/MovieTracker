@@ -1,5 +1,6 @@
 package com.hyep.movietracker.screens;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -56,6 +57,7 @@ import com.hyep.movietracker.screens.fragment.BottomSheetTagDetailMovie;
 import com.hyep.movietracker.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -86,6 +88,7 @@ public class DetailMovieScreen extends AppCompatActivity {
     private FirestoreHelper firestoreHelper;
     private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
     private int movieId;
+    private int pickedYear, pickedMonth, pickedDay;
     private List<String> tagsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +161,14 @@ public class DetailMovieScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showListTag();
+            }
+        });
+
+        imgBtnAddToWatched.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+
             }
         });
 
@@ -315,5 +326,36 @@ public class DetailMovieScreen extends AppCompatActivity {
 
             }
         });
+    }
+    private void showDatePickerDialog() {
+        Calendar calendar = Calendar.getInstance();
+        int year, month, day;
+        if (pickedYear != 0 && pickedMonth != 0 && pickedDay != 0) {
+            year = pickedYear;
+            month = pickedMonth;
+            day = pickedDay;
+        }
+        else {
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH);
+            day = calendar.get(Calendar.DAY_OF_MONTH);
+        }
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                DetailMovieScreen.this,
+                R.style.my_dialog_theme,
+                (view, year1, monthOfYear, dayOfMonth) -> {
+                    pickedYear = year1;
+                    pickedMonth = monthOfYear;
+                    pickedDay = dayOfMonth;
+
+                    // Set the date in the EditText
+//                    editTextDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1);
+                },
+                year, month, day);
+
+
+        datePickerDialog.show();
+
     }
 }
