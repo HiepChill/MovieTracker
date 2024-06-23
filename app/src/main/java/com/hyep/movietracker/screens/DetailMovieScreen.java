@@ -35,6 +35,7 @@ import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.hyep.movietracker.Listeners.LoadSpacesCallback;
+import com.hyep.movietracker.Listeners.LoadTagsInMovieCallback;
 import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.CastDetailMovieAdapter;
@@ -85,6 +86,7 @@ public class DetailMovieScreen extends AppCompatActivity {
     private FirestoreHelper firestoreHelper;
     private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
     private int movieId;
+    private List<String> tagsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,10 +106,10 @@ public class DetailMovieScreen extends AppCompatActivity {
         tvMovieTitle = findViewById(R.id.tvMovieTitle);
         tvInformation = findViewById(R.id.tvInformation);
         tvMovieGenres = findViewById(R.id.tvMovieGenres);
+        tvMovieTags = findViewById(R.id.tvMovieTags);
 
         //image view
         ivPoster = findViewById(R.id.ivPoster);
-
 
         //button
         imgBtnBack = findViewById(R.id.imgBtnBack);
@@ -115,12 +117,10 @@ public class DetailMovieScreen extends AppCompatActivity {
         imgBtnAddToWatched = findViewById(R.id.imgBtnAddToWatched);
         imgBtnAddTag = findViewById(R.id.imgBtnAddTag);
 
-
         //recycle view
         rvCast = findViewById(R.id.rvCast);
         GridLayoutManager castLayout = new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false);
         rvCast.setLayoutManager(castLayout);
-
 
         rvMedia = findViewById(R.id.rvMedia);
         LinearLayoutManager rvMediaLayout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -136,6 +136,8 @@ public class DetailMovieScreen extends AppCompatActivity {
         //firestorehelper
         firestoreHelper = new FirestoreHelper(this);
 
+        tagsList = new ArrayList<>();
+        setUpMovieTags();
 
         //onclick Button
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
@@ -159,8 +161,6 @@ public class DetailMovieScreen extends AppCompatActivity {
             }
         });
 
-
-
         // call api
         callDetailMovieById(movieId);
         callListCastById(movieId);
@@ -183,9 +183,27 @@ public class DetailMovieScreen extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        setUpMovieTags();
     }
 
+    private void setUpMovieTags() {
+        firestoreHelper.loadTagsInMovie(String.valueOf(movieId), new LoadTagsInMovieCallback() {
+            @Override
+            public void onLoaded(List<String> tags) {
+                tagsList.clear();
+                tagsList.addAll(tags);
+                displayMovieTags();
+            }
+        });
+    }
 
+    private void displayMovieTags() {
+        StringBuilder tagsText = new StringBuilder();
+        for (String tag : tagsList) {
+            tagsText.append("#").append(tag).append(" ");
+        }
+        tvMovieTags.setText(tagsText.toString().trim());
+    }
 
     private void callDetailMovieById(int movieId){
         APIClient.getApiInterface().getDetailMovieById(movieId, Utils.API_KEY, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<Movie>() {
