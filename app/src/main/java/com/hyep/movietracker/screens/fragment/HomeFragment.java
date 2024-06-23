@@ -30,6 +30,7 @@ import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.screens.DetailSpaceScreen;
 import com.hyep.movietracker.screens.UpcomingScreen;
+import com.hyep.movietracker.screens.WatchedScreen;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,7 @@ public class HomeFragment extends Fragment {
         imvSpace = view.findViewById(R.id.imvSpace);
         rcvPersonalSpace = view.findViewById(R.id.rcvPersonalSpace);
         btnUpComing = view.findViewById(R.id.imgBtnUpcoming);
+        btnWatched = view.findViewById(R.id.imgBtnWatched);
 
         firestoreHelper = new FirestoreHelper(view.getContext());
         handler = new Handler();
@@ -62,6 +64,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), UpcomingScreen.class);
+                startActivity(intent);
+            }
+        });
+
+        btnWatched.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), WatchedScreen.class);
                 startActivity(intent);
             }
         });
