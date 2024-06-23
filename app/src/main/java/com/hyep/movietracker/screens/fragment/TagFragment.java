@@ -1,5 +1,6 @@
 package com.hyep.movietracker.screens.fragment;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,28 +13,37 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.hyep.movietracker.Listeners.DeleteTagCallback;
+import com.hyep.movietracker.Listeners.LoadTagsCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.TagAdapter;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.models.TagModel;
+import com.hyep.movietracker.screens.DetailTagScreen;
+import com.hyep.movietracker.utils.UniqueId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TagFragment extends Fragment {
 
-    ArrayList<TagModel> tagModelArrayList = new ArrayList<>();
-
-    ImageView imvTag;
-    TextView tvNoTag, tvCreateTag;
-    RecyclerView rcvTag;
-    TagAdapter tagAdapter;
+    private ArrayList<TagModel> tagModelArrayList = new ArrayList<>();
+    private ImageView imvTag;
+    private TextView tvNoTag, tvCreateTag;
+    private RecyclerView rcvTag;
+    private TagAdapter tagAdapter;
+    private FirestoreHelper firestoreHelper;
+    private Handler handler;
+    private Runnable deleteRunnable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,23 +56,23 @@ public class TagFragment extends Fragment {
         tvCreateTag = view.findViewById(R.id.tvCreateTag);
         rcvTag = view.findViewById(R.id.rcvTag);
 
-        setUpTagModelArrayList();
+        firestoreHelper = new FirestoreHelper(view.getContext());
+        handler = new Handler();
 
         tagAdapter = new TagAdapter(view.getContext(), tagModelArrayList);
+        tagAdapter.setOnItemClickListener(position -> {
+            TagModel clickedTag = tagModelArrayList.get(position);
+
+            Intent intent = new Intent(getActivity(), DetailTagScreen.class);
+            intent.putExtra("id", clickedTag.getId());
+            intent.putExtra("name",clickedTag.getName());
+            intent.putExtra("color", clickedTag.getColor());
+            startActivity(intent);
+        });
+
+
         rcvTag.setAdapter(tagAdapter);
         rcvTag.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-
-        if (!tagModelArrayList.isEmpty()) {
-            imvTag.setVisibility(View.GONE);
-            tvNoTag.setVisibility(View.GONE);
-            tvCreateTag.setVisibility(View.GONE);
-            rcvTag.setVisibility(View.VISIBLE);
-        } else {
-            imvTag.setVisibility(View.VISIBLE);
-            tvNoTag.setVisibility(View.VISIBLE);
-            tvCreateTag.setVisibility(View.VISIBLE);
-            rcvTag.setVisibility(View.GONE);
-        }
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -73,19 +83,10 @@ public class TagFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
+                TagModel deletedTag = tagModelArrayList.get(position);
                 tagAdapter.deleteItem(position);
-                showUndoSnackbar();
-                if (!tagModelArrayList.isEmpty()) {
-                    imvTag.setVisibility(View.GONE);
-                    tvNoTag.setVisibility(View.GONE);
-                    tvCreateTag.setVisibility(View.GONE);
-                    rcvTag.setVisibility(View.VISIBLE);
-                } else {
-                    imvTag.setVisibility(View.VISIBLE);
-                    tvNoTag.setVisibility(View.VISIBLE);
-                    tvCreateTag.setVisibility(View.VISIBLE);
-                    rcvTag.setVisibility(View.GONE);
-                }
+                showUndoSnackbar(deletedTag, position);
+                updateEmptyViewVisibility();
             }
 
             @Override
@@ -122,21 +123,67 @@ public class TagFragment extends Fragment {
         return view;
     }
 
-    private void setUpTagModelArrayList() {
-        TagModel[] tagModels = {
-                new TagModel("Action", 0),
-                new TagModel("Adventure", 1),
-                new TagModel("Animation", 2),
-                new TagModel("Comedy", 3),
-                new TagModel("Crime", 4),
-        };
-
-        tagModelArrayList.addAll(Arrays.asList(tagModels));
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpTagModelArrayList();
     }
 
-    private void showUndoSnackbar() {
+    private void setUpTagModelArrayList() {
+        firestoreHelper.loadTags(new LoadTagsCallback() {
+            @Override
+            public void onLoaded(ArrayList<TagModel> tags) {
+                tagModelArrayList.clear();
+                tagModelArrayList.addAll(tags);
+                tagAdapter.notifyDataSetChanged();
+                updateEmptyViewVisibility();
+            }
+        });
+    }
+
+    private void showUndoSnackbar(TagModel deletedTag, int position) {
         Snackbar snackbar = Snackbar.make(rcvTag, "Tag deleted", Snackbar.LENGTH_LONG);
-        snackbar.setAction("Undo", v -> tagAdapter.undoDelete());
+        snackbar.setAction("Undo", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handler.removeCallbacks(deleteRunnable);
+                tagAdapter.undoDelete();
+                updateEmptyViewVisibility();
+            }
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                    deleteRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            firestoreHelper.deleteTag(deletedTag.getId(), new DeleteTagCallback() {
+                                @Override
+                                public void onDeleted() {
+                                    setUpTagModelArrayList();
+                                }
+                            });
+                        }
+                    };
+                    handler.postDelayed(deleteRunnable, Snackbar.LENGTH_LONG);
+                }
+            }
+        });
         snackbar.show();
+    }
+
+    private void updateEmptyViewVisibility() {
+        if (!tagModelArrayList.isEmpty()) {
+            imvTag.setVisibility(View.GONE);
+            tvNoTag.setVisibility(View.GONE);
+            tvCreateTag.setVisibility(View.GONE);
+            rcvTag.setVisibility(View.VISIBLE);
+        } else {
+            imvTag.setVisibility(View.VISIBLE);
+            tvNoTag.setVisibility(View.VISIBLE);
+            tvCreateTag.setVisibility(View.VISIBLE);
+            rcvTag.setVisibility(View.GONE);
+        }
     }
 }

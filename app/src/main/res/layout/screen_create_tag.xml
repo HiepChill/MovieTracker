@@ -7,30 +7,29 @@
     android:background="@color/black">
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="409dp"
-        android:layout_height="150dp"
+        android:id="@+id/header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/icon_enter_tag"
+            android:id="@+id/imvArrowBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/baseline_arrow_back_ios_24" />
+            android:src="@drawable/ic_arrow_back"/>
 
         <EditText
-            android:id="@+id/tag_name"
+            android:id="@+id/edtTagName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -42,43 +41,37 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ic_back"
-        android:layout_width="410dp"
-        android:layout_height="566dp"
+        android:id="@+id/colorSelection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/header">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
             android:text="Color"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
-
         <LinearLayout
-            android:layout_width="377dp"
-            android:layout_height="344dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/ic_create_tag_screen"
+            android:background="@drawable/bg_color_palette"
             android:backgroundTint="#15192D"
-            android:gravity="bottom|center_horizontal"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/row1"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
                 <RelativeLayout
@@ -86,7 +79,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/magenta" />
 
                 <RelativeLayout
@@ -94,9 +87,9 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/magenta"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/magenta"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/aquaGreen" />
 
                 <RelativeLayout
@@ -104,9 +97,9 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/aquaGreen"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/aquaGreen"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/chromeYellow" />
 
                 <RelativeLayout
@@ -114,9 +107,9 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/magenta"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/magenta"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/purple" />
 
                 <RelativeLayout
@@ -124,16 +117,16 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/purple"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/purple"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/royalBlue" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/row2"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
                 <RelativeLayout
@@ -141,7 +134,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/red" />
 
                 <RelativeLayout
@@ -149,9 +142,9 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/red"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/red"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/claret" />
 
                 <RelativeLayout
@@ -159,9 +152,9 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/claret"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/claret"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/smokeyGrey" />
 
                 <RelativeLayout
@@ -169,9 +162,9 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/red"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/red"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/blazeOrange" />
 
                 <RelativeLayout
@@ -179,24 +172,24 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/blazeOrange"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/blazeOrange"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/bluePurple" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/row3"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="20dp">
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp">
 
                 <RelativeLayout
                     android:id="@+id/green"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/green" />
 
                 <RelativeLayout
@@ -204,9 +197,9 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/green"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/green"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/cobaltBlue" />
 
                 <RelativeLayout
@@ -214,9 +207,9 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/cobaltBlue"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/cobaltBlue"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/skyBlue" />
 
                 <RelativeLayout
@@ -224,9 +217,9 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/green"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/green"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/brown" />
 
                 <RelativeLayout
@@ -234,33 +227,25 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/brown"
-                    android:background="@drawable/ic_screnn_tag1"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/brown"
+                    android:background="@drawable/bg_color_case"
                     android:backgroundTint="@color/purpleJam" />
             </RelativeLayout>
-
-            <!-- Placeholder View -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_weight="1" />
-
-            <!-- Your TextView -->
-
-
         </LinearLayout>
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="132dp"
-            android:layout_height="46dp"
-            android:layout_gravity="center"
-            android:id="@+id/btnDone"
-            android:text="DONE"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/magenta"
-            android:background="@drawable/ic_button" />
-
-
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="132dp"
+        android:layout_height="46dp"
+        android:layout_gravity="center"
+        android:id="@+id/btnDone"
+        android:text="DONE"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/magenta"
+        android:background="@drawable/ic_button"
+        app:layout_constraintTop_toBottomOf="@id/colorSelection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

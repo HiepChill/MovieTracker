@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,23 +22,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.hyep.movietracker.Listeners.DeleteSpaceCallback;
+import com.hyep.movietracker.Listeners.LoadSpacesCallback;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.PersonalSpaceAdapter;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.models.PersonalSpaceModel;
+import com.hyep.movietracker.screens.DetailSpaceScreen;
 import com.hyep.movietracker.screens.UpcomingScreen;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class HomeFragment extends Fragment {
 
-    ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
-
-    ImageView imvSpace;
-    TextView tvSpace, tvCreate;
-    RecyclerView rcvPersonalSpace;
-    PersonalSpaceAdapter personalSpaceAdapter;
-    ImageButton btnUpComing, btnWatched;
+    private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
+    private ImageView imvSpace;
+    private TextView tvSpace, tvCreate;
+    private RecyclerView rcvPersonalSpace;
+    private PersonalSpaceAdapter personalSpaceAdapter;
+    private ImageButton btnUpComing, btnWatched;
+    private FirestoreHelper firestoreHelper;
+    private Handler handler;
+    private Runnable deleteRunnable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +55,8 @@ public class HomeFragment extends Fragment {
         rcvPersonalSpace = view.findViewById(R.id.rcvPersonalSpace);
         btnUpComing = view.findViewById(R.id.imgBtnUpcoming);
 
+        firestoreHelper = new FirestoreHelper(view.getContext());
+        handler = new Handler();
 
         btnUpComing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,24 +66,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        setUpPersonalSpaceArrayList();
-
         personalSpaceAdapter = new PersonalSpaceAdapter(view.getContext(), personalSpaceModelArrayList);
+
+        personalSpaceAdapter.setOnItemClickListener(position -> {
+            PersonalSpaceModel space = personalSpaceModelArrayList.get(position);
+
+            Intent intent = new Intent(view.getContext(), DetailSpaceScreen.class);
+            intent.putExtra("id", space.getId());
+            intent.putExtra("size", space.getSize());
+            intent.putExtra("name", space.getName());
+            intent.putExtra("color", space.getColor());
+            intent.putExtra("icon", space.getIcon());
+            startActivity(intent);
+        });
+
         rcvPersonalSpace.setAdapter(personalSpaceAdapter);
         rcvPersonalSpace.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-
-        if (!personalSpaceModelArrayList.isEmpty()) {
-            tvCreate.setVisibility(View.GONE);
-            tvSpace.setVisibility(View.GONE);
-            imvSpace.setVisibility(View.GONE);
-            rcvPersonalSpace.setVisibility(View.VISIBLE);
-        }
-        else {
-            tvCreate.setVisibility(View.VISIBLE);
-            tvSpace.setVisibility(View.VISIBLE);
-            imvSpace.setVisibility(View.VISIBLE);
-            rcvPersonalSpace.setVisibility(View.GONE);
-        }
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -86,20 +92,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
+                PersonalSpaceModel deletedSpace = personalSpaceModelArrayList.get(position);
                 personalSpaceAdapter.deleteItem(position);
-                showUndoSnackbar();
-                if (!personalSpaceModelArrayList.isEmpty()) {
-                    tvCreate.setVisibility(View.GONE);
-                    tvSpace.setVisibility(View.GONE);
-                    imvSpace.setVisibility(View.GONE);
-                    rcvPersonalSpace.setVisibility(View.VISIBLE);
-                }
-                else {
-                    tvCreate.setVisibility(View.VISIBLE);
-                    tvSpace.setVisibility(View.VISIBLE);
-                    imvSpace.setVisibility(View.VISIBLE);
-                    rcvPersonalSpace.setVisibility(View.GONE);
-                }
+                showUndoSnackbar(deletedSpace, position);
+                updateEmptyViewVisibility();
             }
 
             @Override
@@ -136,29 +132,67 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void setUpPersonalSpaceArrayList() {
-        PersonalSpaceModel[] personalSpaceModels = {
-                new PersonalSpaceModel("Phim cua Duong", 6,  0, 0),
-                new PersonalSpaceModel("Phim cua Hiep", 7,  1, 0),
-                new PersonalSpaceModel("Phim cua Thanh", 8,  2, 0),
-                new PersonalSpaceModel("Phim cua Thuy", 9,  3, 0),
-                new PersonalSpaceModel("Phim cua Duong", 6,  4, 1),
-                new PersonalSpaceModel("Phim cua Hiep", 7,  5, 1),
-                new PersonalSpaceModel("Phim cua Thanh", 8,  6, 1),
-                new PersonalSpaceModel("Phim cua Thuy", 9,  7, 1),
-        };
-
-        personalSpaceModelArrayList.addAll(Arrays.asList(personalSpaceModels));
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpPersonalSpaceArrayList();
     }
 
-    private void showUndoSnackbar() {
+    private void setUpPersonalSpaceArrayList() {
+        firestoreHelper.loadSpaces(new LoadSpacesCallback() {
+            @Override
+            public void onLoaded(ArrayList<PersonalSpaceModel> spaces) {
+                personalSpaceModelArrayList.clear();
+                personalSpaceModelArrayList.addAll(spaces);
+                personalSpaceAdapter.notifyDataSetChanged();
+                updateEmptyViewVisibility();
+            }
+        });
+    }
+
+    private void showUndoSnackbar(PersonalSpaceModel deletedSpace, int position) {
         Snackbar snackbar = Snackbar.make(getView(), "Personal space deleted", Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacks(deleteRunnable);
                 personalSpaceAdapter.undoDelete();
+                updateEmptyViewVisibility();
+            }
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                    deleteRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            firestoreHelper.deleteSpace(deletedSpace.getId(), new DeleteSpaceCallback() {
+                                @Override
+                                public void onDeleted() {
+                                    setUpPersonalSpaceArrayList();
+                                }
+                            });
+                        }
+                    };
+                    handler.postDelayed(deleteRunnable, Snackbar.LENGTH_LONG);
+                }
             }
         });
         snackbar.show();
+    }
+
+    private void updateEmptyViewVisibility() {
+        if (!personalSpaceModelArrayList.isEmpty()) {
+            tvCreate.setVisibility(View.GONE);
+            tvSpace.setVisibility(View.GONE);
+            imvSpace.setVisibility(View.GONE);
+            rcvPersonalSpace.setVisibility(View.VISIBLE);
+        } else {
+            tvCreate.setVisibility(View.VISIBLE);
+            tvSpace.setVisibility(View.VISIBLE);
+            imvSpace.setVisibility(View.VISIBLE);
+            rcvPersonalSpace.setVisibility(View.GONE);
+        }
     }
 }

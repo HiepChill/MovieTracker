@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.hyep.movietracker" />
+                  <option name="mobileSdkAppId" value="1:559084869240:android:09f03a7dfc3a50b5e7ff8d" />
+                  <option name="projectId" value="movietracker-e522d" />
+                  <option name="projectNumber" value="559084869240" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

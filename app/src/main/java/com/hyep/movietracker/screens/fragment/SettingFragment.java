@@ -12,13 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.screens.LoginScreen;
-import com.hyep.movietracker.screens.MainScreen;
 import com.hyep.movietracker.screens.NewPasswordScreen;
 
 public class SettingFragment extends Fragment {
@@ -42,15 +40,13 @@ public class SettingFragment extends Fragment {
         btnLogOut = view.findViewById(R.id.btnLogOut);
 
         mAuth = FirebaseAuth.getInstance();
-
         FirebaseUser user = mAuth.getCurrentUser();
+
         if (user!=null){
             String name = user.getDisplayName();
             Uri uri = user.getPhotoUrl();
             String email = user.getEmail();
 
-
-//            Toast.makeText(getActivity(),"Name"+ name, Toast.LENGTH_SHORT).show();
             tvName.setText(name);
             imvProfile.setImageURI(uri);
 
@@ -70,7 +66,6 @@ public class SettingFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), LoginScreen.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-
             }
         });
 

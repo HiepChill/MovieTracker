@@ -1,0 +1,44 @@
+# Báo Cáo Tiến Độ Hàng Tuần
+
+## Thông Tin Chung
+- **Tên Dự Án**: MovieTracker
+- **Tuần**: 1
+- **Ngày**: (28-4-2024 -> 5-5-2024)
+- **Nhóm Thực Hiện**:
+  - Thành viên 1: Chu Mạnh Vũ Hiệp
+  - Thành viên 2: Nguyễn Mạnh Thành
+  - Thành viên 3: Hồ Bá An Dương
+  - Thành viên 4: Phạm Thu Thủy
+
+## Mục Tiêu Tuần Này
+(Tóm tắt ngắn gọn mục tiêu chính của tuần này.)
+Cả nhóm cùng suy nghĩ và đưa ra ý tưởng cho giao diện app xem phim, phác họa để người thiết kế giao diện hiểu rõ và thiết kế app
+
+## Công Việc Đã Hoàn Thành
+(Tóm tắt các công việc đã hoàn thành trong tuần này.)
+Đã thiết kế sơ qua phần giao diện
+
+### Thành viên 1: Chu Mạnh Vũ Hiệp
+- Công việc 1: Nêu ý tưởng cho giao diện và mô tả thiết kế
+- Công việc 2:
+
+### Thành viên 2:Phạm Thu Thủy
+- Công việc 1:Nêu ý tưởng cho giao diện và thiết kế giao diện
+- Công việc 2:
+
+### Thành viên 3:Hồ Bá An Dương
+- Công việc 1:Nêu ý tưởng cho giao diện và mô tả thiết kế
+- Công việc 2:
+
+### Thành viên 4:Nguyễn Mạnh Thành
+- Công việc 1:Nêu ý tưởng cho giao diện và mô tả thiết kế
+- Công việc 2:
+
+## Vấn Đề Gặp Phải
+(Tiêu điểm vào các vấn đề, thách thức mà nhóm gặp phải và cách giải quyết.)
+-có nhiều tranh cãi về vấn đề giao diện
+## Kế Hoạch Tuần Tới
+(Phác thảo ngắn gọn các kế hoạch và mục tiêu dự kiến cho tuần tiếp theo.)
+-Bắt đầu bắt tay vào thiết kế xử lý từng màn giao diện
+## Nhận Xét và Đề Xuất
+(Mọi nhận xét và đề xuất để cải thiện quá trình làm việc nhóm và tiến độ dự án.)

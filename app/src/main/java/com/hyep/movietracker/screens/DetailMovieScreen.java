@@ -1,14 +1,21 @@
 package com.hyep.movietracker.screens;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +34,9 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.hyep.movietracker.Listeners.LoadSpacesCallback;
+import com.hyep.movietracker.Listeners.LoadTagsInMovieCallback;
+import com.hyep.movietracker.helper.FirestoreHelper;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.adapter.CastDetailMovieAdapter;
 import com.hyep.movietracker.adapter.MediaDetailMovieAdapter;
@@ -38,10 +48,14 @@ import com.hyep.movietracker.models.CastResponse;
 import com.hyep.movietracker.models.MediaModel;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.MovieResponse;
+import com.hyep.movietracker.models.PersonalSpaceModel;
 import com.hyep.movietracker.models.TrailerModel;
 import com.hyep.movietracker.models.TrailerResponse;
+import com.hyep.movietracker.screens.fragment.BottomSheetSpaceDetailMovie;
+import com.hyep.movietracker.screens.fragment.BottomSheetTagDetailMovie;
 import com.hyep.movietracker.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -69,6 +83,10 @@ public class DetailMovieScreen extends AppCompatActivity {
     private String idTrailer;
 
     private WebView wvTrailer;
+    private FirestoreHelper firestoreHelper;
+    private ArrayList<PersonalSpaceModel> personalSpaceModelArrayList = new ArrayList<>();
+    private int movieId;
+    private List<String> tagsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,22 +94,22 @@ public class DetailMovieScreen extends AppCompatActivity {
         setContentView(R.layout.screen_detail_movie);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
             return insets;
         });
         Intent intent = getIntent();
 
-        int movieId = intent.getIntExtra("movieId",0);
+        movieId = intent.getIntExtra("movieId",0);
 
         //text view
         tvIMDBScore = findViewById(R.id.tvIMDBScore);
         tvMovieTitle = findViewById(R.id.tvMovieTitle);
         tvInformation = findViewById(R.id.tvInformation);
         tvMovieGenres = findViewById(R.id.tvMovieGenres);
+        tvMovieTags = findViewById(R.id.tvMovieTags);
 
         //image view
         ivPoster = findViewById(R.id.ivPoster);
-
 
         //button
         imgBtnBack = findViewById(R.id.imgBtnBack);
@@ -99,12 +117,10 @@ public class DetailMovieScreen extends AppCompatActivity {
         imgBtnAddToWatched = findViewById(R.id.imgBtnAddToWatched);
         imgBtnAddTag = findViewById(R.id.imgBtnAddTag);
 
-
         //recycle view
         rvCast = findViewById(R.id.rvCast);
         GridLayoutManager castLayout = new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false);
         rvCast.setLayoutManager(castLayout);
-
 
         rvMedia = findViewById(R.id.rvMedia);
         LinearLayoutManager rvMediaLayout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -117,6 +133,11 @@ public class DetailMovieScreen extends AppCompatActivity {
         //webview
         wvTrailer = findViewById(R.id.wvTrailer);
 
+        //firestorehelper
+        firestoreHelper = new FirestoreHelper(this);
+
+        tagsList = new ArrayList<>();
+        setUpMovieTags();
 
         //onclick Button
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
@@ -126,12 +147,62 @@ public class DetailMovieScreen extends AppCompatActivity {
             }
         });
 
+        imgBtnAddToSpace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showListSpace();
+            }
+        });
+
+        imgBtnAddTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showListTag();
+            }
+        });
+
         // call api
         callDetailMovieById(movieId);
         callListCastById(movieId);
         callMediaById(movieId);
         callRecommendationById(movieId);
         callTrailerById(movieId);
+    }
+
+    private void showListSpace() {
+        BottomSheetSpaceDetailMovie bottomSheetSpaceDetailMovie = BottomSheetSpaceDetailMovie.newInstance(movieId);
+        bottomSheetSpaceDetailMovie.show(getSupportFragmentManager(), bottomSheetSpaceDetailMovie.getTag());
+    }
+
+    private void showListTag() {
+        BottomSheetTagDetailMovie bottomSheetTagDetailMovie = BottomSheetTagDetailMovie.newInstance(movieId);
+        bottomSheetTagDetailMovie.show(getSupportFragmentManager(), bottomSheetTagDetailMovie.getTag());
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpMovieTags();
+    }
+
+    private void setUpMovieTags() {
+        firestoreHelper.loadTagsInMovie(String.valueOf(movieId), new LoadTagsInMovieCallback() {
+            @Override
+            public void onLoaded(List<String> tags) {
+                tagsList.clear();
+                tagsList.addAll(tags);
+                displayMovieTags();
+            }
+        });
+    }
+
+    private void displayMovieTags() {
+        StringBuilder tagsText = new StringBuilder();
+        for (String tag : tagsList) {
+            tagsText.append("#").append(tag).append(" ");
+        }
+        tvMovieTags.setText(tagsText.toString().trim());
     }
 
     private void callDetailMovieById(int movieId){
