@@ -8,6 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -22,6 +26,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.hyep.movietracker.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -29,6 +34,8 @@ public class StaticFragment extends Fragment {
 
     private BarChart barChart;
     private PieChart pieChart;
+    private Spinner yearSpinner;
+    private TextView tvTotalWatched, tvTotalGenres;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,13 +44,43 @@ public class StaticFragment extends Fragment {
 
         barChart = view.findViewById(R.id.barChart);
         pieChart = view.findViewById(R.id.pieChart);
+        yearSpinner = view.findViewById(R.id.yearSpinner);
+        tvTotalWatched = view.findViewById(R.id.tvTotalWatched);
+        tvTotalGenres = view.findViewById(R.id.tvTotalGenres);
 
+        setupYearSpinner();
         setupCharts();
 
         return view;
     }
 
+    private void setupYearSpinner() {
+        // Assume you have an array of years to display in the spinner
+        List<String> years = Arrays.asList("2022", "2023", "2024");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, years);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearSpinner.setAdapter(adapter);
+
+        yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedYear = (String) parent.getItemAtPosition(position);
+                updateChartsData(selectedYear);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
+    }
+
     private void setupCharts() {
+        // Initial setup with default year (e.g., current year)
+        updateChartsData("2023");  // You can change the default year as needed
+    }
+
+    private void updateChartsData(String year) {
         List<BarEntry> barEntries = new ArrayList<>();
         List<PieEntry> pieEntries = new ArrayList<>();
 

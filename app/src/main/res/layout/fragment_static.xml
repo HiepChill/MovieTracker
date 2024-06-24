@@ -37,10 +37,11 @@
             android:id="@+id/yearSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/chromeYellow"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:tooltipText="2023"
+            android:tooltipText="Select Year"
             app:layout_constraintBottom_toBottomOf="@id/tvStatics"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvStatics" />
