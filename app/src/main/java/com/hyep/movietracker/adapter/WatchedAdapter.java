@@ -2,10 +2,14 @@ package com.hyep.movietracker.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Typeface;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TypefaceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.protobuf.GeneratedMessageLite;
 import com.google.type.Color;
 import com.hyep.movietracker.R;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.WatchedMovie;
 import com.hyep.movietracker.utils.Utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,13 +85,14 @@ public class WatchedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof HeaderViewHolder){
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             String header = item.getHeader();
-//            headerViewHolder.headerTextView.setText(header);
             setFormattedHeader(headerViewHolder.headerTextView, header);
         }else if(holder instanceof WatchedHolder){
             WatchedHolder watchedHolder = (WatchedHolder) holder;
             Movie movie = item.getMovie();
             watchedHolder.tvGenre.setText("Movie");
-            watchedHolder.tvDate.setText(movie.getReleaseDate().toString());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+
+            watchedHolder.tvDate.setText(simpleDateFormat.format(movie.getReleaseDate()));
             watchedHolder.tvTitle.setText(movie.getTitle());
             Glide.with(cont).load(Utils.BASE_IMG_URL + movie.getPosterPath()).into(watchedHolder.imagePoster);
 
@@ -104,31 +111,29 @@ public class WatchedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @SuppressLint("ResourceAsColor")
-    private void setFormattedHeader(TextView textView, String header) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
-        Date parsedDate;
-        try {
-            parsedDate = sdf.parse(header);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        // Định dạng phần ngày trong chuỗi header
-        SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
-        String day = dayFormat.format(parsedDate);
-
-        // Tạo một SpannableString để định dạng văn bản
+    private void setFormattedHeader(@NonNull TextView textView, String header) {
         SpannableString spannableString = new SpannableString(header);
+        int color = ContextCompat.getColor(cont, R.color.secondary);
+        spannableString.setSpan(
+                new ForegroundColorSpan(color),
+                0,
+                2,
+                spannableString.SPAN_EXCLUSIVE_INCLUSIVE
+        );
 
-        // Đặt màu sắc cho phần ngày (đầu chuỗi)
-        int color = ContextCompat.getColor(cont, R.color.white);
-        spannableString.setSpan(new ForegroundColorSpan(color), 0, day.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(
+                new StyleSpan(Typeface.BOLD),
+                0,
+                2,
+                spannableString.SPAN_EXCLUSIVE_INCLUSIVE
+        );
 
-        // Đặt kích thước chữ cho phần ngày (đầu chuỗi)
-        spannableString.setSpan(new RelativeSizeSpan(1.5f), 0, day.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        // Đặt spannableString vào TextView
+        spannableString.setSpan(
+                new RelativeSizeSpan(2f),
+                0,
+                2,
+                spannableString.SPAN_EXCLUSIVE_INCLUSIVE
+        );
         textView.setText(spannableString);
     }
 

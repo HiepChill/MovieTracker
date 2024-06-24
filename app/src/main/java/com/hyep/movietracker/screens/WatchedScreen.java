@@ -1,10 +1,13 @@
 package com.hyep.movietracker.screens;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,7 +20,12 @@ import com.hyep.movietracker.adapter.WatchedAdapter;
 import com.hyep.movietracker.models.Movie;
 import com.hyep.movietracker.models.WatchedMovie;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -53,13 +61,23 @@ public class WatchedScreen extends AppCompatActivity {
             finish();
         });
 
+
         movieList = new ArrayList<>();
 
-        movieList.add(new Movie(1022789, "/oxxqiyWrnM0XPnBtVe9TgYWnPxT.jpg","Inside Out 2", new Date(2024,6,11),new Date(2024,6,11) ));
-        movieList.add(new Movie(1086747, "/vZVEUPychdvZLrTNwWErr9xZFmu.jpg","The Watchers", new Date(2024,6,6),new Date(2024,6,11) ));
-        movieList.add(new Movie(748783, "/tSPsiMHb4edeBKZZjKDmhX18Jbs.jpg","Inside Out 2", new Date(2024,6,11),new Date(2024,3,11) ));
-        movieList.add(new Movie(1022789, "/oxxqiyWrnM0XPnBtVe9TgYWnPxT.jpg","Inside Out 2", new Date(2024,6,11),new Date(2024,3,11) ));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+        try {
+            movieList.add(new Movie(1022789, "/oxxqiyWrnM0XPnBtVe9TgYWnPxT.jpg", "Inside Out 2",
+                    dateFormat.parse("2024-06-06"), dateFormat.parse("2024-06-11")));
+            movieList.add(new Movie(1086747, "/vZVEUPychdvZLrTNwWErr9xZFmu.jpg", "The Watchers",
+                    dateFormat.parse("2024-06-06"), dateFormat.parse("2024-06-11")));
+            movieList.add(new Movie(748783, "/tSPsiMHb4edeBKZZjKDmhX18Jbs.jpg", "Inside Out 2",
+                    dateFormat.parse("2024-06-11"), dateFormat.parse("2024-03-11")));
+            movieList.add(new Movie(1022789, "/oxxqiyWrnM0XPnBtVe9TgYWnPxT.jpg", "Inside Out 2",
+                    dateFormat.parse("2024-06-11"), dateFormat.parse("2024-03-11")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         itemList = prepareItems(movieList);
         rcvWatched.setLayoutManager(new LinearLayoutManager(this));
         watchedAdapter = new WatchedAdapter(this, itemList, new WatchedAdapter.OnItemClickListener() {
@@ -84,7 +102,10 @@ public class WatchedScreen extends AppCompatActivity {
             }
         });
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault());
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM, yyyy");
+
         String lastHeader = "";
         for (Movie movie: movies){
             String hear = sdf.format(movie.getWatchedDate());
