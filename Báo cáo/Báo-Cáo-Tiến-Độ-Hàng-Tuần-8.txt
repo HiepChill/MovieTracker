@@ -28,7 +28,7 @@ Hoàn thiện các màn Login, Register, ForgotPassword và authentication
 
 ### Thành viên 3:Hồ Bá An Dương
 - Công việc 1:Dùng  firestore lưu trữ dữ liệu
-- Công việc 2:Hoàn thiện màn static
+- Công việc 2:Hoàn thiện giao diện màn static
 
 ### Thành viên 4:Nguyễn Mạnh Thành
 - Công việc 1:Thực hiện màn Watched
