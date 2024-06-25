@@ -64,21 +64,20 @@ public class SearchScreen extends AppCompatActivity implements OnItemClickListen
         });
         edtSearch = findViewById(R.id.edtSearch);
         txtMovie = findViewById(R.id.txtMovie);
-        txtTV = findViewById(R.id.txtTV);
+
 
         rcvSearch = findViewById(R.id.rcvSearchView);
         rcvMovie = findViewById(R.id.rcvMovie);
-        rcvTV = findViewById(R.id.rcvTV);
+
 
 
         setLayout(rcvSearch);
         setLayout(rcvMovie);
-        setLayout(rcvTV);
 
         progressDialog = new ProgressDialog(this);
 
         callMovieApi();
-        callTVApi();
+
 
         imgBtnBack = findViewById(R.id.imgBtnBack);
         imgBtnBack.setOnClickListener(v -> finish());
@@ -154,24 +153,24 @@ public class SearchScreen extends AppCompatActivity implements OnItemClickListen
         });
     }
 
-    private void callTVApi() {
-        progressDialog.show();
-
-        APIClient.getApiInterface().getDiscoverTV(Utils.API_KEY, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<TVResponse>() {
-            @Override
-            public void onResponse(Call<TVResponse> call, Response<TVResponse> response) {
-                progressDialog.dismiss();
-                tvList = response.body().getTvList();
-                DiscoverTVAdapter tvAdapter = new DiscoverTVAdapter(tvList, getApplicationContext(), SearchScreen.this::onMovieClicked);
-                rcvTV.setAdapter(tvAdapter);
-                Log.d("data", tvList.toString());
-            }
-            @Override
-            public void onFailure(Call<TVResponse> call, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void callTVApi() {
+//        progressDialog.show();
+//
+//        APIClient.getApiInterface().getDiscoverTV(Utils.API_KEY, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<TVResponse>() {
+//            @Override
+//            public void onResponse(Call<TVResponse> call, Response<TVResponse> response) {
+//                progressDialog.dismiss();
+//                tvList = response.body().getTvList();
+//                DiscoverTVAdapter tvAdapter = new DiscoverTVAdapter(tvList, getApplicationContext(), SearchScreen.this::onMovieClicked);
+//                rcvTV.setAdapter(tvAdapter);
+//                Log.d("data", tvList.toString());
+//            }
+//            @Override
+//            public void onFailure(Call<TVResponse> call, Throwable throwable) {
+//                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private void searchMovie(String api_key, String query, String language) {
         APIClient.getApiInterface().getListMovieBySearch(Utils.API_KEY, query, Utils.LANGUAGE_ENGLISH).enqueue(new Callback<MovieResponse>() {

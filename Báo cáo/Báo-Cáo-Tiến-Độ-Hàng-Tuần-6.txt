@@ -1,0 +1,48 @@
+# Báo Cáo Tiến Độ Hàng Tuần
+
+## Thông Tin Chung
+- **Tên Dự Án**: MovieTracker
+- **Tuần**: 6
+- **Ngày**: (3-6-2024 -> 9-6-2024)
+- **Nhóm Thực hiện**:
+  - Thành viên 1: Chu Mạnh Vũ Hiệp
+  - Thành viên 2: Nguyễn Mạnh Thành
+  - Thành viên 3: Hồ Bá An Dương
+  - Thành viên 4: Phạm Thu Thủy
+
+## Mục Tiêu Tuần Này
+(Tóm tắt ngắn gọn mục tiêu chính của tuần này.)
+Tìm cách khắc phục vấn đề lưu trữ dữ liệu và hoàn thiện thêm các màn
+
+## Công Việc Đã Hoàn Thành
+(Tóm tắt các công việc đã hoàn thành trong tuần này.)
+Hoàn thiện các màn Setting, Detail Movie
+
+### Thành viên 1: Chu Mạnh Vũ Hiệp
+- Công việc 1: Khắc phục lỗi về RealmDB
+- Công việc 2: code thử RealmDB vào dự án 
+
+### Thành viên 2:Phạm Thu Thủy
+- Công việc 1:Xử lý nốt màn Create Space
+- Công việc 2:Chỉnh lại màn Create Tag
+
+### Thành viên 3:Hồ Bá An Dương
+- Công việc 1:Fix các lỗi của các màn trước
+- Công việc 2:Fix lỗi SnackBar
+
+### Thành viên 4:Nguyễn Mạnh Thành
+- Công việc 1:Fix lỗi thay đổi Font chữ
+- Công việc 2:Tìm hiểu về authentication firebase
+
+## Vấn Đề Gặp Phải
+(Tiêu điểm vào các vấn đề, thách thức mà nhóm gặp phải và cách giải quyết.)
+-Gặp khó khăn trong việc them RealmDB vào dự án(Lỗi Sync Gradle)
+-Sử dụng Realm DB đang gặp khó khăn trong việc lưu trữ vào db
+## Kế Hoạch Tuần Tới
+(Phác thảo ngắn gọn các kế hoạch và mục tiêu dự kiến cho tuần tiếp theo.)
+-tiếp tục hoàn thành thêm các chức năng và màn hình
+-Tìm cách khắc phục và sử dụng RealmDB và tìm phương án thay thế
+
+## Nhận Xét và Đề Xuất
+(Mọi nhận xét và đề xuất để cải thiện quá trình làm việc nhóm và tiến độ dự án.)
+cần đẩy nhanh tốc độ hoàn thành công việc
