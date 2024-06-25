@@ -35,10 +35,20 @@ public class Movie {
     @Expose
     private List<GenresModel> genres;
 
+    private Date watchedDate;
+
     public Movie(int id, String posterPath, String title) {
         this.id = id;
         this.posterPath = posterPath;
         this.title = title;
+    }
+
+    public Movie(int id, String posterPath, String title, Date releaseDate, Date watchedDate){
+        this.id = id;
+        this.posterPath = posterPath;
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.watchedDate = watchedDate;
     }
 
     public Movie(int id, String posterPath, String title, Date releaseDate, Float voteAverage, String overview, List<GenresModel> genres) {
@@ -49,6 +59,7 @@ public class Movie {
         this.voteAverage = voteAverage;
         this.overview = overview;
         this.genres = genres;
+        this.watchedDate = null;
     }
 
     public List<GenresModel> getGenres() {
@@ -76,8 +87,13 @@ public class Movie {
     }
 
 
+    public Date getWatchedDate() {
+        return watchedDate;
+    }
 
-
+    public void setWatchedDate(Date watchedDate) {
+        this.watchedDate = watchedDate;
+    }
 
     public int getId() {
         return id;
