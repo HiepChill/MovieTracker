@@ -1,0 +1,47 @@
+# Báo Cáo Tiến Độ Hàng Tuần
+
+## Thông Tin Chung
+- **Tên Dự Án**: MovieTracker
+- **Tuần**: 8
+- **Ngày**: (17-6-2024 -> 23-6-2024)
+- **Nhóm Thực hiện**:
+  - Thành viên 1: Chu Mạnh Vũ Hiệp
+  - Thành viên 2: Nguyễn Mạnh Thành
+  - Thành viên 3: Hồ Bá An Dương
+  - Thành viên 4: Phạm Thu Thủy
+
+## Mục Tiêu Tuần Này
+(Tóm tắt ngắn gọn mục tiêu chính của tuần này.)
+Hoàn thiện các màn còn lại 
+
+## Công Việc Đã Hoàn Thành
+(Tóm tắt các công việc đã hoàn thành trong tuần này.)
+Hoàn thiện các màn Login, Register, ForgotPassword và authentication
+
+### Thành viên 1: Chu Mạnh Vũ Hiệp
+- Công việc 1: Dùng firestore để lưu trữ dữ liệu
+- Công việc 2: Lưu trữ firestore theo authentication
+
+### Thành viên 2:Phạm Thu Thủy
+- Công việc 1:Hoàn thiện màn Create Space và Create Tag
+- Công việc 2:Hoàn thiện màn chọn lịch 
+
+### Thành viên 3:Hồ Bá An Dương
+- Công việc 1:Dùng  firestore lưu trữ dữ liệu
+- Công việc 2:Hoàn thiện màn static
+
+### Thành viên 4:Nguyễn Mạnh Thành
+- Công việc 1:Thực hiện màn Watched
+- Công việc 2:Fix RecycleView trong màn Watched
+
+## Vấn Đề Gặp Phải
+(Tiêu điểm vào các vấn đề, thách thức mà nhóm gặp phải và cách giải quyết.)
+-Dữ lieu màn static và watched
+## Kế Hoạch Tuần Tới
+(Phác thảo ngắn gọn các kế hoạch và mục tiêu dự kiến cho tuần tiếp theo.)
+-tiếp tục hoàn thành thêm các chức năng và màn hình 
+-Thêm dữ liệu vào db của watched
+
+## Nhận Xét và Đề Xuất
+(Mọi nhận xét và đề xuất để cải thiện quá trình làm việc nhóm và tiến độ dự án.)
+cần đẩy nhanh tốc độ hoàn thành công việc
