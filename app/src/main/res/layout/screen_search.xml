@@ -81,7 +81,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="310dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp">
 
         <ScrollView
@@ -100,51 +100,6 @@
 
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
 
-        <View
-            android:id="@+id/wg2"
-            android:layout_width="5dp"
-            android:layout_height="32dp"
-            android:background="@color/magenta"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/txtTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="TV Show suggest for you"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/wg2"
-            app:layout_constraintTop_toTopOf="@+id/wg2" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="310dp"
-        android:layout_marginTop="10dp">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvTV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </ScrollView>
-
-    </LinearLayout>
 
 </LinearLayout>
